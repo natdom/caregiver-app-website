@@ -51,6 +51,59 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        // Bright, optimistic brand colors
+        coral: {
+          50: '#fef7f0',
+          100: '#feeadc',
+          200: '#fcd2b3',
+          300: '#f9b180',
+          400: '#f58545',
+          500: '#e67e22',  // Primary warm coral
+          600: '#d35400',  // Primary dark
+          700: '#b7471d',
+          800: '#93391c',
+          900: '#77301a',
+          950: '#401609',
+        },
+        sage: {
+          50: '#f6fdf9',
+          100: '#e8faf0',
+          200: '#d2f4e1',
+          300: '#a9e9c5',
+          400: '#74d99f',  // Success green
+          500: '#4ade80',
+          600: '#22c55e',
+          700: '#16a34a',
+          800: '#15803d',
+          900: '#166534',
+          950: '#083418',
+        },
+        teal: {
+          50: '#f0fdfa',
+          100: '#ccfbf1',
+          200: '#99f6e4',
+          300: '#5eead4',
+          400: '#2dd4bf',
+          500: '#14b8a6',  // Accent teal
+          600: '#0d9488',
+          700: '#0f766e',
+          800: '#115e59',
+          900: '#134e4a',
+          950: '#042f2e',
+        },
+        neutral: {
+          50: '#fdfcfa',   // Warm white background
+          100: '#f7f5f3',
+          200: '#e7e5e4',
+          300: '#d6d3d1',
+          400: '#a8a29e',
+          500: '#78716c',
+          600: '#57534e',
+          700: '#44403c',  // Rich text color
+          800: '#292524',
+          900: '#1c1917',  // Deep background
+          950: '#0c0a09',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

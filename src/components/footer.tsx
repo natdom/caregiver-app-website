@@ -13,28 +13,12 @@ const navigation = {
     { name: 'Terms of Service', href: '/terms' },
     { name: 'Accessibility', href: '/accessibility' },
   ],
-  social: [
-    {
-      name: 'GitHub',
-      href: '#',
-      icon: Github,
-    },
-    {
-      name: 'Twitter',
-      href: '#',
-      icon: Twitter,
-    },
-    {
-      name: 'LinkedIn',
-      href: '#',
-      icon: Linkedin,
-    },
-  ],
+  social: [],
 }
 
 export function Footer() {
   return (
-    <footer className="bg-slate-900" aria-labelledby="footer-heading">
+    <footer className="bg-neutral-900" aria-labelledby="footer-heading">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
@@ -43,24 +27,12 @@ export function Footer() {
           {/* Brand section */}
           <div className="space-y-8 xl:col-span-1">
             <Link href="/" className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-sky-400" aria-hidden="true" />
+              <Heart className="h-8 w-8 text-coral-400" aria-hidden="true" />
               <span className="font-display font-bold text-xl text-white">Support Network</span>
             </Link>
-            <p className="text-sm leading-6 text-slate-300 max-w-sm">
+            <p className="text-sm leading-6 text-neutral-200 max-w-sm">
               Making every caregiver's day a little lighter through connection, clarity, and care.
             </p>
-            <div className="flex space-x-6">
-              {navigation.social.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-slate-400 hover:text-slate-300 transition-colors"
-                  aria-label={item.name}
-                >
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
-                </Link>
-              ))}
-            </div>
           </div>
 
           {/* Navigation sections */}
@@ -73,7 +45,7 @@ export function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-slate-300 hover:text-white transition-colors"
+                        className="text-sm leading-6 text-neutral-200 hover:text-white transition-colors"
                       >
                         {item.name}
                       </Link>
@@ -88,7 +60,7 @@ export function Footer() {
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-slate-300 hover:text-white transition-colors"
+                        className="text-sm leading-6 text-neutral-200 hover:text-white transition-colors"
                       >
                         {item.name}
                       </Link>
@@ -101,12 +73,12 @@ export function Footer() {
             {/* Newsletter signup */}
             <div>
               <h3 className="text-sm font-semibold leading-6 text-white">Stay updated</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
+              <p className="mt-2 text-sm leading-6 text-neutral-200">
                 Get the latest updates and caregiving resources.
               </p>
               <Link
                 href="/newsletter"
-                className="mt-6 inline-flex rounded-md bg-sky-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+                className="mt-6 inline-flex rounded-md bg-coral-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-coral-500 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral-600"
               >
                 Join our waitlist
               </Link>
@@ -115,13 +87,13 @@ export function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="mt-16 border-t border-slate-800 pt-8 sm:mt-20 lg:mt-24">
+        <div className="mt-16 border-t border-neutral-800 pt-8 sm:mt-20 lg:mt-24">
           <div className="flex flex-col items-center justify-between sm:flex-row">
-            <p className="text-xs leading-5 text-slate-400">
+            <p className="text-xs leading-5 text-neutral-400">
               &copy; {new Date().getFullYear()} Support Network. All rights reserved.
             </p>
-            <p className="mt-4 text-xs leading-5 text-slate-400 sm:mt-0">
-              Contact: <a href="mailto:hello@support.network" className="hover:text-slate-300">hello@support.network</a>
+            <p className="mt-4 text-xs leading-5 text-neutral-400 sm:mt-0">
+              Contact: <a href="mailto:hello@support.network" className="hover:text-neutral-200">hello@support.network</a>
             </p>
           </div>
         </div>

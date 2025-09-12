@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { allResources } from 'contentlayer/generated'
 import { getMDXComponent } from 'next-contentlayer/hooks'
+import { useMDXComponents } from '@/mdx-components'
 import { formatDate } from '@/lib/utils'
 import { Clock, User, Calendar, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
@@ -78,10 +79,11 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
   }
 
   const MDXContent = getMDXComponent(resource.body.code)
+  const components = useMDXComponents({})
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 via-sky-50 to-slate-100 dark:from-slate-900 dark:via-sky-900 dark:to-slate-900 min-h-screen">
-      <article className="py-16">
+    <div className="bg-gradient-to-br from-coral-50 via-sage-50 to-coral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 min-h-screen">
+      <article className="py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
             {/* Back button */}
@@ -96,27 +98,38 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
 
             {/* Header */}
             <header className="mb-12">
-              <div className="flex flex-wrap items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-4">
+              <div className="flex flex-wrap items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 mb-4">
                 {resource.topics.map((topic) => (
                   <span
                     key={topic}
-                    className="inline-flex items-center rounded-full bg-sky-100 dark:bg-sky-900 px-3 py-1 text-xs font-medium text-sky-800 dark:text-sky-200"
+                    className="inline-flex items-center rounded-full bg-teal-100 dark:bg-teal-900 px-3 py-1 text-xs font-medium text-teal-800 dark:text-teal-200"
                   >
                     {topic}
                   </span>
                 ))}
               </div>
               
-              <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl mb-6">
+              {/* Cover image */}
+              {resource.cover && (
+                <div className="mb-8 -mx-4 sm:mx-0">
+                  <img
+                    src={resource.cover}
+                    alt={resource.coverAlt || resource.title}
+                    className="w-full h-64 sm:h-80 object-cover rounded-none sm:rounded-2xl shadow-lg"
+                  />
+                </div>
+              )}
+              
+              <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl mb-6 leading-tight">
                 {resource.title}
               </h1>
               
-              <p className="text-xl leading-8 text-slate-600 dark:text-slate-300 mb-8">
+              <p className="text-xl leading-8 text-neutral-600 dark:text-neutral-200 mb-8 font-medium">
                 {resource.excerpt}
               </p>
 
               {/* Meta information */}
-              <div className="flex flex-wrap items-center gap-6 text-sm text-slate-600 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700 pb-8">
+              <div className="flex flex-wrap items-center gap-6 text-sm text-neutral-600 dark:text-neutral-400 border-b border-neutral-200 dark:border-neutral-700 pb-8">
                 <div className="flex items-center">
                   <User className="mr-2 h-4 w-4" />
                   <span>{resource.author}</span>
@@ -140,29 +153,28 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
             </header>
 
             {/* Content */}
-            <div className="prose prose-lg prose-slate dark:prose-invert max-w-none">
-              <MDXContent />
+            <div className="max-w-none">
+              <MDXContent components={components} />
             </div>
 
             {/* Footer */}
-            <footer className="mt-16 pt-8 border-t border-slate-200 dark:border-slate-700">
-              <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl p-8">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-                  Was this helpful?
-                </h3>
-                <p className="text-slate-600 dark:text-slate-300 mb-6">
-                  Join our community to get more resources like this and connect with other caregivers.
-                </p>
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <Button asChild>
-                    <Link href="/newsletter">Join our waitlist</Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link href="/resources">Explore more resources</Link>
-                  </Button>
-                </div>
+            {/* Related articles suggestion */}
+            <div className="mt-12 p-6 bg-gradient-to-r from-coral-50 to-sage-50 dark:from-coral-900/20 dark:to-sage-900/20 rounded-2xl border border-coral-200 dark:border-coral-800">
+              <h3 className="text-lg font-semibold text-neutral-700 dark:text-white mb-3">
+                💡 Found this helpful?
+              </h3>
+              <p className="text-neutral-600 dark:text-neutral-200 mb-4">
+                Join our community to get more practical caregiving resources and connect with others who understand your journey.
+              </p>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Button asChild size="sm" className="font-medium">
+                  <Link href="/newsletter">Join our waitlist</Link>
+                </Button>
+                <Button variant="outline" asChild size="sm">
+                  <Link href="/resources">Browse more resources</Link>
+                </Button>
               </div>
-            </footer>
+            </div>
           </div>
         </div>
       </article>

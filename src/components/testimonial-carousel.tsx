@@ -33,10 +33,10 @@ export function TestimonialCarousel() {
   }, [])
 
   return (
-    <section className="bg-slate-50 py-24 dark:bg-slate-800 sm:py-32">
+    <section className="bg-coral-50 py-24 dark:bg-neutral-800 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-4xl">
             What caregivers are saying
           </h2>
         </div>
@@ -54,13 +54,13 @@ export function TestimonialCarousel() {
                 aria-hidden={index !== currentIndex}
               >
                 <figure className="text-center">
-                  <Quote className="mx-auto h-12 w-12 text-sky-500 mb-8" aria-hidden="true" />
-                  <blockquote className="text-2xl font-medium text-slate-900 dark:text-white sm:text-3xl">
+                  <Quote className="mx-auto h-12 w-12 text-coral-500 mb-8" aria-hidden="true" />
+                  <blockquote className="text-2xl font-medium text-neutral-700 dark:text-white sm:text-3xl">
                     "{testimonial.quote}"
                   </blockquote>
-                  <figcaption className="mt-8 text-lg text-slate-600 dark:text-slate-300">
+                  <figcaption className="mt-8 text-lg text-neutral-600 dark:text-neutral-300">
                     <div className="font-medium">{testimonial.author}</div>
-                    <div className="text-slate-500 dark:text-slate-400">{testimonial.context}</div>
+                    <div className="text-neutral-500 dark:text-neutral-400">{testimonial.context}</div>
                   </figcaption>
                 </figure>
               </div>
@@ -75,8 +75,8 @@ export function TestimonialCarousel() {
                 onClick={() => setCurrentIndex(index)}
                 className={`h-3 w-3 rounded-full transition-colors ${
                   index === currentIndex
-                    ? 'bg-sky-500'
-                    : 'bg-slate-300 hover:bg-slate-400 dark:bg-slate-600 dark:hover:bg-slate-500'
+                    ? 'bg-coral-500'
+                    : 'bg-neutral-300 hover:bg-neutral-400 dark:bg-neutral-600 dark:hover:bg-neutral-500'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />

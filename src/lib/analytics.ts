@@ -55,16 +55,16 @@ export function useAnalytics() {
 // Convenience functions for common events
 export const analytics = {
   waitlistSubmit: (role?: string) => 
-    trackEvent('waitlist_submit', { role }),
+    trackEvent('waitlist_submit', role ? { role } : {}),
     
   newsletterSubscribe: (source?: string) =>
-    trackEvent('newsletter_subscribe', { source }),
+    trackEvent('newsletter_subscribe', source ? { source } : {}),
     
   resourceRead: (title: string, category?: string) =>
-    trackEvent('resource_read', { title, category }),
+    trackEvent('resource_read', category ? { title, category } : { title }),
     
   contactSubmit: (role?: string) =>
-    trackEvent('contact_submit', { role }),
+    trackEvent('contact_submit', role ? { role } : {}),
     
   resourceView: (title: string, slug: string) =>
     trackEvent('resource_view', { title, slug }),

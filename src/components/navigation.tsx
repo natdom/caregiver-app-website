@@ -42,14 +42,14 @@ export function Navigation() {
   }, [isOpen])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-white/20 dark:border-white/10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-neutral-900/60">
       <nav className="container flex h-16 items-center justify-between" aria-label="Main navigation">
         <Link 
           href="/" 
-          className="flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 rounded-md"
+          className="flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2 rounded-md"
           onClick={closeMenu}
         >
-          <Heart className="h-8 w-8 text-sky-500" aria-hidden="true" />
+          <Heart className="h-8 w-8 text-coral-500" aria-hidden="true" />
           <span className="font-display font-bold text-xl">Support Network</span>
         </Link>
 
@@ -60,8 +60,8 @@ export function Navigation() {
               key={item.href}
               href={item.href}
               className={cn(
-                'text-sm font-medium transition-colors hover:text-sky-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2 rounded-sm px-1 py-1',
-                pathname === item.href ? 'text-sky-600' : 'text-muted-foreground'
+                'text-sm font-medium transition-colors hover:text-coral-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2 rounded-sm px-1 py-1',
+                pathname === item.href ? 'text-coral-600' : 'text-muted-foreground'
               )}
             >
               {item.label}
@@ -107,7 +107,7 @@ export function Navigation() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      'block rounded-md px-4 py-3 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2',
+                      'block rounded-md px-4 py-3 text-base font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:ring-offset-2',
                       pathname === item.href ? 'bg-accent text-accent-foreground' : ''
                     )}
                     onClick={closeMenu}

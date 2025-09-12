@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 24 50% 98%; /* warm white */
+    --foreground: 24 10% 27%; /* rich charcoal */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 24 10% 27%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 199 89% 48%;
+    --popover-foreground: 24 10% 27%;
+    --primary: 25 85% 55%; /* bright coral */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 60 9% 96%; /* soft neutral */
+    --secondary-foreground: 24 10% 27%;
+    --muted: 60 5% 94%;
+    --muted-foreground: 25 5% 45%;
+    --accent: 174 64% 39%; /* teal accent */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 60 9% 98%;
+    --border: 20 6% 90%;
+    --input: 20 6% 90%;
+    --ring: 25 85% 55%; /* bright coral */
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 199 89% 48%;
+    --background: 24 6% 8%; /* deeper neutral background */
+    --foreground: 0 0% 98%; /* brighter foreground text */
+    --card: 24 6% 10%; /* slightly lighter cards */
+    --card-foreground: 0 0% 96%; /* brighter card text */
+    --popover: 24 6% 10%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 25 85% 60%; /* slightly brighter coral */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 6% 12%; /* lighter secondary */
+    --secondary-foreground: 0 0% 94%;
+    --muted: 24 6% 12%;
+    --muted-foreground: 0 0% 75%; /* much brighter muted text */
+    --accent: 174 64% 45%; /* brighter teal accent */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 73% 41%;
+    --destructive-foreground: 0 0% 96%;
+    --border: 24 6% 18%; /* lighter borders */
+    --input: 24 6% 18%; /* lighter input borders */
+    --ring: 25 85% 60%; /* brighter coral ring */
   }
 }
 
@@ -66,15 +66,15 @@
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-slate-100 dark:bg-slate-800;
+    @apply bg-neutral-100 dark:bg-neutral-800;
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-slate-300 dark:bg-slate-600 rounded-full;
+    @apply bg-neutral-300 dark:bg-neutral-600 rounded-full;
   }
   
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-400 dark:bg-slate-500;
+    @apply bg-neutral-400 dark:bg-neutral-500;
   }
 }
 
@@ -93,12 +93,12 @@
   
   /* Focus visible improvements */
   .focus-visible {
-    @apply outline-none ring-2 ring-sky-500 ring-offset-2 ring-offset-white dark:ring-offset-slate-900;
+    @apply outline-none ring-2 ring-teal-500 ring-offset-2 ring-offset-white dark:ring-offset-neutral-900;
   }
   
   /* Skip to content */
   .skip-link {
-    @apply absolute left-4 top-4 z-50 -translate-y-16 transform rounded-md bg-white px-4 py-2 text-slate-900 transition-transform focus:translate-y-0;
+    @apply absolute left-4 top-4 z-50 -translate-y-16 transform rounded-md bg-white px-4 py-2 text-neutral-700 transition-transform focus:translate-y-0;
   }
 }
 

@@ -33,12 +33,28 @@ export default function NewsletterPage() {
     setIsLoading(true)
 
     try {
-      // TODO: Replace with actual API endpoint
-      await new Promise(resolve => setTimeout(resolve, 1500)) // Simulate API call
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          name: formData.name,
+          role: formData.role,
+          challenge: formData.challenge,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to subscribe')
+      }
+
+      const result = await response.json()
       
       toast({
         title: 'Welcome to the waitlist!',
-        description: 'We\'ll keep you updated on our progress and early access opportunities.',
+        description: result.message || 'We\'ll keep you updated on our progress and early access opportunities.',
       })
       
       // Reset form
@@ -61,16 +77,16 @@ export default function NewsletterPage() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 via-sky-50 to-slate-100 dark:from-slate-900 dark:via-sky-900 dark:to-slate-900 min-h-screen">
+    <div className="bg-gradient-to-br from-coral-50 via-sage-50 to-coral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 min-h-screen">
       {/* Hero */}
-      <section className="py-24 sm:py-32">
+      <section className="py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <Mail className="mx-auto h-16 w-16 text-sky-500 mb-8" aria-hidden="true" />
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+            <Mail className="mx-auto h-16 w-16 text-coral-500 mb-8" aria-hidden="true" />
+            <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl">
               Join the waitlist
             </h1>
-            <p className="mt-6 text-xl leading-8 text-slate-600 dark:text-slate-300">
+            <p className="mt-6 text-xl leading-8 text-neutral-600 dark:text-neutral-200">
               Be the first to know when Support Network launches. Get early access and help shape 
               the caregiving community you need.
             </p>
@@ -79,37 +95,37 @@ export default function NewsletterPage() {
       </section>
 
       {/* Benefits */}
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-2xl font-bold text-center text-slate-900 dark:text-white mb-12">
+            <h2 className="text-2xl font-bold text-center text-neutral-700 dark:text-white mb-12">
               What you'll get
             </h2>
             <div className="grid gap-8 sm:grid-cols-3">
               <div className="text-center">
-                <Users className="mx-auto h-12 w-12 text-emerald-500 mb-4" />
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                <Users className="mx-auto h-12 w-12 text-coral-500 mb-4" />
+                <h3 className="text-lg font-semibold text-neutral-700 dark:text-white mb-2">
                   Early Access
                 </h3>
-                <p className="text-slate-600 dark:text-slate-300">
+                <p className="text-neutral-600 dark:text-neutral-200">
                   Be among the first to join our community when we launch
                 </p>
               </div>
               <div className="text-center">
-                <Bell className="mx-auto h-12 w-12 text-sky-500 mb-4" />
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                <Bell className="mx-auto h-12 w-12 text-coral-500 mb-4" />
+                <h3 className="text-lg font-semibold text-neutral-700 dark:text-white mb-2">
                   Progress Updates
                 </h3>
-                <p className="text-slate-600 dark:text-slate-300">
+                <p className="text-neutral-600 dark:text-neutral-200">
                   Monthly updates on our development and community building
                 </p>
               </div>
               <div className="text-center">
-                <Heart className="mx-auto h-12 w-12 text-rose-500 mb-4" />
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                <Heart className="mx-auto h-12 w-12 text-coral-500 mb-4" />
+                <h3 className="text-lg font-semibold text-neutral-700 dark:text-white mb-2">
                   Helpful Resources
                 </h3>
-                <p className="text-slate-600 dark:text-slate-300">
+                <p className="text-neutral-600 dark:text-neutral-200">
                   Curated caregiving tips and resources delivered to your inbox
                 </p>
               </div>
@@ -119,10 +135,10 @@ export default function NewsletterPage() {
       </section>
 
       {/* Form */}
-      <section className="py-16">
+      <section className="py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl">
-            <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-800 p-8 sm:p-12">
+            <div className="bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-2xl shadow-lg border border-white/20 dark:border-white/10 p-8 sm:p-12">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div>
@@ -198,7 +214,7 @@ export default function NewsletterPage() {
                     onCheckedChange={(checked) => handleInputChange('consent', !!checked)}
                     disabled={isLoading}
                   />
-                  <Label htmlFor="consent" className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                  <Label htmlFor="consent" className="text-sm text-neutral-600 dark:text-neutral-200 leading-relaxed">
                     I'd like to receive updates about Support Network's progress and early access opportunities. 
                     I understand I can unsubscribe at any time.
                   </Label>
@@ -213,7 +229,7 @@ export default function NewsletterPage() {
                   {isLoading ? 'Joining waitlist...' : 'Join the waitlist'}
                 </Button>
 
-                <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   We respect your privacy. No spam, ever. Unsubscribe with one click.
                 </p>
               </form>

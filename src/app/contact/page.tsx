@@ -73,38 +73,39 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-slate-50 via-sky-50 to-slate-100 dark:from-slate-900 dark:via-sky-900 dark:to-slate-900 min-h-screen">
+    <div className="bg-gradient-to-br from-coral-50 via-sage-50 to-coral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 min-h-screen">
       {/* Header */}
-      <section className="py-24 sm:py-32">
+      <section className="py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
+            <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl">
               Get in touch
             </h1>
-            <p className="mt-6 text-xl leading-8 text-slate-600 dark:text-slate-300">
+            <p className="mt-6 text-xl leading-8 text-neutral-600 dark:text-neutral-200">
               We'd love to hear from you. Send us a message and we'll respond as soon as possible.
             </p>
           </div>
         </div>
       </section>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <section className="py-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl">
           <div className="grid gap-8 lg:grid-cols-3">
             {/* Contact Information */}
             <div className="lg:col-span-1">
-              <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
-                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              <div className="bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-2xl shadow-lg border border-white/20 dark:border-white/10 p-8">
+                <h2 className="text-2xl font-bold text-neutral-700 dark:text-white mb-6">
                   Contact Information
                 </h2>
                 
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <Mail className="h-6 w-6 text-sky-500 mt-1" />
+                    <Mail className="h-6 w-6 text-teal-500 mt-1" />
                     <div>
-                      <div className="font-medium text-slate-900 dark:text-white">Email</div>
-                      <div className="text-slate-600 dark:text-slate-300">
-                        <a href="mailto:hello@support.network" className="hover:text-sky-600 dark:hover:text-sky-400">
+                      <div className="font-medium text-neutral-700 dark:text-white">Email</div>
+                      <div className="text-neutral-600 dark:text-neutral-200">
+                        <a href="mailto:hello@support.network" className="hover:text-teal-600 dark:hover:text-teal-400">
                           hello@support.network
                         </a>
                       </div>
@@ -112,31 +113,31 @@ export default function ContactPage() {
                   </div>
                   
                   <div className="flex items-start space-x-4">
-                    <Clock className="h-6 w-6 text-sky-500 mt-1" />
+                    <Clock className="h-6 w-6 text-teal-500 mt-1" />
                     <div>
-                      <div className="font-medium text-slate-900 dark:text-white">Response Time</div>
-                      <div className="text-slate-600 dark:text-slate-300">
+                      <div className="font-medium text-neutral-700 dark:text-white">Response Time</div>
+                      <div className="text-neutral-600 dark:text-neutral-200">
                         We typically respond within 24 hours
                       </div>
                     </div>
                   </div>
                   
                   <div className="flex items-start space-x-4">
-                    <MapPin className="h-6 w-6 text-sky-500 mt-1" />
+                    <MapPin className="h-6 w-6 text-teal-500 mt-1" />
                     <div>
-                      <div className="font-medium text-slate-900 dark:text-white">Based in</div>
-                      <div className="text-slate-600 dark:text-slate-300">
+                      <div className="font-medium text-neutral-700 dark:text-white">Based in</div>
+                      <div className="text-neutral-600 dark:text-neutral-200">
                         United States
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
-                  <h3 className="font-medium text-slate-900 dark:text-white mb-4">
+                <div className="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-700">
+                  <h3 className="font-medium text-neutral-700 dark:text-white mb-4">
                     What to expect
                   </h3>
-                  <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                  <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-200">
                     <li>• Personal response from our team</li>
                     <li>• Follow-up within one business day</li>
                     <li>• Thoughtful consideration of your message</li>
@@ -147,7 +148,7 @@ export default function ContactPage() {
 
             {/* Contact Form */}
             <div className="lg:col-span-2">
-              <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
+              <div className="bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-2xl shadow-lg border border-white/20 dark:border-white/10 p-8">
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div>
@@ -243,7 +244,7 @@ export default function ContactPage() {
                     {isLoading ? 'Sending message...' : 'Send message'}
                   </Button>
 
-                  <p className="text-center text-sm text-slate-500 dark:text-slate-400">
+                  <p className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                     We respect your privacy and will never share your information.
                   </p>
                 </form>
@@ -251,7 +252,8 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      </section>
     </div>
   )
 }
