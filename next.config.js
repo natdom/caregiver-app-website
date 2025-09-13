@@ -1,4 +1,4 @@
-const { withContentlayer } = require('next-contentlayer')
+// const { withContentlayer } = require('next-contentlayer')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -12,8 +12,15 @@ const nextConfig = {
         destination: '/docs/design-system',
         permanent: false,
       },
+      {
+        source: '/press',
+        destination: '/partners',
+        permanent: true,
+      },
     ]
   },
 }
 
-module.exports = withContentlayer(nextConfig)
+// Temporarily disable contentlayer to test hero changes
+module.exports = nextConfig
+// module.exports = withContentlayer(nextConfig)

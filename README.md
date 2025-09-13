@@ -38,6 +38,40 @@ A modern, accessible marketing website for Support Network - a caregiving suppor
 4. **Open your browser:**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+## 🎯 User Flow & Testing
+
+### Primary Conversion Flow
+The site focuses on a single conversion goal: **waitlist signups**
+
+**User Journey:**
+1. **Homepage** (`/`) → Hero CTA "Join the waitlist"
+2. **Waitlist Form** (`/waitlist`) → Optimized form with validation
+3. **Success Page** (`/waitlist/success`) → Social sharing + next steps
+
+### Testing the Waitlist System
+
+**1. Navigation Testing:**
+- Click "Join the waitlist" button in homepage hero
+- Click "Join waitlist" button in site navigation
+- Visit `/newsletter` (should redirect to `/waitlist`)
+
+**2. Form Validation Testing:**
+- Submit empty form → Should show validation errors
+- Enter invalid email → Should show email format error
+- Type 500+ characters in challenge field → Should be limited
+- Uncheck consent → Should prevent submission
+
+**3. Success Flow Testing:**
+- Complete valid form submission
+- Verify redirect to success page
+- Test social sharing buttons (Twitter/LinkedIn)
+- Check data storage: `cat data/waitlist-entries.json`
+
+**4. Accessibility Testing:**
+- Navigate entire form using only Tab key
+- Use arrow keys in role selection radio group
+- Test with screen reader if available
+
 ### Production Build
 
 ```bash
@@ -62,8 +96,9 @@ npm start
 - **MDX** for rich content pages
 
 ### Forms & Validation
-- **React Hook Form** for form handling
-- **Zod** for schema validation
+- **React Server Actions** for form handling
+- **Zod** for schema validation and type safety
+- **File-based storage** for development (PostgreSQL-ready for production)
 - **Resend** for email sending (stub implementation)
 
 ### SEO & Analytics
@@ -85,14 +120,20 @@ caregiver-app-website/
 │   ├── app/                  # Next.js App Router pages
 │   │   ├── (legal)/         # Legal pages (privacy, terms, accessibility)
 │   │   ├── api/             # API routes
+│   │   ├── waitlist/        # Waitlist form and success pages
 │   │   └── docs/            # Documentation pages
 │   ├── components/          # React components
-│   │   └── ui/              # shadcn/ui base components
+│   │   ├── ui/              # shadcn/ui base components
+│   │   └── __tests__/       # Component tests
 │   ├── lib/                 # Utilities and configurations
+│   │   ├── actions/         # Server actions (waitlist, contact)
+│   │   ├── storage/         # Data storage adapters
+│   │   └── validations/     # Zod schemas
 │   └── test/                # Test setup and utilities
 ├── content/                 # MDX content files
 │   ├── pages/               # Legal and static pages
 │   └── resources/           # Blog/resource articles
+├── data/                    # Local development data storage
 ├── public/                  # Static assets
 └── scripts/                 # Utility scripts
 ```
@@ -165,9 +206,13 @@ Legal and static pages are in `content/pages/`:
 
 ## 🧪 Testing
 
+### Running Tests
 ```bash
-# Run tests
+# Run all tests
 npm test
+
+# Run specific test file
+npm test src/components/__tests__/waitlist-form.test.tsx
 
 # Run tests with UI
 npm run test:ui
@@ -182,10 +227,66 @@ npm run typecheck
 npm run format
 ```
 
+### Test Coverage
+The waitlist form includes comprehensive test coverage:
+- **25 test cases** covering form validation, accessibility, and user interactions
+- **ARIA-live announcements** for screen readers
+- **Keyboard navigation** workflows
+- **Error handling** and validation
+- **Loading states** and form submission
+- **Success flow** testing
+
+### Accessibility Testing
+```bash
+# Install axe CLI for accessibility auditing
+npm install -g @axe-core/cli
+
+# Run accessibility audit on waitlist page
+axe http://localhost:3000/waitlist
+
+# Test keyboard navigation manually:
+# - Tab through all form elements
+# - Use arrow keys in radio group
+# - Submit form with Enter key
+```
+
 ## 📧 Form Submissions
 
-### Development
-Forms currently log to console. To enable email sending:
+### Waitlist System
+The optimized waitlist system includes:
+
+**Features:**
+- Server-side validation with Zod schemas
+- Role-based user segmentation (caregiver, professional, funder, other)
+- File-based storage for development (`data/waitlist-entries.json`)
+- PostgreSQL-ready production adapter
+- Comprehensive accessibility support
+- Success page with social sharing
+- Analytics integration with Plausible
+
+**Development Storage:**
+Waitlist submissions are stored locally in `data/waitlist-entries.json`:
+```bash
+# View submissions
+cat data/waitlist-entries.json
+
+# Check waitlist count
+ls -la data/
+```
+
+**Production Setup:**
+For production, implement the PostgreSQL adapter in `src/lib/storage/waitlist-adapter.ts`:
+```typescript
+// Update the adapter to use your database
+if (process.env.NODE_ENV === 'production') {
+  // Use PostgreSQL implementation
+} else {
+  // Use file-based storage
+}
+```
+
+### Contact Forms
+Contact forms currently log to console. To enable email sending:
 
 1. **Get Resend API key** from [resend.com](https://resend.com)
 2. **Add to environment variables**:
@@ -193,15 +294,6 @@ Forms currently log to console. To enable email sending:
    RESEND_API_KEY=re_your_api_key
    ```
 3. **Update API routes** in `src/app/api/contact/route.ts`
-
-### Exporting Submissions
-
-Run the export script to download form submissions as CSV:
-```bash
-npm run export-submissions
-```
-
-Files are saved to `exports/` directory.
 
 ## 🔍 SEO & Analytics
 
@@ -215,9 +307,10 @@ Files are saved to `exports/` directory.
 
 ### Custom Events
 The site tracks these events:
-- `waitlist_submit` - Newsletter signups
+- `waitlist_submit` - Waitlist form submissions with role segmentation
 - `resource_read` - Resource article views
 - `contact_submit` - Contact form submissions
+- Social sharing clicks on success pages
 
 ## 🎨 Customization
 
@@ -267,10 +360,11 @@ axe http://localhost:3000
 
 ### Required for Launch
 - [ ] **Analytics** - Set up Plausible account and tracking
-- [ ] **Email** - Configure Resend or alternative email service
+- [ ] **Waitlist Storage** - Implement PostgreSQL adapter for production
+- [ ] **Email** - Configure Resend or alternative email service  
 - [ ] **Domain** - Update NEXT_PUBLIC_SITE_URL in environment
 - [ ] **Content** - Review all copy for brand voice and accuracy
-- [ ] **Forms** - Test contact and newsletter form submissions
+- [ ] **Waitlist Flow** - Test complete signup and success flow
 - [ ] **Performance** - Verify Lighthouse scores ≥95 on mobile
 - [ ] **Accessibility** - Run axe audit and fix any issues
 
@@ -285,7 +379,8 @@ axe http://localhost:3000
 ## 📞 Support
 
 ### Getting Help
-- **Documentation Issues**: Check this README and `/docs/design-system`
+- **Documentation Issues**: Check this README and `/docs/design-system`  
+- **Waitlist System**: See [WAITLIST.md](./WAITLIST.md) for detailed documentation
 - **Development Questions**: Review code comments and component props
 - **Content Updates**: See "Content Management" section above
 

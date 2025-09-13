@@ -11,7 +11,7 @@ const navItems = [
   { href: '/', label: 'Home' },
   { href: '/about', label: 'About' },
   { href: '/resources', label: 'Resources' },
-  { href: '/press', label: 'Press' },
+  { href: '/partners', label: 'Partners' },
   { href: '/contact', label: 'Contact' },
 ]
 
@@ -67,8 +67,10 @@ export function Navigation() {
               {item.label}
             </Link>
           ))}
-          <Button asChild size="sm">
-            <Link href="/newsletter">Join Waitlist</Link>
+          <Button asChild size="sm" data-testid="nav-cta">
+            <Link href="/waitlist" aria-label="Join the Support Network waitlist">
+              Join waitlist
+            </Link>
           </Button>
         </div>
 
@@ -116,8 +118,10 @@ export function Navigation() {
                     {item.label}
                   </Link>
                 ))}
-                <Button asChild className="mt-4">
-                  <Link href="/newsletter" onClick={closeMenu}>Join Waitlist</Link>
+                <Button asChild className="mt-4" data-testid="mobile-nav-cta">
+                  <Link href="/waitlist" onClick={closeMenu} aria-label="Join the Support Network waitlist">
+                    Join waitlist
+                  </Link>
                 </Button>
               </div>
             </div>

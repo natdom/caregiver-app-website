@@ -26,7 +26,7 @@ vi.mock('next/navigation', () => ({
 vi.mock('next/image', () => ({
   default: ({ src, alt, ...props }: any) => {
     // eslint-disable-next-line jsx-a11y/alt-text, @next/next/no-img-element
-    return <img src={src} alt={alt} {...props} />
+    return React.createElement('img', { src, alt, ...props })
   },
 }))
 
@@ -60,3 +60,15 @@ Object.defineProperty(window, 'matchMedia', {
     dispatchEvent: vi.fn(),
   })),
 })
+
+// Mock ResizeObserver for Radix UI components
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}))
+
+// Mock HTMLFormElement.requestSubmit for JSDOM
+if (typeof window !== 'undefined') {
+  HTMLFormElement.prototype.requestSubmit = vi.fn()
+}
