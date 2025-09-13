@@ -1,4 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
+import { NewsletterInline } from '@/components/newsletter-inline'
+import { StarterKitCTA } from '@/components/starter-kit-cta'
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -102,6 +104,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // Horizontal rule
     hr: () => (
       <hr className="border-neutral-200 dark:border-neutral-700 my-8" />
+    ),
+    
+    // Custom components
+    NewsletterInline: (props: any) => (
+      <div className="my-8">
+        <NewsletterInline {...props} />
+      </div>
+    ),
+    
+    StarterKitCTA: (props: any) => (
+      <div className="my-8">
+        <StarterKitCTA {...props} />
+      </div>
     ),
     
     ...components,

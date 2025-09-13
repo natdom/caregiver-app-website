@@ -7,6 +7,9 @@ import { formatDate } from '@/lib/utils'
 import { Clock, User, Calendar, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { StarterKitCTA } from '@/components/starter-kit-cta'
+import { ArticleSchema } from '@/components/article-schema'
+import { useScrollTracking } from '@/hooks/use-scroll-tracking'
 
 interface ResourcePageProps {
   params: {
@@ -78,16 +81,31 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
     notFound()
   }
 
+  return <ResourcePageClient resource={resource} />
+}
+
+'use client'
+
+function ResourcePageClient({ resource }: { resource: any }) {
   const MDXContent = getMDXComponent(resource.body.code)
   const components = useMDXComponents({})
 
+  // Track scroll progress and 50% milestone
+  useScrollTracking({
+    onScrollProgress: (progress) => {
+      // Could add a progress bar here in the future
+    }
+  })
+
   return (
-    <div className="bg-gradient-to-br from-coral-50 via-sage-50 to-coral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 min-h-screen">
-      <article className="py-8">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl">
-            {/* Back button */}
-            <div className="mb-8">
+    <>
+      <ArticleSchema resource={resource} />
+      <div className="bg-gradient-to-br from-coral-50 via-sage-50 to-coral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 min-h-screen">
+        <article className="py-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-3xl">
+              {/* Back button */}
+              <div className="mb-8">
               <Button variant="ghost" asChild>
                 <Link href="/resources">
                   <ArrowLeft className="mr-2 h-4 w-4" />
@@ -158,26 +176,13 @@ export default async function ResourcePage({ params }: ResourcePageProps) {
             </div>
 
             {/* Footer */}
-            {/* Related articles suggestion */}
-            <div className="mt-12 p-6 bg-gradient-to-r from-coral-50 to-sage-50 dark:from-coral-900/20 dark:to-sage-900/20 rounded-2xl border border-coral-200 dark:border-coral-800">
-              <h3 className="text-lg font-semibold text-neutral-700 dark:text-white mb-3">
-                💡 Found this helpful?
-              </h3>
-              <p className="text-neutral-600 dark:text-neutral-200 mb-4">
-                Join our community to get more practical caregiving resources and connect with others who understand your journey.
-              </p>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="sm" className="font-medium">
-                  <Link href="/newsletter">Join our waitlist</Link>
-                </Button>
-                <Button variant="outline" asChild size="sm">
-                  <Link href="/resources">Browse more resources</Link>
-                </Button>
-              </div>
+            <div className="mt-12">
+              <StarterKitCTA />
             </div>
           </div>
         </div>
-      </article>
-    </div>
+        </article>
+      </div>
+    </>
   )
 }

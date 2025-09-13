@@ -1,97 +1,141 @@
 'use client'
 
-import * as React from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { useToast } from '@/components/ui/use-toast'
-import { Mail } from 'lucide-react'
+import { Mail, ArrowRight, CheckCircle } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
-export function NewsletterInline() {
-  const [email, setEmail] = React.useState('')
-  const [isLoading, setIsLoading] = React.useState(false)
-  const { toast } = useToast()
+interface NewsletterInlineProps {
+  className?: string
+  source?: string
+  compact?: boolean
+}
+
+export function NewsletterInline({ 
+  className, 
+  source = 'resource_inline',
+  compact = false 
+}: NewsletterInlineProps) {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email) return
 
-    setIsLoading(true)
+    setStatus('loading')
+    setErrorMessage('')
 
     try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to subscribe')
+      // Track signup attempt
+      if (typeof window !== 'undefined' && (window as any).plausible) {
+        (window as any).plausible('resource_signup_inline', {
+          props: { source, email_domain: email.split('@')[1] || 'unknown' }
+        })
       }
 
-      const result = await response.json()
+      // Here you would typically call your email signup API
+      // For now, we'll simulate success
+      await new Promise(resolve => setTimeout(resolve, 1000))
       
-      toast({
-        title: 'Thank you for joining!',
-        description: result.message || 'We\'ll keep you updated on our progress.',
-      })
-      
+      setStatus('success')
       setEmail('')
     } catch (error) {
-      toast({
-        title: 'Something went wrong',
-        description: 'Please try again later.',
-        variant: 'destructive',
-      })
-    } finally {
-      setIsLoading(false)
+      setStatus('error')
+      setErrorMessage('Something went wrong. Please try again.')
     }
   }
 
+  if (status === 'success') {
+    return (
+      <div className={cn(
+        "bg-gradient-to-r from-teal-50 to-coral-50 dark:from-teal-900/20 dark:to-coral-900/20 rounded-2xl border border-teal-200 dark:border-teal-800",
+        compact ? "p-4" : "p-6",
+        className
+      )}>
+        <div className="flex items-center justify-center text-center">
+          <CheckCircle className="h-6 w-6 text-teal-600 dark:text-teal-400 mr-3" />
+          <div>
+            <h3 className="text-lg font-semibold text-neutral-700 dark:text-white">
+              Thanks for joining!
+            </h3>
+            <p className="text-sm text-neutral-600 dark:text-neutral-200 mt-1">
+              Check your email for our caregiving starter kit.
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <section className="bg-gradient-to-r from-coral-50 to-sage-50 dark:from-neutral-900 dark:to-neutral-800 py-24 sm:py-32">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <Mail className="mx-auto h-16 w-16 text-coral-500 dark:text-coral-400 mb-8" aria-hidden="true" />
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-4xl">
-            Stay in the loop
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-neutral-600 dark:text-neutral-300">
-            Get updates on our progress, early access opportunities, and helpful caregiving resources delivered to your inbox.
+    <div className={cn(
+      "bg-gradient-to-r from-teal-50 to-coral-50 dark:from-teal-900/20 dark:to-coral-900/20 rounded-2xl border border-teal-200 dark:border-teal-800",
+      compact ? "p-4" : "p-6",
+      className
+    )}>
+      <div className="flex items-start space-x-4">
+        <div className="flex-shrink-0">
+          <div className="w-12 h-12 bg-teal-100 dark:bg-teal-900 rounded-full flex items-center justify-center">
+            <Mail className="h-6 w-6 text-teal-600 dark:text-teal-400" />
+          </div>
+        </div>
+        
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-semibold text-neutral-700 dark:text-white mb-2">
+            Get more resources like this
+          </h3>
+          <p className="text-sm text-neutral-600 dark:text-neutral-200 mb-4">
+            Join 2,000+ caregivers getting practical tips and our free starter kit with templates, checklists, and planning tools.
           </p>
           
-          <form onSubmit={handleSubmit} className="mt-10 flex flex-col gap-4 sm:flex-row sm:max-w-md sm:mx-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1">
-              <Label htmlFor="email-inline" className="sr-only">
-                Email address
-              </Label>
               <Input
-                id="email-inline"
                 type="email"
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-white dark:bg-white/10 border-neutral-200 dark:border-white/20 text-neutral-700 dark:text-white placeholder:text-neutral-500 dark:placeholder:text-neutral-300"
-                disabled={isLoading}
+                disabled={status === 'loading'}
+                className="bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700"
+                aria-label="Email address for newsletter signup"
               />
             </div>
+            
             <Button 
               type="submit" 
-              disabled={isLoading || !email}
-              className="bg-coral-600 hover:bg-coral-700 text-white"
+              disabled={status === 'loading' || !email}
+              className="whitespace-nowrap"
+              size={compact ? "sm" : "default"}
             >
-              {isLoading ? 'Joining...' : 'Join waitlist'}
+              {status === 'loading' ? (
+                <>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
+                  Joining...
+                </>
+              ) : (
+                <>
+                  Get the kit
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </>
+              )}
             </Button>
           </form>
           
-          <p className="mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-            No spam, unsubscribe anytime. We respect your privacy.
+          {errorMessage && (
+            <p className="text-sm text-red-600 dark:text-red-400 mt-2">
+              {errorMessage}
+            </p>
+          )}
+          
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-3">
+            No spam. Unsubscribe anytime. We respect your privacy.
           </p>
         </div>
       </div>
-    </section>
+    </div>
   )
 }

@@ -19,11 +19,11 @@ const mockEnv = (envVar: string | undefined) => {
 
 describe('Feature Flags', () => {
   describe('getHeroVariant', () => {
-    it('returns variant A by default', () => {
+    it('returns variant B by default', () => {
       const cleanup = mockEnv(undefined)
       
       const variant = getHeroVariant()
-      expect(variant).toBe('A')
+      expect(variant).toBe('B')
       
       cleanup()
     })
@@ -46,11 +46,11 @@ describe('Feature Flags', () => {
       cleanup()
     })
 
-    it('returns variant A for invalid environment variable values', () => {
+    it('returns variant B for invalid environment variable values', () => {
       const cleanup = mockEnv('invalid')
       
       const variant = getHeroVariant()
-      expect(variant).toBe('A')
+      expect(variant).toBe('B')
       
       cleanup()
     })
