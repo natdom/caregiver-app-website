@@ -4,19 +4,19 @@ import { getWaitlistCount } from '@/lib/actions/waitlist'
 import { Users, Heart, Target, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Join the Waitlist - Support Network',
+  title: 'Join the Waitlist',
   description: 'Be the first to access the platform designed for family caregivers. Join thousands already building the support network we all deserve.',
   keywords: ['caregiving', 'waitlist', 'support', 'community', 'healthcare', 'family caregivers'],
   openGraph: {
-    title: 'Join the Support Network Waitlist',
+    title: 'Join the withCare Waitlist',
     description: 'Be the first to access the platform designed for family caregivers. Join thousands already building the support network we all deserve.',
     type: 'website',
     images: [
       {
-        url: '/api/og?title=Join%20the%20Waitlist&subtitle=Support%20Network',
+        url: '/api/og?title=Join%20the%20Waitlist&subtitle=withCare',
         width: 1200,
         height: 630,
-        alt: 'Support Network - Join the Waitlist',
+        alt: 'withCare - Join the Waitlist',
       },
     ],
   },
@@ -60,8 +60,8 @@ export default async function WaitlistPage() {
               </h1>
               
               <p className="mx-auto max-w-5xl text-xl text-neutral-700 dark:text-neutral-200 mb-8 leading-relaxed px-6 sm:px-8 font-medium">
-                Support Network is launching soon with tools, community, and resources designed 
-                specifically for family caregivers. Be among the first to access a platform that 
+                withCare is launching soon with tools, community, and resources designed
+                specifically for family caregivers. Be among the first to access a platform that
                 makes caregiving lighter.
               </p>
 

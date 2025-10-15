@@ -26,6 +26,10 @@
     --input: 20 6% 90%;
     --ring: 25 85% 55%; /* bright coral */
     --radius: 0.5rem;
+
+    /* Logo colors */
+    --logo-text: #2B2F32; /* charcoal for light mode */
+    --logo-stroke: transparent; /* no stroke in light mode */
   }
 
   .dark {
@@ -48,6 +52,10 @@
     --border: 24 6% 18%; /* lighter borders */
     --input: 24 6% 18%; /* lighter input borders */
     --ring: 25 85% 60%; /* brighter coral ring */
+
+    /* Logo colors */
+    --logo-text: #F6F2EA; /* off-white for dark mode */
+    --logo-stroke: rgba(0, 0, 0, 0.35); /* subtle stroke in dark mode */
   }
 }
 

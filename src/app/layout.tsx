@@ -22,14 +22,14 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Support Network - A supportive space for caregivers of all kinds',
-    template: '%s | Support Network',
+    default: 'withCare - A supportive space for caregivers of all kinds',
+    template: '%s | withCare',
   },
   description: 'To make every caregiver\'s day a little lighter through connection, clarity, and care.',
   keywords: ['caregiving', 'support', 'community', 'healthcare', 'family', 'eldercare', 'disability'],
-  authors: [{ name: 'Support Network Team' }],
-  creator: 'Support Network',
-  publisher: 'Support Network',
+  authors: [{ name: 'withCare Team' }],
+  creator: 'withCare',
+  publisher: 'withCare',
   formatDetection: {
     email: false,
     address: false,
@@ -43,21 +43,21 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    siteName: 'Support Network',
-    title: 'Support Network - A supportive space for caregivers of all kinds',
+    siteName: 'withCare',
+    title: 'withCare - A supportive space for caregivers of all kinds',
     description: 'To make every caregiver\'s day a little lighter through connection, clarity, and care.',
     images: [
       {
         url: '/api/og',
         width: 1200,
         height: 630,
-        alt: 'Support Network - Caregiving Support Community',
+        alt: 'withCare - Caregiving Support Community',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Support Network - A supportive space for caregivers of all kinds',
+    title: 'withCare - A supportive space for caregivers of all kinds',
     description: 'To make every caregiver\'s day a little lighter through connection, clarity, and care.',
     images: ['/api/og'],
   },

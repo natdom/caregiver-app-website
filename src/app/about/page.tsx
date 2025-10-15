@@ -3,7 +3,7 @@ import { Users, Heart, Target, Clock } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'About',
-  description: 'Learn about Support Network\'s mission to make every caregiver\'s day a little lighter through connection, clarity, and care.',
+  description: 'Learn about withCare\'s mission to make every caregiver\'s day a little lighter through connection, clarity, and care.',
 }
 
 const values = [
@@ -37,7 +37,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl">
-              Why Support Network exists
+              Why withCare exists
             </h1>
             <p className="mt-6 text-xl leading-8 text-neutral-600 dark:text-neutral-200">
               Caregiving touches millions of lives, yet too many caregivers feel isolated, overwhelmed, 

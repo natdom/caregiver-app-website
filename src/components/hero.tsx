@@ -39,7 +39,7 @@ export function Hero() {
               className="text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
               data-testid="hero-cta"
             >
-              <Link href="/waitlist" aria-label="Join the Support Network waitlist">
+              <Link href="/waitlist" aria-label="Join the withCare waitlist">
                 Join the waitlist
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>

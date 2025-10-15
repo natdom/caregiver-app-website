@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Heart, Github, Twitter, Linkedin } from 'lucide-react'
+import { WithCareLogo } from '@/components/withcare-logo'
 
 const navigation = {
   main: [
@@ -26,9 +27,8 @@ export function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           {/* Brand section */}
           <div className="space-y-8 xl:col-span-1">
-            <Link href="/" className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-coral-400" aria-hidden="true" />
-              <span className="font-display font-bold text-xl text-white">Support Network</span>
+            <Link href="/" className="flex items-center">
+              <WithCareLogo className="h-11 w-auto" />
             </Link>
             <p className="text-sm leading-6 text-neutral-200 max-w-sm">
               Making every caregiver's day a little lighter through connection, clarity, and care.
@@ -90,10 +90,10 @@ export function Footer() {
         <div className="mt-16 border-t border-neutral-800 pt-8 sm:mt-20 lg:mt-24">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <p className="text-xs leading-5 text-neutral-400">
-              &copy; {new Date().getFullYear()} Support Network. All rights reserved.
+              &copy; {new Date().getFullYear()} withCare. All rights reserved.
             </p>
             <p className="mt-4 text-xs leading-5 text-neutral-400 sm:mt-0">
-              Contact: <a href="mailto:hello@support.network" className="hover:text-neutral-200">hello@support.network</a>
+              Contact: <a href="mailto:hello@withcare.app" className="hover:text-neutral-200">hello@withcare.app</a>
             </p>
           </div>
         </div>

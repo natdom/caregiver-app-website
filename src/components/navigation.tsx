@@ -3,8 +3,9 @@
 import * as React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Heart } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { WithCareLogo } from '@/components/withcare-logo'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -43,14 +44,13 @@ export function Navigation() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/20 dark:border-white/10 bg-white/80 dark:bg-neutral-900/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-neutral-900/60">
-      <nav className="container flex h-16 items-center justify-between" aria-label="Main navigation">
-        <Link 
-          href="/" 
-          className="flex items-center space-x-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2 rounded-md"
+      <nav className="container flex h-20 items-center justify-between" aria-label="Main navigation">
+        <Link
+          href="/"
+          className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2 rounded-md"
           onClick={closeMenu}
         >
-          <Heart className="h-8 w-8 text-coral-500" aria-hidden="true" />
-          <span className="font-display font-bold text-xl">Support Network</span>
+          <WithCareLogo className="h-11 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -68,7 +68,7 @@ export function Navigation() {
             </Link>
           ))}
           <Button asChild size="sm" data-testid="nav-cta">
-            <Link href="/waitlist" aria-label="Join the Support Network waitlist">
+            <Link href="/waitlist" aria-label="Join the withCare waitlist">
               Join waitlist
             </Link>
           </Button>
@@ -100,7 +100,7 @@ export function Navigation() {
             {/* Menu */}
             <div
               id="mobile-menu"
-              className="fixed right-0 top-16 h-[calc(100vh-4rem)] w-full max-w-sm border-l bg-background p-6 shadow-lg md:hidden"
+              className="fixed right-0 top-20 h-[calc(100vh-5rem)] w-full max-w-sm border-l bg-background p-6 shadow-lg md:hidden"
               role="menu"
             >
               <div className="flex flex-col space-y-4">
@@ -119,7 +119,7 @@ export function Navigation() {
                   </Link>
                 ))}
                 <Button asChild className="mt-4" data-testid="mobile-nav-cta">
-                  <Link href="/waitlist" onClick={closeMenu} aria-label="Join the Support Network waitlist">
+                  <Link href="/waitlist" onClick={closeMenu} aria-label="Join the withCare waitlist">
                     Join waitlist
                   </Link>
                 </Button>
