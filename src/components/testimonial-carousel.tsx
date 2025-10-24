@@ -5,19 +5,22 @@ import { Quote } from 'lucide-react'
 
 const testimonials = [
   {
-    quote: "Short, clear answers I could actually use.",
-    author: "Sarah M.",
-    context: "Caregiver, dementia",
+    quote:
+      "This feels like something caregivers have needed for a long time. It's clear, supportive, and real.",
+    author: 'Participant from early feedback session',
+    context: '',
   },
   {
-    quote: "It felt like someone finally understood the mental load.",
-    author: "David K.",
-    context: "Parent, neurodiversity",
+    quote:
+      "I'm excited to see this come to life. Even reading the early content makes me feel understood.",
+    author: 'Parent and caregiver',
+    context: 'Calgary',
   },
   {
-    quote: "Small changes that made our days calmer.",
-    author: "Maria L.",
-    context: "Spouse, mobility support",
+    quote:
+      "It's rare to see a space being built with this much empathy. You can tell it comes from lived experience.",
+    author: 'Community member',
+    context: 'early tester',
   },
 ]
 
@@ -37,10 +40,10 @@ export function TestimonialCarousel() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-4xl">
-            What caregivers are saying
+            What people are saying
           </h2>
         </div>
-        
+
         <div className="mx-auto mt-16 max-w-4xl">
           <div className="relative">
             {testimonials.map((testimonial, index) => (
@@ -54,19 +57,24 @@ export function TestimonialCarousel() {
                 aria-hidden={index !== currentIndex}
               >
                 <figure className="text-center">
-                  <Quote className="mx-auto h-12 w-12 text-coral-500 mb-8" aria-hidden="true" />
+                  <Quote
+                    className="mx-auto mb-8 h-12 w-12 text-coral-500"
+                    aria-hidden="true"
+                  />
                   <blockquote className="text-2xl font-medium text-neutral-700 dark:text-white sm:text-3xl">
                     "{testimonial.quote}"
                   </blockquote>
                   <figcaption className="mt-8 text-lg text-neutral-600 dark:text-neutral-300">
                     <div className="font-medium">{testimonial.author}</div>
-                    <div className="text-neutral-500 dark:text-neutral-400">{testimonial.context}</div>
+                    <div className="text-neutral-500 dark:text-neutral-400">
+                      {testimonial.context}
+                    </div>
                   </figcaption>
                 </figure>
               </div>
             ))}
           </div>
-          
+
           {/* Indicators */}
           <div className="mt-12 flex justify-center space-x-3">
             {testimonials.map((_, index) => (

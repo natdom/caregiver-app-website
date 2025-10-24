@@ -8,7 +8,13 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { useToast } from '@/components/ui/use-toast'
 import { Mail, MapPin, Clock } from 'lucide-react'
 
@@ -24,7 +30,7 @@ type ContactForm = z.infer<typeof contactSchema>
 export default function ContactPage() {
   const [isLoading, setIsLoading] = React.useState(false)
   const { toast } = useToast()
-  
+
   const {
     register,
     handleSubmit,
@@ -57,7 +63,7 @@ export default function ContactPage() {
 
       toast({
         title: 'Message sent!',
-        description: 'Thank you for reaching out. We\'ll get back to you soon.',
+        description: "Thank you for reaching out. We'll get back to you soon.",
       })
 
       reset()
@@ -73,7 +79,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-coral-50 via-sage-50 to-coral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-coral-50 via-sage-50 to-coral-100 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900">
       {/* Header */}
       <section className="py-12 sm:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -82,7 +88,8 @@ export default function ContactPage() {
               Get in touch
             </h1>
             <p className="mt-6 text-xl leading-8 text-neutral-600 dark:text-neutral-200">
-              We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+              Have questions, ideas, or feedback as we build withCare? We'd love
+              to hear from you.
             </p>
           </div>
         </div>
@@ -90,168 +97,198 @@ export default function ContactPage() {
 
       <section className="py-8">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl">
-          <div className="grid gap-8 lg:grid-cols-3">
-            {/* Contact Information */}
-            <div className="lg:col-span-1">
-              <div className="bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-2xl shadow-lg border border-white/20 dark:border-white/10 p-8">
-                <h2 className="text-2xl font-bold text-neutral-700 dark:text-white mb-6">
-                  Contact Information
-                </h2>
-                
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <Mail className="h-6 w-6 text-teal-500 mt-1" />
-                    <div>
-                      <div className="font-medium text-neutral-700 dark:text-white">Email</div>
-                      <div className="text-neutral-600 dark:text-neutral-200">
-                        <a href="mailto:hello@support.network" className="hover:text-teal-600 dark:hover:text-teal-400">
-                          hello@support.network
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <Clock className="h-6 w-6 text-teal-500 mt-1" />
-                    <div>
-                      <div className="font-medium text-neutral-700 dark:text-white">Response Time</div>
-                      <div className="text-neutral-600 dark:text-neutral-200">
-                        We typically respond within 24 hours
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <MapPin className="h-6 w-6 text-teal-500 mt-1" />
-                    <div>
-                      <div className="font-medium text-neutral-700 dark:text-white">Based in</div>
-                      <div className="text-neutral-600 dark:text-neutral-200">
-                        United States
-                      </div>
-                    </div>
-                  </div>
-                </div>
+          <div className="mx-auto max-w-4xl">
+            <div className="grid gap-8 lg:grid-cols-3">
+              {/* Contact Information */}
+              <div className="lg:col-span-1">
+                <div className="rounded-2xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-white/5">
+                  <h2 className="mb-6 text-2xl font-bold text-neutral-700 dark:text-white">
+                    Contact Information
+                  </h2>
 
-                <div className="mt-8 pt-8 border-t border-neutral-200 dark:border-neutral-700">
-                  <h3 className="font-medium text-neutral-700 dark:text-white mb-4">
-                    What to expect
-                  </h3>
-                  <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-200">
-                    <li>• Personal response from our team</li>
-                    <li>• Follow-up within one business day</li>
-                    <li>• Thoughtful consideration of your message</li>
-                  </ul>
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <Mail className="mt-1 h-6 w-6 text-teal-500" />
+                      <div>
+                        <div className="font-medium text-neutral-700 dark:text-white">
+                          Email
+                        </div>
+                        <div className="text-neutral-600 dark:text-neutral-200">
+                          <a
+                            href="mailto:hello@withcare.app"
+                            className="hover:text-teal-600 dark:hover:text-teal-400"
+                          >
+                            hello@withcare.app
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <Clock className="mt-1 h-6 w-6 text-teal-500" />
+                      <div>
+                        <div className="font-medium text-neutral-700 dark:text-white">
+                          Response Time
+                        </div>
+                        <div className="text-neutral-600 dark:text-neutral-200">
+                          We typically respond within 24 hours
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <MapPin className="mt-1 h-6 w-6 text-teal-500" />
+                      <div>
+                        <div className="font-medium text-neutral-700 dark:text-white">
+                          Based in
+                        </div>
+                        <div className="text-neutral-600 dark:text-neutral-200">
+                          United States
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 border-t border-neutral-200 pt-8 dark:border-neutral-700">
+                    <h3 className="mb-4 font-medium text-neutral-700 dark:text-white">
+                      What to expect
+                    </h3>
+                    <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-200">
+                      <li>• Personal response from our team</li>
+                      <li>• Follow-up within one business day</li>
+                      <li>• Thoughtful consideration of your message</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Contact Form */}
-            <div className="lg:col-span-2">
-              <div className="bg-white/10 dark:bg-white/5 backdrop-blur-md rounded-2xl shadow-lg border border-white/20 dark:border-white/10 p-8">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-                  <div className="grid gap-6 sm:grid-cols-2">
+              {/* Contact Form */}
+              <div className="lg:col-span-2">
+                <div className="rounded-2xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-white/5">
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                    <div className="grid gap-6 sm:grid-cols-2">
+                      <div>
+                        <Label htmlFor="name" className="text-sm font-medium">
+                          Name *
+                        </Label>
+                        <Input
+                          id="name"
+                          {...register('name')}
+                          placeholder="Your name"
+                          disabled={isLoading}
+                          aria-invalid={errors.name ? 'true' : 'false'}
+                        />
+                        {errors.name && (
+                          <p
+                            className="mt-1 text-sm text-red-600 dark:text-red-400"
+                            role="alert"
+                          >
+                            {errors.name.message}
+                          </p>
+                        )}
+                      </div>
+                      <div>
+                        <Label htmlFor="email" className="text-sm font-medium">
+                          Email *
+                        </Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          {...register('email')}
+                          placeholder="your.email@example.com"
+                          disabled={isLoading}
+                          aria-invalid={errors.email ? 'true' : 'false'}
+                        />
+                        {errors.email && (
+                          <p
+                            className="mt-1 text-sm text-red-600 dark:text-red-400"
+                            role="alert"
+                          >
+                            {errors.email.message}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
                     <div>
-                      <Label htmlFor="name" className="text-sm font-medium">
-                        Name *
+                      <Label htmlFor="role" className="text-sm font-medium">
+                        I am a... *
                       </Label>
-                      <Input
-                        id="name"
-                        {...register('name')}
-                        placeholder="Your name"
+                      <Select
+                        value={selectedRole}
+                        onValueChange={(value) => setValue('role', value)}
                         disabled={isLoading}
-                        aria-invalid={errors.name ? 'true' : 'false'}
-                      />
-                      {errors.name && (
-                        <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
-                          {errors.name.message}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select your role" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="caregiver">
+                            Family caregiver
+                          </SelectItem>
+                          <SelectItem value="professional">
+                            Healthcare professional
+                          </SelectItem>
+                          <SelectItem value="funder">
+                            Potential funder/investor
+                          </SelectItem>
+                          <SelectItem value="partner">
+                            Potential partner
+                          </SelectItem>
+                          <SelectItem value="media">Media/Press</SelectItem>
+                          <SelectItem value="other">Other</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      {errors.role && (
+                        <p
+                          className="mt-1 text-sm text-red-600 dark:text-red-400"
+                          role="alert"
+                        >
+                          {errors.role.message}
                         </p>
                       )}
                     </div>
+
                     <div>
-                      <Label htmlFor="email" className="text-sm font-medium">
-                        Email *
+                      <Label htmlFor="message" className="text-sm font-medium">
+                        Message *
                       </Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        {...register('email')}
-                        placeholder="your.email@example.com"
+                      <Textarea
+                        id="message"
+                        {...register('message')}
+                        placeholder="Share your ideas, questions, or feedback as we build withCare..."
+                        className="min-h-[120px]"
                         disabled={isLoading}
-                        aria-invalid={errors.email ? 'true' : 'false'}
+                        aria-invalid={errors.message ? 'true' : 'false'}
                       />
-                      {errors.email && (
-                        <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
-                          {errors.email.message}
+                      {errors.message && (
+                        <p
+                          className="mt-1 text-sm text-red-600 dark:text-red-400"
+                          role="alert"
+                        >
+                          {errors.message.message}
                         </p>
                       )}
                     </div>
-                  </div>
 
-                  <div>
-                    <Label htmlFor="role" className="text-sm font-medium">
-                      I am a... *
-                    </Label>
-                    <Select 
-                      value={selectedRole} 
-                      onValueChange={(value) => setValue('role', value)}
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full"
                       disabled={isLoading}
                     >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select your role" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="caregiver">Family caregiver</SelectItem>
-                        <SelectItem value="professional">Healthcare professional</SelectItem>
-                        <SelectItem value="funder">Potential funder/investor</SelectItem>
-                        <SelectItem value="partner">Potential partner</SelectItem>
-                        <SelectItem value="media">Media/Press</SelectItem>
-                        <SelectItem value="other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    {errors.role && (
-                      <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
-                        {errors.role.message}
-                      </p>
-                    )}
-                  </div>
+                      {isLoading ? 'Sending message...' : 'Send message'}
+                    </Button>
 
-                  <div>
-                    <Label htmlFor="message" className="text-sm font-medium">
-                      Message *
-                    </Label>
-                    <Textarea
-                      id="message"
-                      {...register('message')}
-                      placeholder="Tell us how we can help, or what you'd like to know..."
-                      className="min-h-[120px]"
-                      disabled={isLoading}
-                      aria-invalid={errors.message ? 'true' : 'false'}
-                    />
-                    {errors.message && (
-                      <p className="mt-1 text-sm text-red-600 dark:text-red-400" role="alert">
-                        {errors.message.message}
-                      </p>
-                    )}
-                  </div>
-
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Sending message...' : 'Send message'}
-                  </Button>
-
-                  <p className="text-center text-sm text-neutral-500 dark:text-neutral-400">
-                    We respect your privacy and will never share your information.
-                  </p>
-                </form>
+                    <p className="text-center text-sm text-neutral-500 dark:text-neutral-400">
+                      We respect your privacy and will never share your
+                      information.
+                    </p>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </section>
     </div>

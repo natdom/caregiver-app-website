@@ -28,10 +28,11 @@ export function Footer() {
           {/* Brand section */}
           <div className="space-y-8 xl:col-span-1">
             <Link href="/" className="flex items-center">
-              <WithCareLogo className="h-11 w-auto" />
+              <WithCareLogo className="h-11 w-auto" variant="dark" />
             </Link>
-            <p className="text-sm leading-6 text-neutral-200 max-w-sm">
-              Making every caregiver's day a little lighter through connection, clarity, and care.
+            <p className="max-w-sm text-sm leading-6 text-neutral-200">
+              Making every caregiver's day a little lighter—through connection,
+              ease, and growth.
             </p>
           </div>
 
@@ -39,13 +40,15 @@ export function Footer() {
           <div className="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
             <div className="md:grid md:grid-cols-2 md:gap-8">
               <div>
-                <h3 className="text-sm font-semibold leading-6 text-white">Navigation</h3>
+                <h3 className="text-sm font-semibold leading-6 text-white">
+                  Navigation
+                </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.main.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-neutral-200 hover:text-white transition-colors"
+                        className="text-sm leading-6 text-neutral-200 transition-colors hover:text-white"
                       >
                         {item.name}
                       </Link>
@@ -54,13 +57,15 @@ export function Footer() {
                 </ul>
               </div>
               <div className="mt-10 md:mt-0">
-                <h3 className="text-sm font-semibold leading-6 text-white">Legal</h3>
+                <h3 className="text-sm font-semibold leading-6 text-white">
+                  Legal
+                </h3>
                 <ul role="list" className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
                       <Link
                         href={item.href}
-                        className="text-sm leading-6 text-neutral-200 hover:text-white transition-colors"
+                        className="text-sm leading-6 text-neutral-200 transition-colors hover:text-white"
                       >
                         {item.name}
                       </Link>
@@ -69,16 +74,18 @@ export function Footer() {
                 </ul>
               </div>
             </div>
-            
+
             {/* Newsletter signup */}
             <div>
-              <h3 className="text-sm font-semibold leading-6 text-white">Stay updated</h3>
+              <h3 className="text-sm font-semibold leading-6 text-white">
+                Stay updated
+              </h3>
               <p className="mt-2 text-sm leading-6 text-neutral-200">
                 Get the latest updates and caregiving resources.
               </p>
               <Link
                 href="/newsletter"
-                className="mt-6 inline-flex rounded-md bg-coral-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-coral-500 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral-600"
+                className="mt-6 inline-flex rounded-md bg-coral-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-coral-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral-600"
               >
                 Join our waitlist
               </Link>
@@ -93,7 +100,13 @@ export function Footer() {
               &copy; {new Date().getFullYear()} withCare. All rights reserved.
             </p>
             <p className="mt-4 text-xs leading-5 text-neutral-400 sm:mt-0">
-              Contact: <a href="mailto:hello@withcare.app" className="hover:text-neutral-200">hello@withcare.app</a>
+              Contact:{' '}
+              <a
+                href="mailto:hello@withcare.app"
+                className="hover:text-neutral-200"
+              >
+                hello@withcare.app
+              </a>
             </p>
           </div>
         </div>

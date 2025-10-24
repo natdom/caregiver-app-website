@@ -7,9 +7,13 @@ import { cn } from '@/lib/utils'
 
 interface WithCareLogoProps {
   className?: string
+  variant?: 'light' | 'dark' | 'auto'
 }
 
-export function WithCareLogo({ className }: WithCareLogoProps) {
+export function WithCareLogo({
+  className,
+  variant = 'auto',
+}: WithCareLogoProps) {
   const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -20,12 +24,25 @@ export function WithCareLogo({ className }: WithCareLogoProps) {
 
   if (!mounted) {
     // Return a placeholder that matches the logo dimensions during SSR
-    return <div className={cn('h-11 w-auto', className)} style={{ width: '140px' }} />
+    return (
+      <div
+        className={cn('h-11 w-auto', className)}
+        style={{ width: '140px' }}
+      />
+    )
   }
+
+  // Determine which logo to use
+  const useDarkLogo =
+    variant === 'dark' || (variant === 'auto' && resolvedTheme === 'dark')
 
   return (
     <Image
-      src={resolvedTheme === 'dark' ? '/images/withcare-logo-dark.png' : '/images/withcare-logo.png'}
+      src={
+        useDarkLogo
+          ? '/images/withcare-logo-dark.png'
+          : '/images/withcare-logo.png'
+      }
       alt="withCare"
       width={450}
       height={135}
