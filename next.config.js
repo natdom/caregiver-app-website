@@ -1,4 +1,4 @@
-// const { withContentlayer } = require('next-contentlayer')
+const { withContentlayer } = require('next-contentlayer')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -21,6 +21,4 @@ const nextConfig = {
   },
 }
 
-// Temporarily disable contentlayer to test hero changes
-module.exports = nextConfig
-// module.exports = withContentlayer(nextConfig)
+module.exports = withContentlayer(nextConfig)
