@@ -1,4 +1,4 @@
-const { withContentlayer } = require('next-contentlayer')
+// const { withContentlayer } = require('next-contentlayer')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -21,4 +21,7 @@ const nextConfig = {
   },
 }
 
-module.exports = withContentlayer(nextConfig)
+// Disable contentlayer for local dev (hangs on build)
+// Vercel still runs it via: contentlayer build && next build
+module.exports = nextConfig
+// module.exports = withContentlayer(nextConfig)
