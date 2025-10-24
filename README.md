@@ -38,6 +38,27 @@ A modern, accessible marketing website for Support Network - a caregiving suppor
 4. **Open your browser:**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+## ⚠️ Known Issue: Contentlayer & Blog Posts
+
+**Local Development:** Contentlayer is **disabled** in `next.config.js` for local dev due to a known hanging issue with contentlayer 0.3.4. This means:
+- ❌ Blog posts at `/resources` won't display on localhost:3000
+- ✅ All other pages work normally
+- ✅ Fast dev server startup (~1 second)
+
+**Vercel Deployment:** Contentlayer is **enabled** during Vercel builds via the build command: `contentlayer build && next build`
+- ✅ All blog posts are generated and visible on production
+- ✅ Check live site at [withcare.app/resources](https://withcare.app/resources)
+
+**If you need to work on blog posts:**
+1. Edit MDX files in `content/resources/`
+2. Commit and push to trigger Vercel deployment
+3. Preview on Vercel deployment URL or production site
+
+**If you need contentlayer locally** (not recommended):
+1. Uncomment `withContentlayer` in `next.config.js`
+2. Be prepared for contentlayer build to hang (may take 5+ minutes or never complete)
+3. Remember to disable it again before continuing other work
+
 ## 🎯 User Flow & Testing
 
 ### Primary Conversion Flow
