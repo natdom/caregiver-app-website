@@ -143,7 +143,7 @@ export default function ContactPage() {
                           Based in
                         </div>
                         <div className="text-neutral-600 dark:text-neutral-200">
-                          United States
+                          North America
                         </div>
                       </div>
                     </div>

@@ -172,35 +172,37 @@ export default function AboutPage() {
               <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-teal-200/20 blur-3xl dark:bg-teal-500/10" />
 
               <h2 className="relative mb-6 text-3xl font-bold text-neutral-700 dark:text-white">
-                What we're building
+                What We're Building
               </h2>
+              <p className="relative mb-8 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
+                withCare is a supportive digital space for caregivers of all
+                kinds — designed to bring connection, clarity, and practical
+                support to everyday care.
+              </p>
               <div className="relative space-y-8">
                 <div className="rounded-lg border-l-4 border-coral-400 bg-white/30 p-4 backdrop-blur-sm dark:border-coral-500 dark:bg-white/5">
                   <h3 className="mb-3 flex items-center text-lg font-semibold text-neutral-700 dark:text-white">
                     <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-coral-100 text-sm font-bold text-coral-600 dark:bg-coral-900 dark:text-coral-400">
                       1
                     </span>
-                    Phase 1: Foundation (2024)
+                    Phase 1 — Foundation (Mid 2025 – Early 2026)
                   </h3>
                   <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
                       <span className="mr-2 text-coral-500">•</span>
-                      <span>
-                        Curated resource library with practical caregiving
-                        guides
-                      </span>
+                      <span>Building core platform infrastructure</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2 text-coral-500">•</span>
-                      <span>
-                        Community waitlist and early feedback collection
-                      </span>
+                      <span>Creating a curated resource library</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2 text-coral-500">•</span>
-                      <span>
-                        Brand presence and partnership network development
-                      </span>
+                      <span>Establishing partnerships and brand presence</span>
+                    </li>
+                    <li className="flex items-start">
+                      <span className="mr-2 text-coral-500">•</span>
+                      <span>Gathering early user feedback</span>
                     </li>
                   </ul>
                 </div>
@@ -209,22 +211,20 @@ export default function AboutPage() {
                     <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-600 dark:bg-teal-900 dark:text-teal-400">
                       2
                     </span>
-                    Phase 2: Community (2025)
+                    Phase 2 — Community (2026)
                   </h3>
                   <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
                       <span className="mr-2 text-teal-500">•</span>
-                      <span>
-                        Community platform launch with focused discussion areas
-                      </span>
+                      <span>Launching the interactive community platform</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2 text-teal-500">•</span>
-                      <span>Peer-to-peer support and resource sharing</span>
+                      <span>Creating discussion spaces for peer support</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2 text-teal-500">•</span>
-                      <span>Expert-moderated Q&A sessions</span>
+                      <span>Refining features based on early tester feedback</span>
                     </li>
                   </ul>
                 </div>
@@ -233,20 +233,20 @@ export default function AboutPage() {
                     <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-sage-100 text-sm font-bold text-sage-600 dark:bg-sage-900 dark:text-sage-400">
                       3
                     </span>
-                    Phase 3: Tools (2025-2026)
+                    Phase 3 — Personalization & Growth (Late 2026 – 2027)
                   </h3>
                   <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
                       <span className="mr-2 text-sage-500">•</span>
-                      <span>Care coordination tools and templates</span>
+                      <span>Building personalized experiences for each caregiver</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2 text-sage-500">•</span>
-                      <span>Personalized resource recommendations</span>
+                      <span>Deepening integration across resources and tools</span>
                     </li>
                     <li className="flex items-start">
                       <span className="mr-2 text-sage-500">•</span>
-                      <span>Integration with local services and providers</span>
+                      <span>Evolving through community collaboration</span>
                     </li>
                   </ul>
                 </div>

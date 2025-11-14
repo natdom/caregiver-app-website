@@ -35,12 +35,12 @@ export function FeatureGrid() {
           </p>
         </div>
 
-        <div className="mx-auto mt-16 max-w-7xl">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto mt-16 max-w-5xl">
+          <div className="grid gap-8 md:grid-cols-3">
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="group relative rounded-2xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-coral-300/30 hover:bg-white/20 hover:shadow-xl dark:border-white/10 dark:bg-white/5 dark:hover:border-coral-400/30 dark:hover:bg-white/10"
+                className="group relative flex flex-col rounded-2xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md transition-all duration-300 hover:scale-105 hover:border-coral-300/30 hover:bg-white/20 hover:shadow-xl dark:border-white/10 dark:bg-white/5 dark:hover:border-coral-400/30 dark:hover:bg-white/10"
               >
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-coral-100 transition-colors duration-300 group-hover:bg-coral-200 dark:bg-coral-900 dark:group-hover:bg-coral-800">
                   <feature.icon className="h-6 w-6 text-coral-600 transition-transform duration-300 group-hover:scale-110 dark:text-coral-400" />

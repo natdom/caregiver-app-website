@@ -66,47 +66,57 @@ export function FundingSnapshot() {
 
           {/* What we're building */}
           <div className="rounded-2xl border border-white/20 bg-gradient-to-r from-coral-50/50 to-sage-50/50 p-8 shadow-lg backdrop-blur-md dark:border-white/10 dark:from-coral-900/10 dark:to-sage-900/10 sm:p-12">
-            <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
-              <div>
-                <h3 className="mb-4 text-2xl font-bold text-neutral-700 dark:text-white">
-                  What we're building
-                </h3>
-                <p className="mb-6 leading-relaxed text-neutral-600 dark:text-neutral-300">
-                  withCare is more than a platform—it's a movement to make
-                  caregiving feel lighter. We're creating a supportive space
-                  built on connection, ease, and growth.
-                </p>
-                <ul className="space-y-3 text-neutral-600 dark:text-neutral-300">
-                  <li>
-                    • Curated resources from trusted experts and caregivers
-                  </li>
-                  <li>
-                    • A welcoming community for open, judgment-free
-                    conversations
-                  </li>
-                  <li>
-                    • Practical tools that simplify complex care challenges
-                  </li>
-                  <li>
-                    • A focus on mental and emotional wellbeing, not just
-                    logistics
-                  </li>
-                </ul>
-              </div>
-              <div className="text-center lg:text-right">
-                <div className="inline-flex flex-col items-center space-y-4 lg:items-end">
-                  <div className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
-                    Early traction signals
+            <div className="text-center">
+              <h3 className="mb-4 text-2xl font-bold text-neutral-700 dark:text-white">
+                What we're building
+              </h3>
+              <p className="mb-8 leading-relaxed text-neutral-600 dark:text-neutral-300">
+                A supportive digital space for caregivers of all kinds — designed
+                to bring connection, clarity, and practical support to everyday
+                care.
+              </p>
+              <div className="mx-auto grid max-w-3xl gap-6 text-left sm:grid-cols-2">
+                <div className="rounded-lg border border-coral-200/30 bg-white/30 p-5 backdrop-blur-sm dark:border-coral-500/20 dark:bg-white/5">
+                  <div className="mb-2 font-semibold text-neutral-700 dark:text-white">
+                    Curated resources
                   </div>
-                  <div className="space-y-2 text-neutral-600 dark:text-neutral-300">
-                    <div>Growing waitlist interest</div>
-                    <div>Advisory network forming</div>
-                    <div>Partner discussions underway</div>
+                  <div className="text-sm text-neutral-600 dark:text-neutral-300">
+                    Practical, trustworthy caregiving information from experts and
+                    experienced caregivers
                   </div>
-                  <Button asChild className="mt-6">
-                    <Link href="/press">See where we're headed →</Link>
-                  </Button>
                 </div>
+                <div className="rounded-lg border border-teal-200/30 bg-white/30 p-5 backdrop-blur-sm dark:border-teal-500/20 dark:bg-white/5">
+                  <div className="mb-2 font-semibold text-neutral-700 dark:text-white">
+                    Welcoming community
+                  </div>
+                  <div className="text-sm text-neutral-600 dark:text-neutral-300">
+                    Open, judgment-free conversations where caregivers can share
+                    and find understanding
+                  </div>
+                </div>
+                <div className="rounded-lg border border-sage-200/30 bg-white/30 p-5 backdrop-blur-sm dark:border-sage-500/20 dark:bg-white/5">
+                  <div className="mb-2 font-semibold text-neutral-700 dark:text-white">
+                    Practical tools
+                  </div>
+                  <div className="text-sm text-neutral-600 dark:text-neutral-300">
+                    Simple solutions to help manage complex care challenges
+                  </div>
+                </div>
+                <div className="rounded-lg border border-coral-200/30 bg-white/30 p-5 backdrop-blur-sm dark:border-coral-500/20 dark:bg-white/5">
+                  <div className="mb-2 font-semibold text-neutral-700 dark:text-white">
+                    Wellbeing focus
+                  </div>
+                  <div className="text-sm text-neutral-600 dark:text-neutral-300">
+                    Mental and emotional support, not just logistics
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8">
+                <Button asChild size="lg">
+                  <Link href="/about">
+                    Learn more about our vision <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
               </div>
             </div>
           </div>
