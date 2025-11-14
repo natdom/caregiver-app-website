@@ -1,4 +1,4 @@
-import { allResources } from '@/lib/contentlayer-shim'
+import { allResources } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'

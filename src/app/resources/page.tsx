@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { allResources } from '@/lib/contentlayer-shim'
+import { allResources } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import { ResourcesPageClient } from './resources-client'
 
