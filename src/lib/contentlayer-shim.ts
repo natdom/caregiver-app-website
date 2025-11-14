@@ -8,25 +8,21 @@
 // Type definitions matching contentlayer generated types
 export type Resource = {
   _id: string
-  _raw: {
-    sourceFilePath: string
-    sourceFileName: string
-    sourceFileDir: string
-    contentType: string
-    flattenedPath: string
-  }
+  _raw: any
   type: 'Resource'
   title: string
   excerpt: string
   publishedAt: string
+  updatedAt?: string
   author: string
   authorRole?: string
-  topics?: string[]
+  topics: string[]
   readingTime?: number
-  featured?: boolean
+  featured: boolean
   cover?: string
   coverAlt?: string
   slug: string
+  url: string
   body: {
     raw: string
     code: string
@@ -35,16 +31,14 @@ export type Resource = {
 
 export type Page = {
   _id: string
-  _raw: {
-    sourceFilePath: string
-    sourceFileName: string
-    sourceFileDir: string
-    contentType: string
-    flattenedPath: string
-  }
+  _raw: any
   type: 'Page'
   title: string
+  description: string
+  publishedAt: string
+  updatedAt?: string
   slug: string
+  url: string
   body: {
     raw: string
     code: string
