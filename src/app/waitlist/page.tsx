@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { WaitlistForm } from '@/components/waitlist-form'
 import { getWaitlistCount } from '@/lib/actions/waitlist'
-import { Users, Heart, Target, ArrowRight } from 'lucide-react'
+import { Users, Feather, Sprout, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Join the Waitlist',
@@ -26,17 +26,17 @@ const benefits = [
   {
     icon: Users,
     title: "Connection",
-    description: "Join a community that understands your journey"
+    description: "Real connection starts with understanding. Find people who share your experiences and values, and feel part of a community that truly gets what caregiving means."
   },
   {
-    icon: Target,
-    title: "Clarity", 
-    description: "Get practical guidance without overwhelming complexity"
+    icon: Feather,
+    title: "Ease",
+    description: "Simple, practical guidance that cuts through the noise. Get support that fits your life, reduces mental load, and helps you breathe a little easier."
   },
   {
-    icon: Heart,
-    title: "Care",
-    description: "Access tools that respect your time and emotional bandwidth"
+    icon: Sprout,
+    title: "Growth",
+    description: "Caregiving changes you—and that's okay. We help you find balance, confidence, and new ways to grow through every stage of care."
   }
 ]
 
