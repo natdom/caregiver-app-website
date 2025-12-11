@@ -4,9 +4,10 @@ import { WithCareLogo } from '@/components/withcare-logo'
 
 const navigation = {
   main: [
+    { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Resources', href: '/resources' },
-    { name: 'Press', href: '/press' },
+    { name: 'Explore', href: '/resources' },
+    { name: 'Partners', href: '/partners' },
     { name: 'Contact', href: '/contact' },
   ],
   legal: [
@@ -80,9 +81,6 @@ export function Footer() {
               <h3 className="text-sm font-semibold leading-6 text-white">
                 Stay updated
               </h3>
-              <p className="mt-2 text-sm leading-6 text-neutral-200">
-                Get the latest updates and caregiving resources.
-              </p>
               <Link
                 href="/newsletter"
                 className="mt-6 inline-flex rounded-md bg-coral-600 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-coral-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral-600"
@@ -97,7 +95,7 @@ export function Footer() {
         <div className="mt-16 border-t border-neutral-800 pt-8 sm:mt-20 lg:mt-24">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <p className="text-xs leading-5 text-neutral-400">
-              &copy; {new Date().getFullYear()} withCare. All rights reserved.
+              &copy; 2026 withCare. All rights reserved.
             </p>
             <p className="mt-4 text-xs leading-5 text-neutral-400 sm:mt-0">
               Contact:{' '}

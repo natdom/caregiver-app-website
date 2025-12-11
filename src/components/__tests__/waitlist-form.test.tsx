@@ -215,7 +215,7 @@ describe('WaitlistForm', () => {
     it('shows benefit text near submit button', () => {
       render(<WaitlistForm />)
 
-      expect(screen.getByText(/join early members shaping support network/i)).toBeInTheDocument()
+      expect(screen.getByText(/join early members shaping withcare/i)).toBeInTheDocument()
       expect(screen.getByText(/caregiver starter kit/i)).toBeInTheDocument()
     })
 

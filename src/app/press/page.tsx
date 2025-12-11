@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Press Kit',
-  description: 'Press information, market context, and contact details for Support Network.',
+  description: 'Press information, market context, and contact details for withCare.',
 }
 
 const marketStats = [
@@ -117,7 +117,7 @@ export default function PressPage() {
               </h2>
               <div className="prose prose-lg prose-slate dark:prose-invert max-w-none mb-8">
                 <p>
-                  Support Network is a comprehensive platform designed specifically for family caregivers. 
+                  withCare is a comprehensive platform designed specifically for family caregivers. 
                   We provide three core pillars of support:
                 </p>
               </div>

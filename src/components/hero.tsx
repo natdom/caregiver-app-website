@@ -14,7 +14,7 @@ export function Hero() {
       {/* Background pattern */}
       <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,theme(colors.neutral.50),rgba(255,255,255,0))] dark:[mask-image:linear-gradient(180deg,theme(colors.neutral.900),rgba(0,0,0,0))]" />
 
-      <div className="container relative mx-auto px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+      <div className="container relative mx-auto px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-4xl animate-fade-in text-center">
           {/* Main headline */}
           <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-6xl lg:text-7xl">
@@ -35,7 +35,7 @@ export function Hero() {
           </p>
 
           {/* Single Primary CTA */}
-          <div className="mt-12 flex flex-col items-center">
+          <div className="mt-12">
             <Button
               size="lg"
               asChild
@@ -44,53 +44,11 @@ export function Hero() {
             >
               <Link
                 href="/waitlist"
-                aria-label="Be part of what we're building with withCare"
+                aria-label="Join the waitlist for withCare"
               >
-                Be part of what we're building →
+                Join the waitlist →
               </Link>
             </Button>
-            <p className="mt-4 max-w-md text-center text-sm text-neutral-600 dark:text-neutral-400">
-              withCare is in early development. We're creating this space with
-              real caregiver input.
-            </p>
-          </div>
-
-          {/* Testimonial */}
-          <div className="mx-auto mt-16 max-w-md">
-            <div className="rounded-2xl border border-white/20 bg-white/10 p-6 text-center shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-white/5">
-              <blockquote className="mb-4 text-sm italic text-neutral-700 dark:text-neutral-300">
-                "This feels like something caregivers have needed for a long
-                time. It's clear, supportive, and real."
-              </blockquote>
-              <div className="flex items-center justify-center space-x-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-coral-200 dark:bg-coral-800">
-                  <span className="text-sm font-semibold text-coral-800 dark:text-coral-200">
-                    P
-                  </span>
-                </div>
-                <div className="text-left">
-                  <div className="text-sm font-medium text-neutral-700 dark:text-white">
-                    Participant from early feedback session
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Social proof indicators */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-neutral-500 dark:text-neutral-400">
-            <div className="group flex items-center space-x-2">
-              <Users className="h-5 w-5 text-coral-500 transition-transform group-hover:scale-110" />
-              <span className="text-sm font-medium">Growing community</span>
-            </div>
-            <div className="group flex items-center space-x-2">
-              <Lightbulb className="h-5 w-5 text-coral-500 transition-transform group-hover:scale-110" />
-              <span className="text-sm font-medium">Practical guidance</span>
-            </div>
-            <div className="group flex items-center space-x-2">
-              <Heart className="h-5 w-5 text-coral-500 transition-transform group-hover:scale-110" />
-              <span className="text-sm font-medium">Judgment-free space</span>
-            </div>
           </div>
         </div>
       </div>

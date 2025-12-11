@@ -1,6 +1,6 @@
-# Support Network Marketing Website
+# withCare Marketing Website
 
-A modern, accessible marketing website for Support Network - a caregiving support community. Built with Next.js 14, TypeScript, and Tailwind CSS.
+A modern, accessible marketing website for withCare - a caregiving support community. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ## 🚀 Quick Start
 

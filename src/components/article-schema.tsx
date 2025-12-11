@@ -20,7 +20,7 @@ export function ArticleSchema({ resource }: ArticleSchemaProps) {
     },
     "publisher": {
       "@type": "Organization",
-      "name": "Support Network",
+      "name": "withCare",
       "description": "A community platform for caregivers providing practical resources, support, and connection.",
       "url": "https://supportnetwork.com",
       "logo": {
@@ -48,8 +48,8 @@ export function ArticleSchema({ resource }: ArticleSchemaProps) {
     "isAccessibleForFree": true,
     "license": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
     "copyrightHolder": {
-      "@type": "Organization", 
-      "name": "Support Network"
+      "@type": "Organization",
+      "name": "withCare"
     },
     "potentialAction": {
       "@type": "ReadAction",

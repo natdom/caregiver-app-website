@@ -23,8 +23,8 @@ export default function SuccessPageClient() {
     const shareUrl = `${baseUrl}/waitlist`
     
     const messages = {
-      twitter: "I just joined the Support Network waitlist! 🤝 A platform designed to make caregiving lighter through connection, clarity, and care. Join me!",
-      linkedin: "I'm excited to be part of the Support Network community! It's a platform designed to support family caregivers through connection, clarity, and care. If you're a caregiver or know someone who is, I'd encourage you to check it out."
+      twitter: "I just joined the withCare waitlist! 🤝 A platform designed to make caregiving lighter through connection, clarity, and care. Join me!",
+      linkedin: "I'm excited to be part of the withCare community! It's a platform designed to support family caregivers through connection, clarity, and care. If you're a caregiver or know someone who is, I'd encourage you to check it out."
     }
     
     const urls = {

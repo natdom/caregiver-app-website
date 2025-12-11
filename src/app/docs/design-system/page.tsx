@@ -8,7 +8,7 @@ import { Heart, Users, Lightbulb, Mail } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Design System',
-  description: 'Design tokens, components, and patterns used in Support Network.',
+  description: 'Design tokens, components, and patterns used in withCare.',
   robots: {
     index: false,
     follow: false,
@@ -61,7 +61,7 @@ export default function DesignSystemPage() {
               Design System
             </h1>
             <p className="mt-6 text-xl leading-8 text-neutral-600 dark:text-neutral-200">
-              Components, tokens, and patterns for Support Network
+              Components, tokens, and patterns for withCare
             </p>
           </div>
 
@@ -83,7 +83,7 @@ export default function DesignSystemPage() {
               <div>
                 <h3 className="text-lg font-medium text-neutral-700 dark:text-white mb-4">Body Text</h3>
                 <p className="text-base text-neutral-600 dark:text-neutral-200 mb-4">
-                  This is regular body text. Support Network is designed to be warm, approachable, and professional. 
+                  This is regular body text. withCare is designed to be warm, approachable, and professional. 
                   We use clear, direct language that respects caregivers' time and emotional bandwidth.
                 </p>
                 <p className="text-lg text-neutral-600 dark:text-neutral-200 mb-4">

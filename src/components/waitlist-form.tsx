@@ -220,7 +220,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
                 htmlFor="consent" 
                 className="text-sm leading-relaxed cursor-pointer"
               >
-                I agree to receive updates about Support Network <span className="text-red-500">*</span>
+                I agree to receive updates about withCare <span className="text-red-500">*</span>
               </Label>
               <p id="consent-description" className="text-xs text-neutral-500 dark:text-neutral-400">
                 We'll send you launch updates and caregiver resources. Unsubscribe anytime.
@@ -249,7 +249,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
           <div className="text-center">
             <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
               <span className="font-medium text-coral-600 dark:text-coral-400">
-                Join early members shaping Support Network
+                Join early members shaping withCare
               </span>
               <br />
               Plus get the <strong>Caregiver Starter Kit</strong> when you join.

@@ -6,7 +6,7 @@ describe('Partners Page Metadata', () => {
   describe('Page Metadata', () => {
     it('has proper title and description', () => {
       expect(metadata.title).toBe('Partners & Investors')
-      expect(metadata.description).toContain('Partner with Support Network')
+      expect(metadata.description).toContain('Partner with withCare')
       expect(metadata.description).toContain('53M+ family caregivers')
     })
 
@@ -20,7 +20,7 @@ describe('Partners Page Metadata', () => {
 
     it('has Open Graph metadata', () => {
       expect(metadata.openGraph).toBeDefined()
-      expect(metadata.openGraph?.title).toBe('Partners & Investors - Support Network')
+      expect(metadata.openGraph?.title).toBe('Partners & Investors - withCare')
       expect(metadata.openGraph?.type).toBe('website')
       expect(metadata.openGraph?.images).toHaveLength(1)
     })
@@ -44,7 +44,7 @@ describe('Partners Page Metadata', () => {
       const jsonLdScript = container.querySelector('script[type="application/ld+json"]')
       const schema = JSON.parse(jsonLdScript?.textContent || '{}')
       
-      expect(schema.name).toBe('Support Network')
+      expect(schema.name).toBe('withCare')
       expect(schema.description).toContain('comprehensive platform')
       expect(schema.url).toBe('https://support.network')
       expect(schema.contactPoint).toBeDefined()

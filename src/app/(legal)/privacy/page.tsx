@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
-  description: 'How we collect, use, and protect your information at Support Network.',
+  description: 'How we collect, use, and protect your information at withCare.',
   robots: {
     index: true,
     follow: true,

@@ -64,3 +64,6 @@ temp/
 *.njsproj
 *.sln
 *.sw?
+# Screenshots
+screenshots/
+screenshots_*.zip

@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Accessibility Statement',
-  description: 'Our commitment to making Support Network accessible to all caregivers.',
+  description: 'Our commitment to making withCare accessible to all caregivers.',
   robots: {
     index: true,
     follow: true,

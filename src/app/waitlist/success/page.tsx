@@ -6,24 +6,24 @@ import { Suspense } from 'react'
 import SuccessPageClient from './page-client'
 
 export const metadata: Metadata = {
-  title: 'Welcome to the Support Network Community!',
+  title: 'Welcome to the withCare Community!',
   description: "You're in! Thanks for joining our waitlist. Get ready for a platform that makes caregiving lighter through connection, clarity, and care.",
   openGraph: {
-    title: 'I just joined the Support Network waitlist!',
+    title: 'I just joined the withCare waitlist!',
     description: "A platform designed to make caregiving lighter. Join thousands of caregivers, professionals, and advocates building the support network we all deserve.",
     type: 'website',
     images: [
       {
-        url: '/api/og?title=Waitlist%20Success&subtitle=Welcome%20to%20Support%20Network',
+        url: '/api/og?title=Waitlist%20Success&subtitle=Welcome%20to%20withCare',
         width: 1200,
         height: 630,
-        alt: 'Support Network - Waitlist Success',
+        alt: 'withCare - Waitlist Success',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'I just joined the Support Network waitlist!',
+    title: 'I just joined the withCare waitlist!',
     description: "A platform designed to make caregiving lighter. Join the movement! 💙",
   },
   robots: {
@@ -72,7 +72,7 @@ export default function WaitlistSuccessPage() {
             <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl mb-6">
               You're in! 
               <span className="block text-3xl sm:text-4xl mt-2 bg-gradient-to-r from-coral-500 to-teal-500 bg-clip-text text-transparent">
-                Welcome to Support Network
+                Welcome to withCare
               </span>
             </h1>
             
@@ -203,7 +203,7 @@ export default function WaitlistSuccessPage() {
               Questions? We're here to help
             </h2>
             <p className="text-neutral-600 dark:text-neutral-300 mb-8">
-              Reach out anytime if you have questions about Support Network or need immediate resources.
+              Reach out anytime if you have questions about withCare or need immediate resources.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button variant="outline" size="lg" asChild>

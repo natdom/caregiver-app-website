@@ -5,7 +5,7 @@ export const runtime = 'edge'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const title = searchParams.get('title') || 'Support Network'
+  const title = searchParams.get('title') || 'withCare'
   const subtitle = searchParams.get('subtitle') || 'A supportive space for caregivers of all kinds'
 
   try {
@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
                 color: 'white',
               }}
             >
-              Support Network
+              withCare
             </div>
           </div>
 
