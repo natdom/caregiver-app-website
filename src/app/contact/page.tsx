@@ -229,12 +229,7 @@ export default function ContactPage() {
                           <SelectItem value="professional">
                             Healthcare professional
                           </SelectItem>
-                          <SelectItem value="funder">
-                            Potential funder/investor
-                          </SelectItem>
-                          <SelectItem value="partner">
-                            Potential partner
-                          </SelectItem>
+                          <SelectItem value="partner">Partner</SelectItem>
                           <SelectItem value="media">Media/Press</SelectItem>
                           <SelectItem value="other">Other</SelectItem>
                         </SelectContent>

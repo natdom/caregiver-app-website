@@ -5,11 +5,11 @@ import { Users, Feather, Sprout, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Join the Waitlist',
-  description: 'Be the first to access the platform designed for family caregivers. Join thousands already building the support network we all deserve.',
+  description: 'Be among the first to access a platform designed to make caregiving lighter. Join caregivers building community, finding support, and gaining practical tools.',
   keywords: ['caregiving', 'waitlist', 'support', 'community', 'healthcare', 'family caregivers'],
   openGraph: {
     title: 'Join the withCare Waitlist',
-    description: 'Be the first to access the platform designed for family caregivers. Join thousands already building the support network we all deserve.',
+    description: 'Be among the first to access a platform designed to make caregiving lighter. Join caregivers building community, finding support, and gaining practical tools.',
     type: 'website',
     images: [
       {
@@ -26,17 +26,17 @@ const benefits = [
   {
     icon: Users,
     title: "Connection",
-    description: "Real connection starts with understanding. Find people who share your experiences and values, and feel part of a community that truly gets what caregiving means."
+    description: "A space where your experiences are seen, shared, and understood."
   },
   {
     icon: Feather,
     title: "Ease",
-    description: "Simple, practical guidance that cuts through the noise. Get support that fits your life, reduces mental load, and helps you breathe a little easier."
+    description: "Support designed to reduce the noise, stress, and mental weight of caregiving."
   },
   {
     icon: Sprout,
     title: "Growth",
-    description: "Caregiving changes you, and that's okay. We help you find balance, confidence, and new ways to grow through every stage of care."
+    description: "Encouragement and clarity to help you move forward with confidence."
   }
 ]
 
@@ -53,16 +53,14 @@ export default async function WaitlistPage() {
             
             <div className="text-center mb-12 relative z-10">
               <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl lg:text-6xl mb-8 leading-tight px-2">
-                You're not alone in
+                Join caregivers building a
                 <span className="block bg-gradient-to-r from-coral-500 to-teal-500 bg-clip-text text-transparent leading-normal py-2">
-                  your caregiving journey
+                  lighter path forward
                 </span>
               </h1>
               
               <p className="mx-auto max-w-5xl text-xl text-neutral-700 dark:text-neutral-200 mb-8 leading-relaxed px-6 sm:px-8 font-medium">
-                withCare is launching soon with tools, community, and resources designed
-                specifically for family caregivers. Be among the first to access a platform that
-                makes caregiving lighter.
+                Be among the first to access a platform that makes caregiving lighter.
               </p>
 
               {/* Waitlist count */}
@@ -83,7 +81,7 @@ export default async function WaitlistPage() {
               <div className="space-y-6">
                 <div>
                   <h2 className="text-2xl font-bold text-neutral-700 dark:text-white mb-6">
-                    What you'll get access to
+                    What you'll find
                   </h2>
                   <div className="space-y-6">
                     {benefits.map((benefit) => (
@@ -120,7 +118,7 @@ export default async function WaitlistPage() {
                     </div>
                     <div className="flex items-center space-x-3">
                       <ArrowRight className="h-4 w-4 text-coral-500 flex-shrink-0" aria-hidden="true" />
-                      <span>Free Caregiver Starter Kit (digital resources)</span>
+                      <span>Early access to curated resources and guides</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <ArrowRight className="h-4 w-4 text-coral-500 flex-shrink-0" aria-hidden="true" />

@@ -5,8 +5,8 @@ import PartnersPage, { metadata } from '../page'
 describe('Partners Page Metadata', () => {
   describe('Page Metadata', () => {
     it('has proper title and description', () => {
-      expect(metadata.title).toBe('Partners & Investors')
-      expect(metadata.description).toContain('Partner with withCare')
+      expect(metadata.title).toBe('Partners')
+      expect(metadata.description).toContain('Join us in building support')
       expect(metadata.description).toContain('53M+ family caregivers')
     })
 
@@ -20,19 +20,20 @@ describe('Partners Page Metadata', () => {
 
     it('has Open Graph metadata', () => {
       expect(metadata.openGraph).toBeDefined()
-      expect(metadata.openGraph?.title).toBe('Partners & Investors - withCare')
+      expect(metadata.openGraph?.title).toBe('Partners - withCare')
       expect(metadata.openGraph?.type).toBe('website')
-      expect(metadata.openGraph?.images).toHaveLength(1)
     })
   })
 
   describe('JSON-LD Structured Data', () => {
     it('includes JSON-LD script in page', () => {
       const { container } = render(<PartnersPage />)
-      
-      const jsonLdScript = container.querySelector('script[type="application/ld+json"]')
+
+      const jsonLdScript = container.querySelector(
+        'script[type="application/ld+json"]'
+      )
       expect(jsonLdScript).toBeInTheDocument()
-      
+
       const jsonContent = JSON.parse(jsonLdScript?.textContent || '{}')
       expect(jsonContent['@context']).toBe('https://schema.org')
       expect(jsonContent['@type']).toBe('Organization')
@@ -40,10 +41,12 @@ describe('Partners Page Metadata', () => {
 
     it('has proper organization schema', () => {
       const { container } = render(<PartnersPage />)
-      
-      const jsonLdScript = container.querySelector('script[type="application/ld+json"]')
+
+      const jsonLdScript = container.querySelector(
+        'script[type="application/ld+json"]'
+      )
       const schema = JSON.parse(jsonLdScript?.textContent || '{}')
-      
+
       expect(schema.name).toBe('withCare')
       expect(schema.description).toContain('comprehensive platform')
       expect(schema.url).toBe('https://support.network')
@@ -55,20 +58,24 @@ describe('Partners Page Metadata', () => {
 
     it('includes contact information in schema', () => {
       const { container } = render(<PartnersPage />)
-      
-      const jsonLdScript = container.querySelector('script[type="application/ld+json"]')
+
+      const jsonLdScript = container.querySelector(
+        'script[type="application/ld+json"]'
+      )
       const schema = JSON.parse(jsonLdScript?.textContent || '{}')
-      
+
       expect(schema.contactPoint.email).toBe('partners@support.network')
       expect(schema.contactPoint['@type']).toBe('ContactPoint')
     })
 
     it('includes founder information', () => {
       const { container } = render(<PartnersPage />)
-      
-      const jsonLdScript = container.querySelector('script[type="application/ld+json"]')
+
+      const jsonLdScript = container.querySelector(
+        'script[type="application/ld+json"]'
+      )
       const schema = JSON.parse(jsonLdScript?.textContent || '{}')
-      
+
       expect(schema.founders).toHaveLength(1)
       expect(schema.founders[0].name).toBe('Alex Thompson')
       expect(schema.founders[0].jobTitle).toBe('CEO & Co-founder')

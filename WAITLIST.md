@@ -39,7 +39,7 @@ src/
 - **Character limits** (500 chars for challenge field)
 
 ### ✅ User Segmentation
-- **Role-based tracking**: Family Caregiver, Healthcare Professional, Investor/Funder, Other
+- **Role-based tracking**: Family Caregiver, Healthcare Professional, Partner, Other
 - **Optional challenge field** for user insights
 - **Analytics integration** with role data
 
@@ -68,7 +68,7 @@ src/
 |-------|------|----------|------------|
 | `name` | Text | No | Optional string |
 | `email` | Email | Yes | Valid email format |
-| `role` | Radio | Yes | One of: caregiver, professional, funder, other |
+| `role` | Radio | Yes | One of: caregiver, professional, partner, other |
 | `challenge` | Textarea | No | Max 500 characters |
 | `consent` | Checkbox | Yes | Must be checked |
 
@@ -94,7 +94,7 @@ interface WaitlistEntry {
   id: string
   email: string
   name?: string
-  role: 'caregiver' | 'professional' | 'funder' | 'other'
+  role: 'caregiver' | 'professional' | 'partner' | 'other'
   challenge?: string
   consent: boolean
   submittedAt: Date
@@ -189,7 +189,7 @@ CREATE TABLE waitlist_entries (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255),
-  role VARCHAR(50) NOT NULL CHECK (role IN ('caregiver', 'professional', 'funder', 'other')),
+  role VARCHAR(50) NOT NULL CHECK (role IN ('caregiver', 'professional', 'partner', 'other')),
   challenge TEXT,
   consent BOOLEAN NOT NULL DEFAULT false,
   submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()

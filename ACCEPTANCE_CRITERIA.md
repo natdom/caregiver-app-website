@@ -85,7 +85,7 @@
 ### Page Content
 - [x] Compelling homepage with clear CTAs
 - [x] Informative About page with mission/values
-- [x] Comprehensive Press kit for funders
+- [x] Comprehensive Press kit for partners
 - [x] Professional legal pages
 - [x] Contact information and forms
 

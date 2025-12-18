@@ -251,8 +251,6 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
               <span className="font-medium text-coral-600 dark:text-coral-400">
                 Join early members shaping withCare
               </span>
-              <br />
-              Plus get the <strong>Caregiver Starter Kit</strong> when you join.
             </p>
           </div>
         </div>

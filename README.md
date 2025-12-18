@@ -278,7 +278,7 @@ The optimized waitlist system includes:
 
 **Features:**
 - Server-side validation with Zod schemas
-- Role-based user segmentation (caregiver, professional, funder, other)
+- Role-based user segmentation (caregiver, professional, partner, other)
 - File-based storage for development (`data/waitlist-entries.json`)
 - PostgreSQL-ready production adapter
 - Comprehensive accessibility support

@@ -39,23 +39,29 @@ describe('WaitlistForm', () => {
       expect(screen.getByLabelText(/name/i)).toBeInTheDocument()
       expect(screen.getByLabelText(/email address/i)).toBeInTheDocument()
       expect(screen.getByText(/your role/i)).toBeInTheDocument()
-      expect(screen.getByLabelText(/biggest caregiving challenge/i)).toBeInTheDocument()
-      expect(screen.getByLabelText(/agree to receive updates/i)).toBeInTheDocument()
+      expect(
+        screen.getByLabelText(/biggest caregiving challenge/i)
+      ).toBeInTheDocument()
+      expect(
+        screen.getByLabelText(/agree to receive updates/i)
+      ).toBeInTheDocument()
     })
 
     it('marks required fields with asterisk', () => {
       render(<WaitlistForm />)
 
       const emailField = screen.getByRole('textbox', { name: /email address/i })
-      const consentField = screen.getByRole('checkbox', { name: /agree to receive updates/i })
+      const consentField = screen.getByRole('checkbox', {
+        name: /agree to receive updates/i,
+      })
 
       expect(emailField).toBeRequired()
       expect(consentField).toBeRequired()
-      
+
       // Check for asterisk in the labels by content
       expect(screen.getByText('Email address')).toBeInTheDocument()
       expect(screen.getByText('Your role')).toBeInTheDocument()
-      
+
       // Check that required field indicators are present
       const asterisks = document.querySelectorAll('span.text-red-500')
       expect(asterisks.length).toBeGreaterThan(0)
@@ -81,22 +87,40 @@ describe('WaitlistForm', () => {
       expect(roleGroup).toHaveAttribute('aria-required', 'true')
 
       // Challenge textarea
-      const challengeField = screen.getByLabelText(/biggest caregiving challenge/i)
+      const challengeField = screen.getByLabelText(
+        /biggest caregiving challenge/i
+      )
       expect(challengeField).toHaveAttribute('maxLength', '500')
-      expect(challengeField).toHaveAttribute('aria-describedby', 'challenge-hint')
+      expect(challengeField).toHaveAttribute(
+        'aria-describedby',
+        'challenge-hint'
+      )
     })
 
     it('renders all role options with descriptions', () => {
       render(<WaitlistForm />)
 
       const roles = [
-        { label: 'Family Caregiver', description: 'Caring for a family member or friend' },
-        { label: 'Healthcare Professional', description: 'Doctor, nurse, social worker, etc.' },
-        { label: 'Investor/Funder', description: 'Looking to support our mission' },
-        { label: 'Other', description: 'Partner, researcher, or advocate' }
+        {
+          label: 'Family Caregiver',
+          description: 'Caring for a family member or friend',
+        },
+        {
+          label: 'Healthcare Professional',
+          description: 'Doctor, nurse, social worker, etc.',
+        },
+        {
+          label: 'Partner',
+          description:
+            'Investor, funder, or organization interested in supporting our mission',
+        },
+        {
+          label: 'Other',
+          description: 'Researcher, advocate, or other interest',
+        },
       ]
 
-      roles.forEach(role => {
+      roles.forEach((role) => {
         expect(screen.getByText(role.label)).toBeInTheDocument()
         expect(screen.getByText(role.description)).toBeInTheDocument()
       })
@@ -117,13 +141,19 @@ describe('WaitlistForm', () => {
       const user = userEvent.setup()
       render(<WaitlistForm />)
 
-      const submitButton = screen.getByRole('button', { name: /join the waitlist/i })
+      const submitButton = screen.getByRole('button', {
+        name: /join the waitlist/i,
+      })
       await user.click(submitButton)
 
       await waitFor(() => {
-        expect(screen.getByText(/please enter a valid email address/i)).toBeInTheDocument()
+        expect(
+          screen.getByText(/please enter a valid email address/i)
+        ).toBeInTheDocument()
         expect(screen.getByText(/please select your role/i)).toBeInTheDocument()
-        expect(screen.getByText(/you must agree to receive updates/i)).toBeInTheDocument()
+        expect(
+          screen.getByText(/you must agree to receive updates/i)
+        ).toBeInTheDocument()
       })
     })
 
@@ -134,11 +164,15 @@ describe('WaitlistForm', () => {
       const emailField = screen.getByLabelText(/email address/i)
       await user.type(emailField, 'invalid-email')
 
-      const submitButton = screen.getByRole('button', { name: /join the waitlist/i })
+      const submitButton = screen.getByRole('button', {
+        name: /join the waitlist/i,
+      })
       await user.click(submitButton)
 
       await waitFor(() => {
-        expect(screen.getByText(/please enter a valid email address/i)).toBeInTheDocument()
+        expect(
+          screen.getByText(/please enter a valid email address/i)
+        ).toBeInTheDocument()
       })
     })
 
@@ -146,16 +180,22 @@ describe('WaitlistForm', () => {
       const user = userEvent.setup()
       render(<WaitlistForm />)
 
-      const challengeField = screen.getByLabelText(/biggest caregiving challenge/i)
+      const challengeField = screen.getByLabelText(
+        /biggest caregiving challenge/i
+      )
       const longText = 'a'.repeat(501) // Over 500 character limit
 
       await user.type(challengeField, longText)
 
-      const submitButton = screen.getByRole('button', { name: /join the waitlist/i })
+      const submitButton = screen.getByRole('button', {
+        name: /join the waitlist/i,
+      })
       await user.click(submitButton)
 
       await waitFor(() => {
-        expect(screen.getByText(/please keep your response under 500 characters/i)).toBeInTheDocument()
+        expect(
+          screen.getByText(/please keep your response under 500 characters/i)
+        ).toBeInTheDocument()
       })
     })
 
@@ -163,23 +203,33 @@ describe('WaitlistForm', () => {
       const user = userEvent.setup()
       const mockFormAction = vi.fn()
       mockUseFormState.mockReturnValue([null, mockFormAction])
-      
+
       render(<WaitlistForm />)
 
       // Fill out valid form
       await user.type(screen.getByLabelText(/name/i), 'John Doe')
-      await user.type(screen.getByLabelText(/email address/i), 'john@example.com')
+      await user.type(
+        screen.getByLabelText(/email address/i),
+        'john@example.com'
+      )
       await user.click(screen.getByLabelText(/family caregiver/i))
-      await user.type(screen.getByLabelText(/biggest caregiving challenge/i), 'Finding time for self-care')
+      await user.type(
+        screen.getByLabelText(/biggest caregiving challenge/i),
+        'Finding time for self-care'
+      )
       await user.click(screen.getByLabelText(/agree to receive updates/i))
 
-      const submitButton = screen.getByRole('button', { name: /join the waitlist/i })
+      const submitButton = screen.getByRole('button', {
+        name: /join the waitlist/i,
+      })
       await user.click(submitButton)
 
       // Verify form fields are filled correctly
       expect(screen.getByDisplayValue('John Doe')).toBeInTheDocument()
       expect(screen.getByDisplayValue('john@example.com')).toBeInTheDocument()
-      expect(screen.getByDisplayValue('Finding time for self-care')).toBeInTheDocument()
+      expect(
+        screen.getByDisplayValue('Finding time for self-care')
+      ).toBeInTheDocument()
       expect(screen.getByLabelText(/family caregiver/i)).toBeChecked()
       expect(screen.getByLabelText(/agree to receive updates/i)).toBeChecked()
     })
@@ -189,12 +239,16 @@ describe('WaitlistForm', () => {
     it('shows loading state during submission', async () => {
       const user = userEvent.setup()
       mockUseFormStatus.mockReturnValue({ pending: true })
-      mockSubmitWaitlistForm.mockImplementation(() => new Promise(resolve => setTimeout(resolve, 1000)))
-      
+      mockSubmitWaitlistForm.mockImplementation(
+        () => new Promise((resolve) => setTimeout(resolve, 1000))
+      )
+
       render(<WaitlistForm />)
 
       expect(screen.getByText(/joining waitlist/i)).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: /joining waitlist/i })).toBeDisabled()
+      expect(
+        screen.getByRole('button', { name: /joining waitlist/i })
+      ).toBeDisabled()
     })
 
     it('updates role selection state correctly', async () => {
@@ -215,21 +269,24 @@ describe('WaitlistForm', () => {
     it('shows benefit text near submit button', () => {
       render(<WaitlistForm />)
 
-      expect(screen.getByText(/join early members shaping withcare/i)).toBeInTheDocument()
-      expect(screen.getByText(/caregiver starter kit/i)).toBeInTheDocument()
+      expect(
+        screen.getByText(/join early members shaping withcare/i)
+      ).toBeInTheDocument()
     })
 
     it('displays error messages with proper ARIA attributes', async () => {
       const formState = {
         success: false,
-        errors: { email: ['This email is already registered'] }
+        errors: { email: ['This email is already registered'] },
       }
       mockUseFormState.mockReturnValue([formState, vi.fn()])
 
       render(<WaitlistForm />)
 
       await waitFor(() => {
-        const errorMessage = screen.getByText(/this email is already registered/i)
+        const errorMessage = screen.getByText(
+          /this email is already registered/i
+        )
         expect(errorMessage).toBeInTheDocument()
         expect(errorMessage).toHaveAttribute('role', 'alert')
         expect(errorMessage).toHaveAttribute('aria-live', 'polite')
@@ -257,19 +314,23 @@ describe('WaitlistForm', () => {
       expect(screen.getByLabelText(/healthcare professional/i)).toHaveFocus()
 
       await user.tab()
-      expect(screen.getByLabelText(/investor\/funder/i)).toHaveFocus()
+      expect(screen.getByLabelText(/partner/i)).toHaveFocus()
 
       await user.tab()
       expect(screen.getByLabelText(/other/i)).toHaveFocus()
 
       await user.tab()
-      expect(screen.getByLabelText(/biggest caregiving challenge/i)).toHaveFocus()
+      expect(
+        screen.getByLabelText(/biggest caregiving challenge/i)
+      ).toHaveFocus()
 
       await user.tab()
       expect(screen.getByLabelText(/agree to receive updates/i)).toHaveFocus()
 
       await user.tab()
-      expect(screen.getByRole('button', { name: /join the waitlist/i })).toHaveFocus()
+      expect(
+        screen.getByRole('button', { name: /join the waitlist/i })
+      ).toHaveFocus()
     })
 
     it('supports arrow key navigation in radio group', async () => {
@@ -283,7 +344,7 @@ describe('WaitlistForm', () => {
       expect(screen.getByLabelText(/healthcare professional/i)).toHaveFocus()
 
       await user.keyboard('{ArrowDown}')
-      expect(screen.getByLabelText(/investor\/funder/i)).toHaveFocus()
+      expect(screen.getByLabelText(/partner/i)).toHaveFocus()
 
       await user.keyboard('{ArrowUp}')
       expect(screen.getByLabelText(/healthcare professional/i)).toHaveFocus()
@@ -293,16 +354,21 @@ describe('WaitlistForm', () => {
       const user = userEvent.setup()
       const mockFormAction = vi.fn()
       mockUseFormState.mockReturnValue([null, mockFormAction])
-      
+
       render(<WaitlistForm />)
 
       // Fill required fields and focus the submit button
-      await user.type(screen.getByLabelText(/email address/i), 'john@example.com')
+      await user.type(
+        screen.getByLabelText(/email address/i),
+        'john@example.com'
+      )
       await user.click(screen.getByLabelText(/family caregiver/i))
       await user.click(screen.getByLabelText(/agree to receive updates/i))
 
       // Focus submit button and press Enter
-      const submitButton = screen.getByRole('button', { name: /join the waitlist/i })
+      const submitButton = screen.getByRole('button', {
+        name: /join the waitlist/i,
+      })
       submitButton.focus()
       await user.keyboard('{Enter}')
 
@@ -318,14 +384,18 @@ describe('WaitlistForm', () => {
       render(<WaitlistForm showTitle={true} />)
 
       expect(screen.getByText(/join the waitlist/i)).toBeInTheDocument()
-      expect(screen.getByText(/be the first to know when we launch/i)).toBeInTheDocument()
+      expect(
+        screen.getByText(/be the first to know when we launch/i)
+      ).toBeInTheDocument()
     })
 
     it('hides title when showTitle is false', () => {
       render(<WaitlistForm showTitle={false} />)
 
       expect(screen.queryByText(/join the waitlist/i)).not.toBeInTheDocument()
-      expect(screen.queryByText(/be the first to know when we launch/i)).not.toBeInTheDocument()
+      expect(
+        screen.queryByText(/be the first to know when we launch/i)
+      ).not.toBeInTheDocument()
     })
   })
 
@@ -333,7 +403,7 @@ describe('WaitlistForm', () => {
     it('announces form submission status to screen readers', async () => {
       const formState = {
         success: false,
-        message: 'Something went wrong. Please try again.'
+        message: 'Something went wrong. Please try again.',
       }
       mockUseFormState.mockReturnValue([formState, vi.fn()])
 
@@ -341,14 +411,16 @@ describe('WaitlistForm', () => {
 
       await waitFor(() => {
         const liveRegion = document.querySelector('[aria-live="polite"]')
-        expect(liveRegion).toHaveTextContent('Something went wrong. Please try again.')
+        expect(liveRegion).toHaveTextContent(
+          'Something went wrong. Please try again.'
+        )
       })
     })
 
     it('announces successful form submission', async () => {
       const formState = {
         success: true,
-        message: 'Thank you for joining our waitlist!'
+        message: 'Thank you for joining our waitlist!',
       }
       mockUseFormState.mockReturnValue([formState, vi.fn()])
 
@@ -356,7 +428,9 @@ describe('WaitlistForm', () => {
 
       await waitFor(() => {
         const liveRegion = document.querySelector('[aria-live="polite"]')
-        expect(liveRegion).toHaveTextContent('Thank you for joining our waitlist!')
+        expect(liveRegion).toHaveTextContent(
+          'Thank you for joining our waitlist!'
+        )
       })
     })
 
@@ -375,7 +449,9 @@ describe('WaitlistForm', () => {
       const user = userEvent.setup()
       render(<WaitlistForm />)
 
-      const challengeField = screen.getByLabelText(/biggest caregiving challenge/i) as HTMLTextAreaElement
+      const challengeField = screen.getByLabelText(
+        /biggest caregiving challenge/i
+      ) as HTMLTextAreaElement
       const longText = 'a'.repeat(600) // Longer than 500 character limit
 
       await user.type(challengeField, longText)
@@ -391,11 +467,15 @@ describe('WaitlistForm', () => {
       // Required fields should have asterisk
       expect(screen.getByText(/email address/)).toHaveTextContent('*')
       expect(screen.getByText(/your role/)).toHaveTextContent('*')
-      expect(screen.getByText(/agree to receive updates/)).toHaveTextContent('*')
+      expect(screen.getByText(/agree to receive updates/)).toHaveTextContent(
+        '*'
+      )
 
       // Optional fields should be clearly marked
       expect(screen.getByText(/name \(optional\)/i)).toBeInTheDocument()
-      expect(screen.getByText(/biggest caregiving challenge\? \(optional\)/i)).toBeInTheDocument()
+      expect(
+        screen.getByText(/biggest caregiving challenge\? \(optional\)/i)
+      ).toBeInTheDocument()
     })
   })
 
@@ -406,32 +486,32 @@ describe('WaitlistForm', () => {
 
       const caregiverRole = screen.getByLabelText(/family caregiver/i)
       const professionalRole = screen.getByLabelText(/healthcare professional/i)
-      const investorRole = screen.getByLabelText(/investor\/funder/i)
+      const partnerRole = screen.getByLabelText(/partner/i)
 
       // Select caregiver
       await user.click(caregiverRole)
       expect(caregiverRole).toBeChecked()
       expect(professionalRole).not.toBeChecked()
-      expect(investorRole).not.toBeChecked()
+      expect(partnerRole).not.toBeChecked()
 
       // Switch to professional
       await user.click(professionalRole)
       expect(caregiverRole).not.toBeChecked()
       expect(professionalRole).toBeChecked()
-      expect(investorRole).not.toBeChecked()
+      expect(partnerRole).not.toBeChecked()
 
-      // Switch to investor
-      await user.click(investorRole)
+      // Switch to partner
+      await user.click(partnerRole)
       expect(caregiverRole).not.toBeChecked()
       expect(professionalRole).not.toBeChecked()
-      expect(investorRole).toBeChecked()
+      expect(partnerRole).toBeChecked()
     })
 
     it('preserves form state during validation errors', async () => {
       const user = userEvent.setup()
       const formState = {
         success: false,
-        errors: { email: ['This email is already registered'] }
+        errors: { email: ['This email is already registered'] },
       }
       mockUseFormState.mockReturnValue([formState, vi.fn()])
 
@@ -439,14 +519,22 @@ describe('WaitlistForm', () => {
 
       // Fill out form
       await user.type(screen.getByLabelText(/name/i), 'Test User')
-      await user.type(screen.getByLabelText(/email address/i), 'test@example.com')
+      await user.type(
+        screen.getByLabelText(/email address/i),
+        'test@example.com'
+      )
       await user.click(screen.getByLabelText(/family caregiver/i))
-      await user.type(screen.getByLabelText(/biggest caregiving challenge/i), 'Time management')
+      await user.type(
+        screen.getByLabelText(/biggest caregiving challenge/i),
+        'Time management'
+      )
       await user.click(screen.getByLabelText(/agree to receive updates/i))
 
       // Verify error is shown
       await waitFor(() => {
-        expect(screen.getByText(/this email is already registered/i)).toBeInTheDocument()
+        expect(
+          screen.getByText(/this email is already registered/i)
+        ).toBeInTheDocument()
       })
 
       // Form fields should retain their values
