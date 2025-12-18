@@ -66,7 +66,7 @@ export function NewsletterInline({
               Thanks for joining!
             </h3>
             <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-200">
-              Check your email for our caregiving starter kit.
+              We'll be in touch soon.
             </p>
           </div>
         </div>
@@ -90,12 +90,11 @@ export function NewsletterInline({
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="mb-2 text-lg font-semibold text-neutral-700 dark:text-white">
-            Get more care, connection, and clarity—straight to your inbox.
-          </h3>
-          <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-200">
-            Join our early updates to follow progress, share feedback, and help
-            shape withCare as it grows.
+          <p className="mb-2 text-lg font-medium text-neutral-700 dark:text-neutral-200">
+            Join our early updates.
+          </p>
+          <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-300">
+            Follow progress, share feedback, and help shape withCare as it grows.
           </p>
 
           <form
@@ -117,7 +116,7 @@ export function NewsletterInline({
 
             <Button
               type="submit"
-              disabled={status === 'loading' || !email}
+              disabled={status === 'loading'}
               className="whitespace-nowrap"
               size={compact ? 'sm' : 'default'}
             >
@@ -127,7 +126,7 @@ export function NewsletterInline({
                   Joining...
                 </>
               ) : (
-                <>Get early updates →</>
+                <>Join the waitlist →</>
               )}
             </Button>
           </form>

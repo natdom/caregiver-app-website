@@ -24,7 +24,7 @@ const values = [
     icon: CheckSquare,
     title: 'Practical Focus',
     description:
-      'Clear, useful guidance that fits into real lives — no jargon, no filler.',
+      'Clear, useful guidance that fits into real lives with no jargon, no filler.',
   },
   {
     icon: Clock,
@@ -83,7 +83,7 @@ export default function AboutPage() {
                     <li className="flex items-start">
                       <span className="mr-2 text-teal-500">•</span>
                       <span>
-                        Caregivers of all kinds—family, partners, friends
+                        Caregivers of all kinds: family, partners, friends
                       </span>
                     </li>
                     <li className="flex items-start">
@@ -176,7 +176,7 @@ export default function AboutPage() {
               </h2>
               <p className="relative mb-8 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
                 withCare is a supportive digital space for caregivers of all
-                kinds — designed to bring connection, clarity, and practical
+                kinds, designed to bring connection, clarity, and practical
                 support to everyday care.
               </p>
               <div className="relative space-y-8">
@@ -185,7 +185,7 @@ export default function AboutPage() {
                     <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-coral-100 text-sm font-bold text-coral-600 dark:bg-coral-900 dark:text-coral-400">
                       1
                     </span>
-                    Phase 1 — Foundation (Mid 2025 – Early 2026)
+                    Phase 1: Foundation (Mid 2025 – Early 2026)
                   </h3>
                   <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
@@ -211,7 +211,7 @@ export default function AboutPage() {
                     <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-600 dark:bg-teal-900 dark:text-teal-400">
                       2
                     </span>
-                    Phase 2 — Community (2026)
+                    Phase 2: Community (2026)
                   </h3>
                   <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
@@ -233,7 +233,7 @@ export default function AboutPage() {
                     <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-sage-100 text-sm font-bold text-sage-600 dark:bg-sage-900 dark:text-sage-400">
                       3
                     </span>
-                    Phase 3 — Personalization & Growth (Late 2026 – 2027)
+                    Phase 3: Personalization & Growth (Late 2026 – 2027)
                   </h3>
                   <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">

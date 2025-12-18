@@ -36,7 +36,7 @@ const benefits = [
   {
     icon: Sprout,
     title: "Growth",
-    description: "Caregiving changes you—and that's okay. We help you find balance, confidence, and new ways to grow through every stage of care."
+    description: "Caregiving changes you, and that's okay. We help you find balance, confidence, and new ways to grow through every stage of care."
   }
 ]
 

@@ -32,7 +32,7 @@ export function Footer() {
               <WithCareLogo className="h-11 w-auto" variant="dark" />
             </Link>
             <p className="max-w-sm text-sm leading-6 text-neutral-200">
-              Making every caregiver's day a little lighter—through connection,
+              Making every caregiver's day a little lighter through connection,
               ease, and growth.
             </p>
           </div>

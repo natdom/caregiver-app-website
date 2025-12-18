@@ -36,7 +36,7 @@ export function TestimonialCarousel() {
   }, [])
 
   return (
-    <section className="bg-coral-50 py-24 dark:bg-neutral-800 sm:py-32">
+    <section className="bg-coral-50 py-16 dark:bg-neutral-800 sm:py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-4xl">
@@ -44,7 +44,7 @@ export function TestimonialCarousel() {
           </h2>
         </div>
 
-        <div className="mx-auto mt-16 max-w-4xl">
+        <div className="mx-auto mt-12 max-w-4xl">
           <div className="relative">
             {testimonials.map((testimonial, index) => (
               <div
@@ -66,9 +66,6 @@ export function TestimonialCarousel() {
                   </blockquote>
                   <figcaption className="mt-8 text-lg text-neutral-600 dark:text-neutral-300">
                     <div className="font-medium">{testimonial.author}</div>
-                    <div className="text-neutral-500 dark:text-neutral-400">
-                      {testimonial.context}
-                    </div>
                   </figcaption>
                 </figure>
               </div>

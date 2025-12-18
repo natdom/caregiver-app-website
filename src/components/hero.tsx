@@ -28,14 +28,14 @@ export function Hero() {
 
           {/* Subheadline with A/B test */}
           <p
-            className="mx-auto mt-8 max-w-2xl text-lg text-neutral-600 dark:text-neutral-300 sm:text-xl"
+            className="mx-auto mt-6 max-w-2xl text-lg text-neutral-600 dark:text-neutral-300 sm:text-xl"
             data-testid={heroContent.id}
           >
             {heroContent.headline}
           </p>
 
           {/* Single Primary CTA */}
-          <div className="mt-12">
+          <div className="mt-8">
             <Button
               size="lg"
               asChild
