@@ -107,8 +107,8 @@ export default function ContactPage() {
                   </h2>
 
                   <div className="space-y-6">
-                    <div className="flex items-start space-x-4">
-                      <Mail className="mt-1 h-6 w-6 text-teal-500" />
+                    <div className="flex items-center space-x-4">
+                      <Mail className="h-6 w-6 flex-shrink-0 text-teal-500" />
                       <div>
                         <div className="font-medium text-neutral-700 dark:text-white">
                           Email
@@ -124,8 +124,8 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start space-x-4">
-                      <Clock className="mt-1 h-6 w-6 text-teal-500" />
+                    <div className="flex items-center space-x-4">
+                      <Clock className="h-6 w-6 flex-shrink-0 text-teal-500" />
                       <div>
                         <div className="font-medium text-neutral-700 dark:text-white">
                           Response Time
@@ -136,8 +136,8 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-start space-x-4">
-                      <MapPin className="mt-1 h-6 w-6 text-teal-500" />
+                    <div className="flex items-center space-x-4">
+                      <MapPin className="h-6 w-6 flex-shrink-0 text-teal-500" />
                       <div>
                         <div className="font-medium text-neutral-700 dark:text-white">
                           Based in
@@ -147,17 +147,6 @@ export default function ContactPage() {
                         </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="mt-8 border-t border-neutral-200 pt-8 dark:border-neutral-700">
-                    <h3 className="mb-4 font-medium text-neutral-700 dark:text-white">
-                      What to expect
-                    </h3>
-                    <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-200">
-                      <li>• Personal response from our team</li>
-                      <li>• Follow-up within one business day</li>
-                      <li>• Thoughtful consideration of your message</li>
-                    </ul>
                   </div>
                 </div>
               </div>

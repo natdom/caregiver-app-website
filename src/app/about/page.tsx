@@ -167,86 +167,69 @@ export default function AboutPage() {
       <section className="py-8 pb-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-4xl">
-            <div className="group relative overflow-hidden rounded-2xl border border-teal-200/20 bg-gradient-to-br from-coral-50/50 via-sage-50/30 to-teal-50/50 p-8 shadow-lg backdrop-blur-md dark:border-teal-500/20 dark:from-coral-900/20 dark:via-sage-900/10 dark:to-teal-900/20 sm:p-12">
-              {/* Decorative element */}
-              <div className="absolute -bottom-8 -left-8 h-40 w-40 rounded-full bg-teal-200/20 blur-3xl dark:bg-teal-500/10" />
-
-              <h2 className="relative mb-6 text-3xl font-bold text-neutral-700 dark:text-white">
-                What We're Building
+            <div className="rounded-2xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-white/5 sm:p-12">
+              <h2 className="mb-6 text-3xl font-bold text-neutral-700 dark:text-white">
+                Building this step by step
               </h2>
-              <p className="relative mb-8 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
-                withCare is a supportive digital space for caregivers of all
-                kinds, designed to bring connection, clarity, and practical
-                support to everyday care.
+              <p className="mb-8 text-lg leading-relaxed text-neutral-600 dark:text-neutral-300">
+                We're starting simple and building in stages, learning from
+                caregivers along the way.
               </p>
-              <div className="relative space-y-8">
-                <div className="rounded-lg border-l-4 border-coral-400 bg-white/30 p-4 backdrop-blur-sm dark:border-coral-500 dark:bg-white/5">
-                  <h3 className="mb-3 flex items-center text-lg font-semibold text-neutral-700 dark:text-white">
-                    <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-coral-100 text-sm font-bold text-coral-600 dark:bg-coral-900 dark:text-coral-400">
-                      1
-                    </span>
-                    Phase 1: Foundation (Mid 2025 – Early 2026)
+              <div className="space-y-6">
+                <div className="rounded-xl border-l-4 border-coral-400 bg-white/40 p-6 dark:border-coral-400 dark:bg-white/5">
+                  <h3 className="mb-3 text-lg font-semibold text-neutral-700 dark:text-white">
+                    Right now: Foundation (Mid 2025 – Early 2026)
                   </h3>
-                  <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
+                  <ul className="space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
-                      <span className="mr-2 text-coral-500">•</span>
-                      <span>Building core platform infrastructure</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Building the platform and resource library</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="mr-2 text-coral-500">•</span>
-                      <span>Creating a curated resource library</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Partnering with organizations who get it</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="mr-2 text-coral-500">•</span>
-                      <span>Establishing partnerships and brand presence</span>
-                    </li>
-                    <li className="flex items-start">
-                      <span className="mr-2 text-coral-500">•</span>
-                      <span>Gathering early user feedback</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Learning from early users</span>
                     </li>
                   </ul>
                 </div>
-                <div className="rounded-lg border-l-4 border-teal-400 bg-white/30 p-4 backdrop-blur-sm dark:border-teal-500 dark:bg-white/5">
-                  <h3 className="mb-3 flex items-center text-lg font-semibold text-neutral-700 dark:text-white">
-                    <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-teal-100 text-sm font-bold text-teal-600 dark:bg-teal-900 dark:text-teal-400">
-                      2
-                    </span>
-                    Phase 2: Community (2026)
+                <div className="rounded-xl border-l-4 border-teal-400 bg-white/40 p-6 dark:border-teal-400 dark:bg-white/5">
+                  <h3 className="mb-3 text-lg font-semibold text-neutral-700 dark:text-white">
+                    Next: Community (2026)
                   </h3>
-                  <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
+                  <ul className="space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
-                      <span className="mr-2 text-teal-500">•</span>
-                      <span>Launching the interactive community platform</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Opening up community features</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="mr-2 text-teal-500">•</span>
-                      <span>Creating discussion spaces for peer support</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Creating spaces for peer support</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="mr-2 text-teal-500">•</span>
-                      <span>Refining features based on early tester feedback</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Improving based on what you tell us</span>
                     </li>
                   </ul>
                 </div>
-                <div className="rounded-lg border-l-4 border-sage-400 bg-white/30 p-4 backdrop-blur-sm dark:border-sage-500 dark:bg-white/5">
-                  <h3 className="mb-3 flex items-center text-lg font-semibold text-neutral-700 dark:text-white">
-                    <span className="mr-3 flex h-8 w-8 items-center justify-center rounded-full bg-sage-100 text-sm font-bold text-sage-600 dark:bg-sage-900 dark:text-sage-400">
-                      3
-                    </span>
-                    Phase 3: Personalization & Growth (Late 2026 – 2027)
+                <div className="rounded-xl border-l-4 border-sage-400 bg-white/40 p-6 dark:border-sage-400 dark:bg-white/5">
+                  <h3 className="mb-3 text-lg font-semibold text-neutral-700 dark:text-white">
+                    Then: Growing together (Late 2026 – 2027)
                   </h3>
-                  <ul className="ml-11 space-y-2 text-neutral-600 dark:text-neutral-300">
+                  <ul className="space-y-2 text-neutral-600 dark:text-neutral-300">
                     <li className="flex items-start">
-                      <span className="mr-2 text-sage-500">•</span>
-                      <span>Building personalized experiences for each caregiver</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Tailoring experiences for each caregiver</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="mr-2 text-sage-500">•</span>
-                      <span>Deepening integration across resources and tools</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Connecting resources and tools more deeply</span>
                     </li>
                     <li className="flex items-start">
-                      <span className="mr-2 text-sage-500">•</span>
-                      <span>Evolving through community collaboration</span>
+                      <span className="mr-2 text-neutral-400">•</span>
+                      <span>Evolving alongside the community</span>
                     </li>
                   </ul>
                 </div>
