@@ -18,7 +18,7 @@ const testimonials = [
   },
   {
     quote:
-      "It's rare to see a space being built with this much empathy. You can tell it comes from lived experience.",
+      "This would have helped so much early on. I've already sent it to a few people.",
     author: 'Community member',
     context: 'early tester',
   },

@@ -242,18 +242,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
         )}
 
         {/* Submit button */}
-        <div className="space-y-4">
-          <SubmitButton />
-          
-          {/* Benefit text */}
-          <div className="text-center">
-            <p className="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">
-              <span className="font-medium text-coral-600 dark:text-coral-400">
-                Join early members shaping withCare
-              </span>
-            </p>
-          </div>
-        </div>
+        <SubmitButton />
       </form>
     </div>
   )
