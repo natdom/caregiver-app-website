@@ -1,0 +1,24 @@
+# TODO: Update sitemap URL once the site is deployed to the final domain
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Explicitly allow AI crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://withcare.app/sitemap.xml

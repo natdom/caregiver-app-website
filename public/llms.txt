@@ -1,0 +1,52 @@
+# withCare
+
+<!-- TODO: Update all URLs below once the site is deployed to the final domain -->
+
+> An app for caregivers - coming soon.
+
+withCare is an app for caregivers, designed to make every caregiver's day a little lighter through connection, clarity, and care.
+
+## What is withCare?
+
+withCare is an app for caregivers currently in development. It will provide community, tools, and support for people who care for others. This site provides information about the upcoming app, free resources for caregivers, and a waitlist to be notified at launch.
+
+## Who is it for?
+
+- Family caregivers
+- Those caring for aging parents (eldercare)
+- Parents of children with disabilities or special needs
+- Caregivers supporting loved ones with chronic illness
+- Anyone providing unpaid care for a family member or friend
+
+## What's Available on This Site
+
+- Information about withCare, the upcoming app for caregivers
+- Free caregiving resources and guides
+- Articles on self-care, medical appointments, emergency preparedness, and more
+- A newsletter for caregivers
+- Waitlist signup to be notified when the app launches
+- Partnership opportunities
+
+## withCare App Features (Coming Soon)
+
+- Community connection with other caregivers
+- Care coordination tools
+- Support resources and guides
+- A space to share experiences and find understanding
+
+## For Partners
+
+Organizations, healthcare providers, and potential partners can learn more about collaboration opportunities at https://withcare.app/partners
+
+## Contact
+
+- Website: https://withcare.app
+- Email: hello@withcare.app
+- Waitlist: https://withcare.app/waitlist
+
+## Links
+
+- About: https://withcare.app/about
+- Resources: https://withcare.app/resources
+- Partners: https://withcare.app/partners
+- Contact: https://withcare.app/contact
