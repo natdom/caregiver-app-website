@@ -4,8 +4,8 @@ import { compareDesc } from 'date-fns'
 import { ResourcesPageClient } from './resources-client'
 
 export const metadata: Metadata = {
-  title: 'Resources',
-  description: 'Practical guides and resources for caregivers, written by experts and people who understand your journey.',
+  title: 'Explore',
+  description: 'Practical guides and insights for caregivers, written by experts and people who understand your journey.',
 }
 
 export default function ResourcesPage() {

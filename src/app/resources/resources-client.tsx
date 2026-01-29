@@ -76,7 +76,7 @@ export function ResourcesPageClient({ resources }: ResourcesPageClientProps) {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl">
-              Resources
+              Guides and Insights
             </h1>
             <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-300">
               Practical guides for your caregiving journey.
