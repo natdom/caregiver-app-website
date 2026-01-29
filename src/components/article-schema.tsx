@@ -30,7 +30,7 @@ export function ArticleSchema({ resource }: ArticleSchemaProps) {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://supportnetwork.com/resources/${resource.slug}`
+      "@id": `https://supportnetwork.com/explore/${resource.slug}`
     },
     "keywords": resource.topics?.join(", "),
     "wordCount": resource.body?.raw ? resource.body.raw.split(/\s+/).length : undefined,
@@ -53,7 +53,7 @@ export function ArticleSchema({ resource }: ArticleSchemaProps) {
     },
     "potentialAction": {
       "@type": "ReadAction",
-      "target": `https://supportnetwork.com/resources/${resource.slug}`
+      "target": `https://supportnetwork.com/explore/${resource.slug}`
     }
   }
 

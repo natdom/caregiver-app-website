@@ -66,7 +66,7 @@ export const Resource = defineDocumentType(() => ({
   computedFields: {
     url: {
       type: 'string',
-      resolve: (resource) => `/resources/${resource._raw.flattenedPath.replace('resources/', '')}`,
+      resolve: (resource) => `/explore/${resource._raw.flattenedPath.replace('resources/', '')}`,
     },
     slug: {
       type: 'string',

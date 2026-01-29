@@ -35,9 +35,9 @@ export function ResourcePageClient({ resource }: ResourcePageClientProps) {
               {/* Back button */}
               <div className="mb-8">
                 <Button variant="ghost" asChild>
-                  <Link href="/resources">
+                  <Link href="/explore">
                     <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to resources
+                    Back to Explore
                   </Link>
                 </Button>
               </div>

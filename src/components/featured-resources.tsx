@@ -53,7 +53,7 @@ export function FeaturedResources({ className }: FeaturedResourceProps) {
           {featuredResources.map((resource) => (
             <Link
               key={resource._id}
-              href={`/resources/${resource.slug}`}
+              href={`/explore/${resource.slug}`}
               className="group flex items-center justify-between rounded-xl bg-white/60 p-4 transition-all hover:bg-white dark:bg-white/10 dark:hover:bg-white/15"
             >
               <div>
@@ -71,7 +71,7 @@ export function FeaturedResources({ className }: FeaturedResourceProps) {
 
         <div className="mt-8 text-center">
           <Link
-            href="/resources"
+            href="/explore"
             className="inline-flex items-center text-sm font-medium text-teal-600 transition-colors hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
           >
             Explore all guides

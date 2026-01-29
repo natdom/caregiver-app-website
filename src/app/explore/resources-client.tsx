@@ -79,7 +79,7 @@ export function ResourcesPageClient({ resources }: ResourcesPageClientProps) {
               Guides and Insights
             </h1>
             <p className="mt-4 text-lg text-neutral-600 dark:text-neutral-300">
-              Practical guides for your caregiving journey.
+              Practical resources for your caregiving journey.
             </p>
           </div>
         </div>

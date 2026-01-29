@@ -43,7 +43,7 @@ export default function WaitlistSuccessPage() {
               </Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/resources">
+              <Link href="/explore">
                 Explore Guides & Insights
               </Link>
             </Button>

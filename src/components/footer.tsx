@@ -6,7 +6,7 @@ const navigation = {
   main: [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
-    { name: 'Explore', href: '/resources' },
+    { name: 'Explore', href: '/explore' },
     { name: 'Partners', href: '/partners' },
     { name: 'Contact', href: '/contact' },
   ],
