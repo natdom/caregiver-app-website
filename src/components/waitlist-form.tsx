@@ -94,9 +94,9 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
   }, [state?.success])
 
   return (
-    <div className={cn('w-full max-w-md mx-auto', className)}>
+    <div className={cn('w-full', className)}>
       {showTitle && (
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h2 className="text-2xl font-bold text-neutral-700 dark:text-white mb-2">
             Join the waitlist
           </h2>
@@ -114,7 +114,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
         className="sr-only"
       />
 
-      <form ref={formRef} action={formAction} className="space-y-6">
+      <form ref={formRef} action={formAction} className="space-y-5">
         
         {/* Name field (optional) */}
         <FormField id="name" error={state?.errors?.name}>

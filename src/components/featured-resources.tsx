@@ -1,8 +1,7 @@
 import { allResources } from 'contentlayer/generated'
 import { compareDesc } from 'date-fns'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
-import { Clock, ArrowRight, BookOpen } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface FeaturedResourceProps {
@@ -10,122 +9,97 @@ interface FeaturedResourceProps {
   limit?: number
 }
 
+const summaries: Record<string, string> = {
+  'starting-a-care-log': 'What to track for better appointments and coordination.',
+  'self-care-strategies': 'Practical ways to maintain your wellbeing while caregiving.',
+  'medical-appointments-less-stressful': 'Strategies to navigate healthcare visits with confidence.',
+  'anticipatory-grief': 'Understanding the grief that begins before goodbye.',
+  'staying-connected-through-illness': 'Maintaining closeness when everything changes.',
+}
+
 export function FeaturedResources({
   className,
-  limit = 3,
+  limit = 4,
 }: FeaturedResourceProps) {
-  // Get top 3 resources (featured first, then by publication date)
   const topResources = allResources
     .sort((a, b) => {
-      // Featured resources first
       if (a.featured && !b.featured) return -1
       if (!a.featured && b.featured) return 1
-      // Then by publication date
       return compareDesc(new Date(a.publishedAt), new Date(b.publishedAt))
     })
     .slice(0, limit)
-
-  const getResourceDescription = (resource: any) => {
-    const descriptions: Record<string, string> = {
-      'starting-a-care-log':
-        'Learn what information to track and organize for better medical appointments and care coordination',
-      'self-care-strategies':
-        'Discover practical ways to maintain your wellbeing while caring for others',
-      'medical-appointments-less-stressful':
-        'Get proven strategies to prepare for and navigate healthcare visits with confidence',
-    }
-    return descriptions[resource.slug] || resource.excerpt
-  }
 
   if (topResources.length === 0) {
     return null
   }
 
+  const getSummary = (slug: string, fallback: string) => {
+    return summaries[slug] || fallback
+  }
+
   return (
     <section
       className={cn(
-        'bg-gradient-to-r from-sage-50 to-coral-50 py-16 dark:from-sage-900/20 dark:to-coral-900/20 sm:py-20',
+        'bg-stone-100 pb-16 pt-8 dark:bg-neutral-900 sm:pb-20 sm:pt-10',
         className
       )}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="mb-10 text-center">
-          <div className="flex items-center justify-center">
-            <BookOpen className="mr-3 h-8 w-8 text-teal-600 dark:text-teal-400" />
-            <h2 className="text-3xl font-bold text-neutral-700 dark:text-white sm:text-4xl">
-              Guides and Insights
-            </h2>
-          </div>
+          <h2 className="text-2xl font-semibold text-neutral-700 dark:text-white sm:text-3xl">
+            Guides and Insights
+          </h2>
+          <p className="mt-2 text-neutral-500 dark:text-neutral-400">
+            Resources to support your caregiving journey
+          </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          {topResources.map((resource, index) => (
-            <article
+        <div className="grid gap-5 sm:grid-cols-2">
+          {topResources.map((resource) => (
+            <Link
               key={resource._id}
-              className="overflow-hidden rounded-2xl border border-white/20 bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-neutral-800"
+              href={`/resources/${resource.slug}`}
+              className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:bg-neutral-800"
             >
+              {/* Image */}
               {resource.cover && (
-                <div className="aspect-[16/10] overflow-hidden">
+                <div className="aspect-[3/1] overflow-hidden">
                   <img
                     src={resource.cover}
-                    alt={resource.coverAlt || resource.title}
-                    className="h-full w-full object-cover"
+                    alt=""
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                 </div>
               )}
 
-              <div className="p-8">
-                <div className="mb-3 flex items-center gap-2">
-                  {resource.topics?.slice(0, 2).map((topic) => (
-                    <span
-                      key={topic}
-                      className="inline-flex items-center rounded-full bg-teal-100 px-3 py-1 text-xs font-medium text-teal-800 dark:bg-teal-900 dark:text-teal-200"
-                    >
-                      {topic}
-                    </span>
-                  ))}
-                </div>
-
-                <h3 className="mb-3 text-xl font-semibold leading-tight text-neutral-700 dark:text-white">
-                  <Link
-                    href={`/resources/${resource.slug}`}
-                    className="transition-colors hover:text-teal-600 dark:hover:text-teal-400"
-                  >
+              {/* Content */}
+              <div className="flex flex-1 flex-col justify-between p-4">
+                <div>
+                  <h3 className="text-sm font-semibold leading-snug text-neutral-800 dark:text-neutral-100 sm:text-base">
                     {resource.title}
-                  </Link>
-                </h3>
-
-                <p className="mb-4 leading-relaxed text-neutral-600 dark:text-neutral-300">
-                  {getResourceDescription(resource)}
-                </p>
-
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="text-sm text-neutral-500 dark:text-neutral-400">
-                    By {resource.author}
-                  </div>
-                  {resource.readingTime && (
-                    <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-                      <Clock className="mr-1 h-4 w-4" />
-                      {resource.readingTime} min read
-                    </div>
-                  )}
+                  </h3>
+                  <p className="mt-1.5 text-xs text-neutral-500 dark:text-neutral-400 sm:text-sm">
+                    {getSummary(resource.slug, resource.excerpt)}
+                  </p>
                 </div>
 
-                <Button asChild variant="outline" className="group w-full">
-                  <Link href={`/resources/${resource.slug}`}>
-                    Read more
-                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </Button>
+                <div className="mt-3 flex items-center text-xs font-medium text-teal-600 dark:text-teal-400 sm:text-sm">
+                  Read article
+                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 
         <div className="mt-10 text-center">
-          <Button asChild size="lg" variant="outline">
-            <Link href="/resources">Explore →</Link>
-          </Button>
+          <Link
+            href="/resources"
+            className="inline-flex items-center rounded-full bg-white px-6 py-2.5 text-sm font-medium text-neutral-700 shadow-sm transition-all hover:shadow-md dark:bg-neutral-800 dark:text-neutral-200"
+          >
+            View all resources
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Link>
         </div>
       </div>
     </section>
