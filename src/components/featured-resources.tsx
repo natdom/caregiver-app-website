@@ -45,7 +45,7 @@ export function FeaturedResources({ className }: FeaturedResourceProps) {
             Guides and Insights
           </h2>
           <p className="mt-2 text-neutral-500 dark:text-neutral-400">
-            Guides to support your caregiving journey
+            Practical resources for your caregiving journey
           </p>
         </div>
 
