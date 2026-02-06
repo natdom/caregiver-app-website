@@ -1,20 +1,20 @@
-import { Users, Feather, Sprout } from 'lucide-react'
+import Image from 'next/image'
 
 const features = [
   {
-    icon: Users,
+    icon: '/icons/people.png',
     title: 'Connection',
     description:
       'A space where your experiences are seen, shared, and understood.',
   },
   {
-    icon: Feather,
+    icon: '/icons/clipboard.png',
     title: 'Ease',
     description:
       'Support designed to reduce the noise, stress, and mental weight of caregiving.',
   },
   {
-    icon: Sprout,
+    icon: '/icons/lightbulb.png',
     title: 'Growth',
     description:
       'Encouragement and clarity to help you move forward with confidence.',
@@ -40,14 +40,17 @@ export function FeatureGrid() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="group relative overflow-hidden rounded-2xl border border-white/20 bg-white/40 p-8 backdrop-blur-sm transition-all duration-300 hover:bg-white/60 hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+                className="group relative overflow-hidden rounded-2xl border border-neutral-100 bg-neutral-50/50 p-8 transition-all duration-300 hover:border-neutral-200 hover:bg-white hover:shadow-lg dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
               >
-                {/* Gradient border glow on hover */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-coral-500/20 to-teal-500/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-                <div className="relative">
-                  <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-coral-500 to-coral-600 shadow-md transition-transform duration-300 group-hover:scale-110 dark:from-coral-600 dark:to-coral-700">
-                    <feature.icon className="h-7 w-7 text-white" />
+                <div className="relative flex flex-col items-center text-center">
+                  <div className="mb-6 flex h-20 w-20 items-center justify-center">
+                    <Image
+                      src={feature.icon}
+                      alt=""
+                      width={80}
+                      height={80}
+                      className="h-20 w-20 object-contain transition-transform duration-300 group-hover:scale-110"
+                    />
                   </div>
                   <h3 className="mb-3 text-2xl font-semibold text-neutral-700 dark:text-white">
                     {feature.title}

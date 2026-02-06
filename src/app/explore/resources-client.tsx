@@ -3,7 +3,8 @@
 import { useState, useMemo } from 'react'
 import type { Resource } from 'contentlayer/generated'
 import Link from 'next/link'
-import { Search, ArrowRight, Clock, BookOpen, Heart, Sparkles } from 'lucide-react'
+import Image from 'next/image'
+import { Search, ArrowRight, Clock } from 'lucide-react'
 import { NewsletterInline } from '@/components/newsletter-inline'
 
 interface ResourcesPageClientProps {
@@ -16,21 +17,21 @@ const quickAccess = [
     id: 'new',
     label: 'New to caregiving?',
     description: 'Start here',
-    icon: Sparkles,
+    icon: '/icons/pencil.png',
     slug: 'starting-a-care-log',
   },
   {
     id: 'overwhelmed',
     label: 'Feeling overwhelmed?',
     description: 'Self-care that works',
-    icon: Heart,
+    icon: '/icons/heart.png',
     slug: 'self-care-strategies',
   },
   {
     id: 'medical',
     label: 'Managing appointments?',
     description: 'Navigate with confidence',
-    icon: BookOpen,
+    icon: '/icons/stethoscope.png',
     slug: 'medical-appointments-less-stressful',
   },
 ]
@@ -186,15 +187,20 @@ export function ResourcesPageClient({ resources }: ResourcesPageClientProps) {
                   {quickAccess.map((item) => {
                     const resource = getResourceBySlug(item.slug)
                     if (!resource) return null
-                    const Icon = item.icon
                     return (
                       <Link
                         key={item.id}
                         href={resource.url}
                         className="group flex items-center gap-3 rounded-xl border border-white/60 bg-white/40 p-4 transition-all hover:border-teal-200 hover:bg-white/70 dark:border-white/10 dark:bg-white/5 dark:hover:border-teal-800 dark:hover:bg-white/10"
                       >
-                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-teal-100/80 text-teal-600 dark:bg-teal-900/50 dark:text-teal-400">
-                          <Icon className="h-5 w-5" />
+                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
+                          <Image
+                            src={item.icon}
+                            alt=""
+                            width={48}
+                            height={48}
+                            className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110"
+                          />
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-medium text-neutral-700 group-hover:text-teal-600 dark:text-neutral-200 dark:group-hover:text-teal-400">

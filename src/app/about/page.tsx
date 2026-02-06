@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Users, Heart, CheckSquare, Clock } from 'lucide-react'
+import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -9,25 +9,25 @@ export const metadata: Metadata = {
 
 const values = [
   {
-    icon: Heart,
+    icon: '/icons/heart.png',
     title: 'Empathy First',
     description:
       'We start by listening and learning from caregivers. The goal is to build tools and resources that genuinely help, not add noise.',
   },
   {
-    icon: Users,
+    icon: '/icons/people.png',
     title: 'Community-Centered',
     description:
       "Caregiving can feel isolating. We're making it easier for people to find support, share insight, and feel understood.",
   },
   {
-    icon: CheckSquare,
+    icon: '/icons/clipboard.png',
     title: 'Practical Focus',
     description:
       'Clear, useful guidance that fits into real lives with no jargon, no filler.',
   },
   {
-    icon: Clock,
+    icon: '/icons/calendar.png',
     title: 'Respect for Time',
     description:
       'Caregivers are busy. Everything we design should be easy to use, quick to read, and worth your time.',
@@ -146,8 +146,14 @@ export default function AboutPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-coral-500/5 via-transparent to-teal-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:from-coral-500/10 dark:to-teal-500/10" />
 
                   <div className="relative">
-                    <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br from-coral-100 to-coral-50 shadow-sm transition-transform duration-300 group-hover:scale-110 dark:from-coral-900 dark:to-coral-800">
-                      <value.icon className="h-6 w-6 text-coral-600 dark:text-coral-400" />
+                    <div className="mb-6 flex h-14 w-14 items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                      <Image
+                        src={value.icon}
+                        alt=""
+                        width={56}
+                        height={56}
+                        className="h-14 w-14 object-contain"
+                      />
                     </div>
                     <h3 className="mb-4 text-xl font-semibold text-neutral-700 dark:text-white">
                       {value.title}
