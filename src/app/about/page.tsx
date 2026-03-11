@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'About',
   description:
-    "Learn about withCare's mission to make every caregiver's day a little lighter through connection, ease, and growth.",
+    "Learn about pero's mission to make every caregiver's day a little lighter through connection, ease, and growth.",
 }
 
 const values = [
@@ -47,7 +46,7 @@ export default function AboutPage() {
             <h1 className="text-4xl font-bold tracking-tight text-neutral-700 dark:text-white sm:text-5xl">
               Why{' '}
               <span className="bg-gradient-to-r from-coral-500 to-teal-500 bg-clip-text text-transparent">
-                withCare
+                pero
               </span>{' '}
               exists
             </h1>
@@ -137,7 +136,7 @@ export default function AboutPage() {
 
           <div className="mx-auto max-w-6xl">
             <div className="grid gap-8 sm:grid-cols-2">
-              {values.map((value, index) => (
+              {values.map((value) => (
                 <div
                   key={value.title}
                   className="group relative overflow-hidden rounded-2xl border border-white/20 bg-white/10 p-8 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-coral-300/30 hover:bg-white/20 hover:shadow-xl dark:border-white/10 dark:bg-white/5 dark:hover:border-coral-500/30 dark:hover:bg-white/10"
@@ -146,15 +145,12 @@ export default function AboutPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-coral-500/5 via-transparent to-teal-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:from-coral-500/10 dark:to-teal-500/10" />
 
                   <div className="relative">
-                    <div className="mb-6 flex h-14 w-14 items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                      <Image
-                        src={value.icon}
-                        alt=""
-                        width={56}
-                        height={56}
-                        className="h-14 w-14 object-contain"
-                      />
-                    </div>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={value.icon}
+                      alt=""
+                      className="mb-6 h-20 w-20 object-contain transition-transform duration-300 group-hover:scale-110"
+                    />
                     <h3 className="mb-4 text-xl font-semibold text-neutral-700 dark:text-white">
                       {value.title}
                     </h3>

@@ -1,6 +1,6 @@
-# withCare Marketing Website
+# pero Marketing Website
 
-A modern, accessible marketing website for withCare - a caregiving support community. Built with Next.js 14, TypeScript, and Tailwind CSS.
+A modern, accessible marketing website for pero - a caregiving support community. Built with Next.js 14, TypeScript, and Tailwind CSS.
 
 ## 🚀 Quick Start
 

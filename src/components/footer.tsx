@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Heart, Github, Twitter, Linkedin } from 'lucide-react'
-import { WithCareLogo } from '@/components/withcare-logo'
+import { PeroLogo } from '@/components/pero-logo'
 
 const navigation = {
   main: [
@@ -29,7 +29,7 @@ export function Footer() {
           {/* Brand section */}
           <div className="space-y-8 xl:col-span-1">
             <Link href="/" className="flex items-center">
-              <WithCareLogo className="h-11 w-auto" variant="dark" />
+              <PeroLogo className="h-11 w-auto" variant="dark" />
             </Link>
             <p className="max-w-sm text-sm leading-6 text-neutral-200">
               Making every caregiver's day a little lighter through connection,
@@ -95,15 +95,15 @@ export function Footer() {
         <div className="mt-16 border-t border-neutral-800 pt-8 sm:mt-20 lg:mt-24">
           <div className="flex flex-col items-center justify-between sm:flex-row">
             <p className="text-xs leading-5 text-neutral-400">
-              &copy; 2026 withCare. All rights reserved.
+              &copy; 2026 pero. All rights reserved.
             </p>
             <p className="mt-4 text-xs leading-5 text-neutral-400 sm:mt-0">
               Contact:{' '}
               <a
-                href="mailto:hello@withcare.app"
+                href="mailto:hello@pero.app"
                 className="hover:text-neutral-200"
               >
-                hello@withcare.app
+                hello@pero.app
               </a>
             </p>
           </div>

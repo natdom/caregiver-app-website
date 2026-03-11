@@ -44,7 +44,7 @@ export function Hero() {
             >
               <Link
                 href="/waitlist"
-                aria-label="Join the waitlist for withCare"
+                aria-label="Join the waitlist for pero"
               >
                 Join the waitlist →
               </Link>

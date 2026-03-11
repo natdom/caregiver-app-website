@@ -24,7 +24,7 @@ describe('Navigation Component', () => {
       expect(desktopCTA).toBeInTheDocument()
       expect(desktopCtaLink).toBeInTheDocument()
       expect(desktopCtaLink).toHaveAttribute('href', '/newsletter')
-      expect(desktopCtaLink).toHaveAttribute('aria-label', 'Get early access to withCare')
+      expect(desktopCtaLink).toHaveAttribute('aria-label', 'Get early access to pero')
       expect(desktopCtaLink).toHaveTextContent('Get early access')
     })
 
@@ -42,7 +42,7 @@ describe('Navigation Component', () => {
       
       expect(mobileCTA).toBeInTheDocument()
       expect(mobileCtaLink).toHaveAttribute('href', '/newsletter')
-      expect(mobileCtaLink).toHaveAttribute('aria-label', 'Get early access to withCare')
+      expect(mobileCtaLink).toHaveAttribute('aria-label', 'Get early access to pero')
       expect(mobileCtaLink).toHaveTextContent('Get early access')
     })
 
@@ -77,7 +77,7 @@ describe('Navigation Component', () => {
       
       // CTA button
       const ariaCtaLink = screen.getByTestId('nav-cta').querySelector('a')!
-      expect(ariaCtaLink).toHaveAttribute('aria-label', 'Get early access to withCare')
+      expect(ariaCtaLink).toHaveAttribute('aria-label', 'Get early access to pero')
     })
 
     it('supports keyboard navigation', async () => {

@@ -6,15 +6,15 @@ export const metadata: Metadata = {
   description: 'Be among the first to access a platform designed to make caregiving lighter. Join caregivers building community, finding support, and gaining practical tools.',
   keywords: ['caregiving', 'waitlist', 'support', 'community', 'healthcare', 'family caregivers'],
   openGraph: {
-    title: 'Join the withCare Waitlist',
+    title: 'Join the pero Waitlist',
     description: 'Be among the first to access a platform designed to make caregiving lighter. Join caregivers building community, finding support, and gaining practical tools.',
     type: 'website',
     images: [
       {
-        url: '/api/og?title=Join%20the%20Waitlist&subtitle=withCare',
+        url: '/api/og?title=Join%20the%20Waitlist&subtitle=pero',
         width: 1200,
         height: 630,
-        alt: 'withCare - Join the Waitlist',
+        alt: 'pero - Join the Waitlist',
       },
     ],
   },

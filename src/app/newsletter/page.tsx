@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Join the Waitlist - withCare',
+  title: 'Join the Waitlist - pero',
   description: 'Be the first to access the platform designed for family caregivers.',
 }
 

@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react'
 import type { Resource } from 'contentlayer/generated'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Search, ArrowRight, Clock } from 'lucide-react'
 import { NewsletterInline } from '@/components/newsletter-inline'
 
@@ -182,7 +181,7 @@ export function ResourcesPageClient({ resources }: ResourcesPageClientProps) {
           {/* Quick Access Cards */}
           <section className="py-6">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="mx-auto max-w-3xl">
+              <div className="mx-auto max-w-5xl">
                 <div className="grid gap-3 sm:grid-cols-3">
                   {quickAccess.map((item) => {
                     const resource = getResourceBySlug(item.slug)
@@ -193,20 +192,19 @@ export function ResourcesPageClient({ resources }: ResourcesPageClientProps) {
                         href={resource.url}
                         className="group flex items-center gap-3 rounded-xl border border-white/60 bg-white/40 p-4 transition-all hover:border-teal-200 hover:bg-white/70 dark:border-white/10 dark:bg-white/5 dark:hover:border-teal-800 dark:hover:bg-white/10"
                       >
-                        <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center">
-                          <Image
+                        <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
                             src={item.icon}
                             alt=""
-                            width={48}
-                            height={48}
-                            className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110"
+                            className="h-16 w-16 object-contain transition-transform duration-300 group-hover:scale-110"
                           />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-sm font-medium text-neutral-700 group-hover:text-teal-600 dark:text-neutral-200 dark:group-hover:text-teal-400">
+                          <p className="text-base font-medium text-neutral-700 group-hover:text-teal-600 dark:text-neutral-200 dark:group-hover:text-teal-400">
                             {item.label}
                           </p>
-                          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                          <p className="text-sm text-neutral-500 dark:text-neutral-400">
                             {item.description}
                           </p>
                         </div>

@@ -33,7 +33,7 @@ describe('Hero Component', () => {
       expect(ctaButton).toBeInTheDocument()
       expect(ctaLink).toBeInTheDocument()
       expect(ctaLink).toHaveAttribute('href', '/newsletter')
-      expect(ctaLink).toHaveAttribute('aria-label', 'Sign up for early access to withCare')
+      expect(ctaLink).toHaveAttribute('aria-label', 'Sign up for early access to pero')
       expect(ctaLink).toHaveTextContent('Get early access')
     })
 

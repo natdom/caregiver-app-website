@@ -147,4 +147,4 @@
 
 **Status: ✅ ALL ACCEPTANCE CRITERIA MET**
 
-The withCare marketing website is ready for deployment and meets all specified requirements. The codebase is production-ready with comprehensive documentation, accessibility compliance, and a complete content management system.
+The pero marketing website is ready for deployment and meets all specified requirements. The codebase is production-ready with comprehensive documentation, accessibility compliance, and a complete content management system.

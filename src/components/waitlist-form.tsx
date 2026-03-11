@@ -220,7 +220,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
                 htmlFor="consent" 
                 className="text-sm leading-relaxed cursor-pointer"
               >
-                I agree to receive updates about withCare <span className="text-red-500">*</span>
+                I agree to receive updates about pero <span className="text-red-500">*</span>
               </Label>
               <p id="consent-description" className="text-xs text-neutral-500 dark:text-neutral-400">
                 We'll send you launch updates and caregiver resources. Unsubscribe anytime.

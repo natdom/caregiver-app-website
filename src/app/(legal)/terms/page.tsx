@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'Terms and conditions for using withCare services.',
+  description: 'Terms and conditions for using pero services.',
   robots: {
     index: true,
     follow: true,

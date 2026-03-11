@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { WithCareLogo } from '@/components/withcare-logo'
+import { PeroLogo } from '@/components/pero-logo'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -50,7 +50,7 @@ export function Navigation() {
           className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500 focus-visible:ring-offset-2 rounded-md"
           onClick={closeMenu}
         >
-          <WithCareLogo className="h-11 w-auto" />
+          <PeroLogo className="h-11 w-auto" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -68,7 +68,7 @@ export function Navigation() {
             </Link>
           ))}
           <Button asChild size="sm" data-testid="nav-cta">
-            <Link href="/waitlist" aria-label="Join the withCare waitlist">
+            <Link href="/waitlist" aria-label="Join the pero waitlist">
               Join waitlist
             </Link>
           </Button>
@@ -119,7 +119,7 @@ export function Navigation() {
                   </Link>
                 ))}
                 <Button asChild className="mt-4" data-testid="mobile-nav-cta">
-                  <Link href="/waitlist" onClick={closeMenu} aria-label="Join the withCare waitlist">
+                  <Link href="/waitlist" onClick={closeMenu} aria-label="Join the pero waitlist">
                     Join waitlist
                   </Link>
                 </Button>

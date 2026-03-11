@@ -94,7 +94,7 @@ export function NewsletterInline({
             Join our early updates.
           </p>
           <p className="mb-4 text-sm text-neutral-600 dark:text-neutral-300">
-            Follow progress, share feedback, and help shape withCare as it grows.
+            Follow progress, share feedback, and help shape pero as it grows.
           </p>
 
           <form

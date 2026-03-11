@@ -88,7 +88,7 @@ export default function ContactPage() {
               Get in touch
             </h1>
             <p className="mt-6 text-xl leading-8 text-neutral-600 dark:text-neutral-200">
-              Have questions, ideas, or feedback as we build withCare? We'd love
+              Have questions, ideas, or feedback as we build pero? We'd love
               to hear from you.
             </p>
           </div>
@@ -115,10 +115,10 @@ export default function ContactPage() {
                         </div>
                         <div className="text-neutral-600 dark:text-neutral-200">
                           <a
-                            href="mailto:hello@withcare.app"
+                            href="mailto:hello@pero.app"
                             className="hover:text-teal-600 dark:hover:text-teal-400"
                           >
-                            hello@withcare.app
+                            hello@pero.app
                           </a>
                         </div>
                       </div>
@@ -240,7 +240,7 @@ export default function ContactPage() {
                       <Textarea
                         id="message"
                         {...register('message')}
-                        placeholder="Share your ideas, questions, or feedback as we build withCare..."
+                        placeholder="Share your ideas, questions, or feedback as we build pero..."
                         className="min-h-[120px]"
                         disabled={isLoading}
                         aria-invalid={errors.message ? 'true' : 'false'}

@@ -4,8 +4,8 @@ import { CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: "You're in – withCare",
-  description: "Thanks for joining the withCare waitlist. We'll be in touch soon.",
+  title: "You're in – pero",
+  description: "Thanks for joining the pero waitlist. We'll be in touch soon.",
   robots: {
     index: false,
     follow: true,
@@ -29,7 +29,7 @@ export default function WaitlistSuccessPage() {
           </h1>
 
           <p className="text-xl text-neutral-600 dark:text-neutral-300 mb-3">
-            Welcome to the withCare community.
+            Welcome to the pero community.
           </p>
 
           <p className="text-neutral-500 dark:text-neutral-400 mb-10">

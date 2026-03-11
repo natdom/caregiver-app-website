@@ -20,7 +20,7 @@ describe('Partners Page Metadata', () => {
 
     it('has Open Graph metadata', () => {
       expect(metadata.openGraph).toBeDefined()
-      expect(metadata.openGraph?.title).toBe('Partners - withCare')
+      expect(metadata.openGraph?.title).toBe('Partners - pero')
       expect(metadata.openGraph?.type).toBe('website')
     })
   })
@@ -47,7 +47,7 @@ describe('Partners Page Metadata', () => {
       )
       const schema = JSON.parse(jsonLdScript?.textContent || '{}')
 
-      expect(schema.name).toBe('withCare')
+      expect(schema.name).toBe('pero')
       expect(schema.description).toContain('comprehensive platform')
       expect(schema.url).toBe('https://support.network')
       expect(schema.contactPoint).toBeDefined()

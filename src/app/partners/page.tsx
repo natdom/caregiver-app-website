@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     'Join us in building support for 53M+ family caregivers who need better tools and community.',
   openGraph: {
-    title: 'Partners - withCare',
+    title: 'Partners - pero',
     description:
       'Join us in building support for 53M+ family caregivers who need better tools and community.',
     type: 'website',
@@ -135,10 +135,10 @@ export default function PartnersPage() {
             <p className="text-neutral-600 dark:text-neutral-300">
               Reach out at{' '}
               <Link
-                href="mailto:hello@withcare.app"
+                href="mailto:hello@pero.app"
                 className="text-coral-600 hover:text-coral-700 dark:text-coral-400 dark:hover:text-coral-300"
               >
-                hello@withcare.app
+                hello@pero.app
               </Link>
             </p>
           </div>

@@ -22,14 +22,14 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'withCare - A supportive space for caregivers of all kinds',
-    template: '%s | withCare',
+    default: 'pero - A supportive space for caregivers of all kinds',
+    template: '%s | pero',
   },
   description: 'To make every caregiver\'s day a little lighter through connection, clarity, and care.',
   keywords: ['caregiving', 'support', 'community', 'healthcare', 'family', 'eldercare', 'disability'],
-  authors: [{ name: 'withCare Team' }],
-  creator: 'withCare',
-  publisher: 'withCare',
+  authors: [{ name: 'pero Team' }],
+  creator: 'pero',
+  publisher: 'pero',
   formatDetection: {
     email: false,
     address: false,
@@ -43,21 +43,21 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: '/',
-    siteName: 'withCare',
-    title: 'withCare - A supportive space for caregivers of all kinds',
+    siteName: 'pero',
+    title: 'pero - A supportive space for caregivers of all kinds',
     description: 'To make every caregiver\'s day a little lighter through connection, clarity, and care.',
     images: [
       {
         url: '/api/og',
         width: 1200,
         height: 630,
-        alt: 'withCare - Caregiving Support Community',
+        alt: 'pero - Caregiving Support Community',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'withCare - A supportive space for caregivers of all kinds',
+    title: 'pero - A supportive space for caregivers of all kinds',
     description: 'To make every caregiver\'s day a little lighter through connection, clarity, and care.',
     images: ['/api/og'],
   },
@@ -85,7 +85,7 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-          enableSystem
+          enableSystem={true}
           disableTransitionOnChange
         >
           <SkipToContent />

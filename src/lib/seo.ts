@@ -21,7 +21,7 @@ export function generateSEO({
   modifiedTime,
   authors,
 }: SEOProps): Metadata {
-  const siteName = 'withCare'
+  const siteName = 'pero'
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://support.network'
 
   const fullTitle = title
@@ -94,7 +94,7 @@ export function generateStructuredData(type: 'website' | 'organization' | 'artic
       return {
         ...commonData,
         '@type': 'WebSite',
-        name: 'withCare',
+        name: 'pero',
         url: baseUrl,
         description: 'A supportive space for caregivers of all kinds',
         potentialAction: {
@@ -111,12 +111,12 @@ export function generateStructuredData(type: 'website' | 'organization' | 'artic
       return {
         ...commonData,
         '@type': 'Organization',
-        name: 'withCare',
+        name: 'pero',
         url: baseUrl,
         description: 'Making every caregiver\'s day a little lighter through connection, clarity, and care.',
         contactPoint: {
           '@type': 'ContactPoint',
-          email: 'hello@withcare.app',
+          email: 'hello@pero.app',
           contactType: 'customer service',
         },
         sameAs: [
@@ -139,7 +139,7 @@ export function generateStructuredData(type: 'website' | 'organization' | 'artic
         },
         publisher: {
           '@type': 'Organization',
-          name: 'withCare',
+          name: 'pero',
           url: baseUrl,
         },
         mainEntityOfPage: {

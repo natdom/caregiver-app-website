@@ -69,7 +69,7 @@ export function FundingSnapshot() {
           <div className="mt-10 text-center">
             <Button asChild size="lg" variant="outline">
               <Link href="/about">
-                Learn more about withCare{' '}
+                Learn more about pero{' '}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The withCare waitlist system is designed for high conversion rates, comprehensive accessibility, and detailed analytics. Built with React Server Actions, Zod validation, and extensive testing.
+The pero waitlist system is designed for high conversion rates, comprehensive accessibility, and detailed analytics. Built with React Server Actions, Zod validation, and extensive testing.
 
 ## Architecture
 
@@ -259,4 +259,4 @@ CREATE INDEX idx_waitlist_submitted_at ON waitlist_entries(submitted_at);
 
 ---
 
-**🎯 Goal**: Convert visitors into engaged waitlist members who will become early users and advocates for withCare.
+**🎯 Goal**: Convert visitors into engaged waitlist members who will become early users and advocates for pero.
