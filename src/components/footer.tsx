@@ -100,10 +100,10 @@ export function Footer() {
             <p className="mt-4 text-xs leading-5 text-neutral-400 sm:mt-0">
               Contact:{' '}
               <a
-                href="mailto:hello@pero.app"
+                href="mailto:hello@joinpero.com"
                 className="hover:text-neutral-200"
               >
-                hello@pero.app
+                hello@joinpero.com
               </a>
             </p>
           </div>

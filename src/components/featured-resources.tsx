@@ -49,6 +49,21 @@ export function FeaturedResources({ className }: FeaturedResourceProps) {
           </p>
         </div>
 
+        <Link
+          href="/explore"
+          className="group mb-6 flex items-center justify-between rounded-xl bg-[#FFF4F0] p-4 transition-all hover:bg-[#FFE9E2] dark:bg-[#2a1a14] dark:hover:bg-[#3a2018]"
+        >
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wide" style={{ color: '#FF6B4A' }}>
+              New to caregiving?
+            </p>
+            <h3 className="mt-0.5 font-medium text-neutral-800 dark:text-white">
+              Start here — you don't have to figure this out alone.
+            </h3>
+          </div>
+          <ArrowRight className="ml-4 h-5 w-5 flex-shrink-0 text-neutral-400 transition-transform group-hover:translate-x-1" style={{ color: '#FF6B4A' }} />
+        </Link>
+
         <div className="space-y-2">
           {featuredResources.map((resource) => (
             <Link

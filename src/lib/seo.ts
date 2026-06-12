@@ -22,7 +22,7 @@ export function generateSEO({
   authors,
 }: SEOProps): Metadata {
   const siteName = 'pero'
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://support.network'
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.joinpero.com'
 
   const fullTitle = title
     ? `${title} | ${siteName}`
@@ -83,7 +83,7 @@ export function generateSEO({
 }
 
 export function generateStructuredData(type: 'website' | 'organization' | 'article', data: any) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://support.network'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.joinpero.com'
   
   const commonData = {
     '@context': 'https://schema.org',
@@ -116,7 +116,7 @@ export function generateStructuredData(type: 'website' | 'organization' | 'artic
         description: 'Making every caregiver\'s day a little lighter through connection, clarity, and care.',
         contactPoint: {
           '@type': 'ContactPoint',
-          email: 'hello@pero.app',
+          email: 'hello@joinpero.com',
           contactType: 'customer service',
         },
         sameAs: [

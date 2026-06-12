@@ -5,24 +5,23 @@ Marketing website for the **pero** caregiver app.
 
 ---
 
-## Rebrand: withCare → pero
+## Current state (updated 2026-06-12)
 
-### ✅ Done
-- Logo PNGs replaced (`public/images/pero-logo.png`, `public/images/pero-logo-dark.png`)
-- Logo component renamed to `src/components/pero-logo.tsx`, exports `PeroLogo`
-- Imports updated in `navigation.tsx` and `footer.tsx`
-- Old `withcare-logo.tsx` deleted
-- Old `withcare-logo.png` / `withcare-logo-dark.png` deleted
-- All brand name instances of `withCare` replaced with `pero` across `src/`, `content/`, and docs
+### ✅ Rebrand complete
+- Logo: new pero logos (light + dark, transparent bg) in `public/images/`
+- Logo component: `src/components/pero-logo.tsx` — switches light/dark per theme
+- All `withCare` brand text → `pero` across entire codebase
+- Email: `hello@joinpero.com` everywhere
+- URLs: `https://www.joinpero.com` throughout (domain confirmed)
+- Theme: system auto (follows OS light/dark preference)
+
+### ✅ Icons
+- All clay icons in `public/icons/` re-cropped with tight alpha-threshold bounds
+- Centred correctly, consistent visual size
+- Rendered via plain `<img>` tags (not `next/image`) to avoid optimisation cache issues
+- Feature grid (`feature-grid.tsx`): `h-24 w-24 object-contain`
+- About page: `h-20 w-20 object-contain`
+- Explore quick-access: `h-16 w-16 object-contain`
 
 ### 🔧 Still needs attention
-
-**1. Domain / email — waiting on domain change**
-Email updated to `hello@pero.app` (temp until domain finalised). Still needs attention:
-- `src/app/page.tsx` — `https://pero.app` URLs in JSON-LD structured data (update when domain confirmed)
-
-**4. One test file**
-- `src/components/__tests__/waitlist-form.test.tsx:273` — has lowercase `withcare` in a string matcher
-
-**5. OG image**
-- `src/app/api/og/route.tsx` — dynamically generated social share image still shows generic branding; update closer to launch
+- `src/app/api/og/route.tsx` — OG social share image, update closer to launch

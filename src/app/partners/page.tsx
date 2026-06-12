@@ -135,10 +135,10 @@ export default function PartnersPage() {
             <p className="text-neutral-600 dark:text-neutral-300">
               Reach out at{' '}
               <Link
-                href="mailto:hello@pero.app"
+                href="mailto:hello@joinpero.com"
                 className="text-coral-600 hover:text-coral-700 dark:text-coral-400 dark:hover:text-coral-300"
               >
-                hello@pero.app
+                hello@joinpero.com
               </Link>
             </p>
           </div>

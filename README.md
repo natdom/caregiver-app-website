@@ -47,7 +47,7 @@ A modern, accessible marketing website for pero - a caregiving support community
 
 **Vercel Deployment:** Contentlayer is **enabled** during Vercel builds via the build command: `contentlayer build && next build`
 - ✅ All blog posts are generated and visible on production
-- ✅ Check live site at [withcare.app/resources](https://withcare.app/resources)
+- ✅ Check live site at [joinpero.com/explore](https://www.joinpero.com/explore)
 
 **If you need to work on blog posts:**
 1. Edit MDX files in `content/resources/`

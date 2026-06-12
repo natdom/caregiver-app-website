@@ -270,7 +270,7 @@ describe('WaitlistForm', () => {
       render(<WaitlistForm />)
 
       expect(
-        screen.getByText(/join early members shaping withcare/i)
+        screen.getByText(/We'll send you launch updates and caregiver resources/i)
       ).toBeInTheDocument()
     })
 

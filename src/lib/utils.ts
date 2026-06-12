@@ -22,6 +22,6 @@ export function formatDate(
 }
 
 export function absoluteUrl(path: string) {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://support.network'
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.joinpero.com'
   return new URL(path, baseUrl).toString()
 }

@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://support.network'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.joinpero.com'),
   alternates: {
     canonical: '/',
   },
