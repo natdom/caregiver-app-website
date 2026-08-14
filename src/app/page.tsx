@@ -1,5 +1,6 @@
 import { Hero } from '@/components/hero'
 import { FeatureGrid } from '@/components/feature-grid'
+import { AssessmentCTA } from '@/components/assessment-cta'
 import { FeaturedResources } from '@/components/featured-resources'
 import { TestimonialCarousel } from '@/components/testimonial-carousel'
 import { FundingSnapshot } from '@/components/funding-snapshot'
@@ -52,6 +53,7 @@ export default function HomePage() {
       />
       <Hero />
       <FeatureGrid />
+      <AssessmentCTA />
       <FeaturedResources />
       <TestimonialCarousel />
       <FundingSnapshot />

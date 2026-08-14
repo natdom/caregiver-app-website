@@ -4,8 +4,10 @@ import { z } from 'zod'
 const newsletterSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   name: z.string().optional(),
-  role: z.string().optional(), 
+  role: z.string().optional(),
   challenge: z.string().optional(),
+  source: z.string().optional(),
+  assessmentStage: z.string().optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -20,7 +22,7 @@ export async function POST(request: NextRequest) {
       ...validatedData,
       timestamp: new Date().toISOString(),
       ip: request.ip || 'unknown',
-      source: 'website-newsletter',
+      source: validatedData.source ?? 'website-newsletter',
     }
     
     console.log('Newsletter subscription:', subscription)
