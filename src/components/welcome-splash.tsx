@@ -48,6 +48,7 @@ export function WelcomeSplash() {
   function handleAssessmentClick() {
     markSeen()
     trackSplashEvent('splash_assessment_clicked')
+    setOpen(false)
   }
 
   return (

@@ -70,13 +70,16 @@ describe('WelcomeSplash', () => {
       expect(mockTrackSplashEvent).toHaveBeenCalledWith('splash_browse_clicked')
     })
 
-    it('marks localStorage seen and tracks splash_assessment_clicked when the assessment link is clicked', async () => {
+    it('closes the dialog, marks localStorage seen, and tracks splash_assessment_clicked when the assessment link is clicked', async () => {
       const user = userEvent.setup()
       render(<WelcomeSplash />)
       await screen.findByRole('dialog')
 
       await user.click(screen.getByRole('link', { name: /take the assessment/i }))
 
+      await waitFor(() => {
+        expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      })
       expect(window.localStorage.getItem(SPLASH_SEEN_KEY)).toBe('1')
       expect(mockTrackSplashEvent).toHaveBeenCalledWith('splash_assessment_clicked')
     })
