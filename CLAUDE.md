@@ -5,6 +5,17 @@ Marketing website for the **pero** caregiver app.
 
 ---
 
+## Workflow: Codex codes, Claude orchestrates
+
+For anything beyond a trivial one-file fix, this repo uses Codex CLI as the implementer with Claude scoping, dispatching, verifying, reviewing, and owning all git/GitHub actions. **Use the `codex-task` skill (`.claude/skills/codex-task/SKILL.md`) for the full checklist** — issue → branch → task prompt → `codex exec -s workspace-write` (no `--approve-for-me`) → independent test verification → review → PR → merge. Repo-wide conventions Codex should already know live in `AGENTS.md` at repo root — keep that file current when conventions change, rather than re-explaining them in every task prompt.
+
+Key things not to relearn the hard way:
+- `codex exec -s workspace-write -C <path> "<prompt>"` (no `--approve-for-me`, no `--dangerously-bypass-*`) runs cleanly under this harness's auto-mode classifier. Adding `--approve-for-me` gets the whole call denied outright.
+- `gh pr merge` into `main` also trips the auto-mode classifier (as does anything else that changes shared/remote state) — that's expected, not a bug; get the user's approval rather than working around it.
+- Always independently re-run tests (`npx vitest run`) rather than trusting Codex's own "tests pass" claim, and diff against the known pre-existing failure baseline (see "Known issues" in `HANDOVER.md`) rather than expecting a fully clean suite.
+
+---
+
 ## Current state (updated 2026-09-07)
 
 ### ✅ First-visit welcome splash
