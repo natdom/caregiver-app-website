@@ -5,6 +5,7 @@ import { FeaturedResources } from '@/components/featured-resources'
 import { TestimonialCarousel } from '@/components/testimonial-carousel'
 import { FundingSnapshot } from '@/components/funding-snapshot'
 import { NewsletterInline } from '@/components/newsletter-inline'
+import { WelcomeSplash } from '@/components/welcome-splash'
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -51,6 +52,7 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
+      <WelcomeSplash />
       <Hero />
       <FeatureGrid />
       <AssessmentCTA />
