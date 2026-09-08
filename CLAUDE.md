@@ -5,7 +5,16 @@ Marketing website for the **pero** caregiver app.
 
 ---
 
-## Current state (updated 2026-06-12)
+## Current state (updated 2026-09-07)
+
+### ✅ First-visit welcome splash
+- `src/components/welcome-splash.tsx` — modal shown once per browser on first homepage visit, gated by `localStorage['pero_splash_seen']`
+- Offers a choice: "Take the assessment →" (`/assessment`) or "Browse the site" (dismiss)
+- Built on a new Radix Dialog primitive, `src/components/ui/dialog.tsx` (shadcn-style, matches `ui/toast.tsx` conventions) — reuse this for any future modal needs rather than adding another dialog implementation
+- Analytics: `src/lib/splash/analytics.ts` (`splash_shown`, `splash_assessment_clicked`, `splash_browse_clicked`, `splash_dismissed`)
+- Tests: `src/components/__tests__/welcome-splash.test.tsx`
+- Mounted only in `src/app/page.tsx` (homepage), not the root layout — keeps it homepage-only by construction
+- Tracking issue: [#12](https://github.com/natdom/caregiver-app-website/issues/12) (closed), shipped in PR #14
 
 ### ✅ Rebrand complete
 - Logo: new pero logos (light + dark, transparent bg) in `public/images/`
