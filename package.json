@@ -9,12 +9,13 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "typecheck": "tsc --noEmit",
-    "test": "vitest",
+    "test": "vitest run",
     "test:ui": "vitest --ui",
     "format": "prettier --write .",
     "prepare": "husky install",
     "export-submissions": "tsx scripts/export-submissions.ts",
-    "postbuild": "next-sitemap"
+    "postbuild": "next-sitemap",
+    "test:ci": "VITEST_QUARANTINE=skip vitest run"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
