@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import {
+  isEmailConfigured,
+  sendNewsletterNotification,
+} from '@/lib/email/resend'
 
 const newsletterSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -28,14 +32,42 @@ export async function POST(request: NextRequest) {
 
     console.log('Newsletter subscription:', subscriptionEvent)
 
-    // TODO(#24): Add durable storage and email delivery. This route currently
-    // persists nothing; the redacted event above is deliberately not a system
-    // of record for newsletter subscriptions.
-    // await addToNewsletterList(validatedData.email)
-    // await sendWelcomeEmail(validatedData.email)
+    if (!isEmailConfigured()) {
+      return NextResponse.json(
+        {
+          error:
+            'This form is temporarily unavailable. Please email hello@joinpero.com directly.',
+        },
+        { status: 503 }
+      )
+    }
+
+    try {
+      const result = await sendNewsletterNotification(validatedData)
+      if (result.audienceError) {
+        console.error('Newsletter audience error:', result.audienceError)
+      }
+    } catch (error) {
+      const errorDetails =
+        error instanceof Error
+          ? { name: error.name, message: error.message }
+          : { name: 'UnknownError', message: 'Resend request failed' }
+
+      console.error('Newsletter delivery error:', errorDetails)
+      return NextResponse.json(
+        {
+          error:
+            'We could not process your signup. Please email hello@joinpero.com directly.',
+        },
+        { status: 502 }
+      )
+    }
 
     return NextResponse.json(
-      { message: 'Thank you for joining! We\'ll keep you updated on our progress.' },
+      {
+        message:
+          "Thank you for joining! We'll keep you updated on our progress.",
+      },
       { status: 200 }
     )
   } catch (error) {
@@ -46,9 +78,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const errorDetails = error instanceof Error
-      ? { name: error.name, message: error.message }
-      : { name: 'UnknownError', message: 'An unexpected error occurred' }
+    const errorDetails =
+      error instanceof Error
+        ? { name: error.name, message: error.message }
+        : { name: 'UnknownError', message: 'An unexpected error occurred' }
 
     console.error('Newsletter signup error:', errorDetails)
     return NextResponse.json(

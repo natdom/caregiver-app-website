@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
+import { isEmailConfigured, sendContactNotification } from '@/lib/email/resend'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -22,14 +23,36 @@ export async function POST(request: NextRequest) {
 
     console.log('Contact form submission:', submissionEvent)
 
-    // TODO(#24): Add durable storage and email delivery. This route currently
-    // persists nothing; the redacted event above is deliberately not a system
-    // of record for contact submissions.
-    // await sendContactFormEmail(validatedData)
-    // await storeContactSubmission(validatedData)
+    if (!isEmailConfigured()) {
+      return NextResponse.json(
+        {
+          error:
+            'This form is temporarily unavailable. Please email hello@joinpero.com directly.',
+        },
+        { status: 503 }
+      )
+    }
+
+    try {
+      await sendContactNotification(validatedData)
+    } catch (error) {
+      const errorDetails =
+        error instanceof Error
+          ? { name: error.name, message: error.message }
+          : { name: 'UnknownError', message: 'Resend request failed' }
+
+      console.error('Contact form delivery error:', errorDetails)
+      return NextResponse.json(
+        {
+          error:
+            'We could not deliver your message. Please email hello@joinpero.com directly.',
+        },
+        { status: 502 }
+      )
+    }
 
     return NextResponse.json(
-      { message: 'Thank you for your message. We\'ll be in touch soon!' },
+      { message: "Thank you for your message. We'll be in touch soon!" },
       { status: 200 }
     )
   } catch (error) {
@@ -40,9 +63,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const errorDetails = error instanceof Error
-      ? { name: error.name, message: error.message }
-      : { name: 'UnknownError', message: 'An unexpected error occurred' }
+    const errorDetails =
+      error instanceof Error
+        ? { name: error.name, message: error.message }
+        : { name: 'UnknownError', message: 'An unexpected error occurred' }
 
     console.error('Contact form error:', errorDetails)
     return NextResponse.json(
