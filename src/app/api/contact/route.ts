@@ -13,22 +13,20 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validatedData = contactSchema.parse(body)
 
-    // TODO: Replace with actual email sending service (Resend)
-    // For now, we'll just log the submission and simulate success
-    
-    const submission = {
-      ...validatedData,
+    const submissionEvent = {
+      event: 'contact_form_submitted',
       timestamp: new Date().toISOString(),
-      ip: request.ip || 'unknown',
+      role: validatedData.role,
+      messageLength: validatedData.message.length,
     }
-    
-    console.log('Contact form submission:', submission)
-    
-    // TODO: Send email notification
+
+    console.log('Contact form submission:', submissionEvent)
+
+    // TODO(#24): Add durable storage and email delivery. This route currently
+    // persists nothing; the redacted event above is deliberately not a system
+    // of record for contact submissions.
     // await sendContactFormEmail(validatedData)
-    
-    // TODO: Store in database or file system
-    // await storeContactSubmission(submission)
+    // await storeContactSubmission(validatedData)
 
     return NextResponse.json(
       { message: 'Thank you for your message. We\'ll be in touch soon!' },
@@ -42,7 +40,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.error('Contact form error:', error)
+    const errorDetails = error instanceof Error
+      ? { name: error.name, message: error.message }
+      : { name: 'UnknownError', message: 'An unexpected error occurred' }
+
+    console.error('Contact form error:', errorDetails)
     return NextResponse.json(
       { error: 'Something went wrong. Please try again later.' },
       { status: 500 }
