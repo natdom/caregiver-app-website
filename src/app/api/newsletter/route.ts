@@ -15,22 +15,23 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validatedData = newsletterSchema.parse(body)
 
-    // TODO: Replace with actual email service integration (Resend, Mailchimp, etc.)
-    // For now, we'll just log the subscription and simulate success
-    
-    const subscription = {
-      ...validatedData,
+    const subscriptionEvent = {
+      event: 'newsletter_subscription_created',
       timestamp: new Date().toISOString(),
-      ip: request.ip || 'unknown',
       source: validatedData.source ?? 'website-newsletter',
+      role: validatedData.role,
+      assessmentStage: validatedData.assessmentStage,
+      hasName: Boolean(validatedData.name),
+      hasChallenge: Boolean(validatedData.challenge),
+      challengeLength: validatedData.challenge?.length ?? 0,
     }
-    
-    console.log('Newsletter subscription:', subscription)
-    
-    // TODO: Add to email marketing service
+
+    console.log('Newsletter subscription:', subscriptionEvent)
+
+    // TODO(#24): Add durable storage and email delivery. This route currently
+    // persists nothing; the redacted event above is deliberately not a system
+    // of record for newsletter subscriptions.
     // await addToNewsletterList(validatedData.email)
-    
-    // TODO: Send welcome email
     // await sendWelcomeEmail(validatedData.email)
 
     return NextResponse.json(
@@ -45,7 +46,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.error('Newsletter signup error:', error)
+    const errorDetails = error instanceof Error
+      ? { name: error.name, message: error.message }
+      : { name: 'UnknownError', message: 'An unexpected error occurred' }
+
+    console.error('Newsletter signup error:', errorDetails)
     return NextResponse.json(
       { error: 'Something went wrong. Please try again later.' },
       { status: 500 }
