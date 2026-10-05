@@ -7,7 +7,7 @@ describe('Redirects Configuration', () => {
   it('should have press to partners redirect configured', async () => {
     // This test verifies the redirect configuration exists
     // In a real app, you would test the actual redirect behavior
-    const { default: nextConfig } = await import('../../next.config.js')
+    const { default: nextConfig } = await import('../../../next.config.js')
     
     const redirects = await nextConfig.redirects()
     const pressRedirect = redirects.find(redirect => redirect.source === '/press')
@@ -18,7 +18,7 @@ describe('Redirects Configuration', () => {
   })
   
   it('should have proper redirect structure', async () => {
-    const { default: nextConfig } = await import('../../next.config.js')
+    const { default: nextConfig } = await import('../../../next.config.js')
     const redirects = await nextConfig.redirects()
     
     redirects.forEach(redirect => {
