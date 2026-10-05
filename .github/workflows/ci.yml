@@ -28,9 +28,11 @@ jobs:
       - name: Lint
         run: npm run lint < /dev/null
 
-      # Runs every test EXCEPT the quarantined files listed in vitest.config.ts.
-      # 46 tests across 6 files, all green. A suite that is permanently red
-      # gates nothing, so the gate is the part that is actually green.
+      # Runs every test EXCEPT the quarantined files listed in vitest.config.ts,
+      # which is the single source of truth for what is excluded and why.
+      # A suite that is permanently red gates nothing, so the gate is the part
+      # that is actually green. Counts deliberately not repeated here — they go
+      # stale immediately. See the per-file table in AGENTS.md.
       - name: Tests (gate)
         run: npm run test:ci
 
@@ -51,9 +53,9 @@ jobs:
 
       - run: npm ci
 
-      # The full picture including the 66 known failures. Never blocks: it is
-      # here so the number is visible on every PR and drift gets noticed.
-      # Expected as of 2026-10-03: 185 tests, 119 passed, 66 failed.
+      # The full picture including the known failures. Never blocks: it is here
+      # so the real number is visible on every PR and drift gets noticed.
+      # The expected baseline lives in AGENTS.md, not in this comment.
       - name: Full test suite
         continue-on-error: true
         run: npm test
