@@ -20,7 +20,7 @@ export function ResourcePageClient({ resource }: ResourcePageClientProps) {
 
   // Track scroll progress and 50% milestone
   useScrollTracking({
-    onScrollProgress: (progress) => {
+    onScrollProgress: (_progress) => {
       // Could add a progress bar here in the future
     }
   })

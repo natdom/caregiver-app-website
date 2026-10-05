@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Heart, Github, Twitter, Linkedin } from 'lucide-react'
 import { PeroLogo } from '@/components/pero-logo'
 
 const navigation = {
@@ -44,7 +43,7 @@ export function Footer() {
                 <h3 className="text-sm font-semibold leading-6 text-white">
                   Navigation
                 </h3>
-                <ul role="list" className="mt-6 space-y-4">
+                <ul className="mt-6 space-y-4">
                   {navigation.main.map((item) => (
                     <li key={item.name}>
                       <Link
@@ -61,7 +60,7 @@ export function Footer() {
                 <h3 className="text-sm font-semibold leading-6 text-white">
                   Legal
                 </h3>
-                <ul role="list" className="mt-6 space-y-4">
+                <ul className="mt-6 space-y-4">
                   {navigation.legal.map((item) => (
                     <li key={item.name}>
                       <Link

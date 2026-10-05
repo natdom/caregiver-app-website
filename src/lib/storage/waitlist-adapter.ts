@@ -82,12 +82,12 @@ export class FileWaitlistStorage implements WaitlistStorage {
 export class PostgresWaitlistStorage implements WaitlistStorage {
   constructor(private connectionString: string) {}
 
-  async create(data: WaitlistFormData & { ipAddress?: string; userAgent?: string }): Promise<WaitlistEntry> {
+  async create(_data: WaitlistFormData & { ipAddress?: string; userAgent?: string }): Promise<WaitlistEntry> {
     // TODO: Implement PostgreSQL storage
     throw new Error('PostgreSQL storage not yet implemented')
   }
 
-  async findByEmail(email: string): Promise<WaitlistEntry | null> {
+  async findByEmail(_email: string): Promise<WaitlistEntry | null> {
     // TODO: Implement PostgreSQL storage
     throw new Error('PostgreSQL storage not yet implemented')
   }

@@ -31,7 +31,13 @@
     "tailwindcss/no-custom-classname": "off",
     "tailwindcss/enforces-shorthand": "off",
     "@next/next/no-img-element": "off",
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "off",
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "depth": 3
+      }
+    ]
   },
   "settings": {
     "react": {
@@ -42,6 +48,10 @@
     "node_modules/",
     ".next/",
     "dist/",
-    ".contentlayer/"
+    ".contentlayer/",
+    "**/__tests__/**",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "src/test/**"
   ]
 }

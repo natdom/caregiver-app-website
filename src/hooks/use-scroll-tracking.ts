@@ -4,10 +4,9 @@ import { useEffect, useRef } from 'react'
 
 interface UseScrollTrackingProps {
   onScrollProgress: (progress: number) => void
-  threshold?: number
 }
 
-export function useScrollTracking({ onScrollProgress, threshold = 0.1 }: UseScrollTrackingProps) {
+export function useScrollTracking({ onScrollProgress }: UseScrollTrackingProps) {
   const hasTriggered = useRef(false)
 
   useEffect(() => {

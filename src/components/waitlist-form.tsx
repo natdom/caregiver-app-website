@@ -41,10 +41,9 @@ interface FormFieldProps {
   id: string
   children: React.ReactNode
   error?: string[]
-  required?: boolean
 }
 
-function FormField({ id, children, error, required }: FormFieldProps) {
+function FormField({ id, children, error }: FormFieldProps) {
   return (
     <div className="space-y-2">
       {children}
@@ -133,7 +132,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
         </FormField>
 
         {/* Email field (required) */}
-        <FormField id="email" error={state?.errors?.email} required>
+        <FormField id="email" error={state?.errors?.email}>
           <Label htmlFor="email" className="text-sm font-medium">
             Email address <span className="text-red-500">*</span>
           </Label>
@@ -150,7 +149,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
         </FormField>
 
         {/* Role field (required) */}
-        <FormField id="role" error={state?.errors?.role} required>
+        <FormField id="role" error={state?.errors?.role}>
           <Label className="text-sm font-medium">
             Your role <span className="text-red-500">*</span>
           </Label>
@@ -206,7 +205,7 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
         </FormField>
 
         {/* Consent checkbox (required) */}
-        <FormField id="consent" error={state?.errors?.consent} required>
+        <FormField id="consent" error={state?.errors?.consent}>
           <div className="flex items-start space-x-3">
             <Checkbox
               id="consent"

@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
-import { waitlistSchema, type WaitlistFormData } from '@/lib/validations/waitlist'
+import { waitlistSchema } from '@/lib/validations/waitlist'
 import { createWaitlistStorage } from '@/lib/storage/waitlist-adapter'
 import { revalidatePath } from 'next/cache'
 
