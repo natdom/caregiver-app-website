@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify (required)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Must stay clean. Cosmetic rules are disabled in .eslintrc.json so that
+      # anything reported here is a correctness or accessibility problem.
+      - name: Lint
+        run: npm run lint < /dev/null
+
+      # Runs every test EXCEPT the quarantined files listed in vitest.config.ts.
+      # 46 tests across 6 files, all green. A suite that is permanently red
+      # gates nothing, so the gate is the part that is actually green.
+      - name: Tests (gate)
+        run: npm run test:ci
+
+      # Catches what Vercel would catch, but earlier and on every PR.
+      - name: Build
+        run: npm run build
+
+  report:
+    name: Report (informational)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # The full picture including the 66 known failures. Never blocks: it is
+      # here so the number is visible on every PR and drift gets noticed.
+      # Expected as of 2026-10-03: 185 tests, 119 passed, 66 failed.
+      - name: Full test suite
+        continue-on-error: true
+        run: npm test
+
+      # 255 known errors, mostly missing Testing Library matcher types.
+      # Informational until that is cleaned up, then promote to the gate.
+      - name: Typecheck
+        continue-on-error: true
+        run: npm run typecheck

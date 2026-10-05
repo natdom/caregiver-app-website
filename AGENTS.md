@@ -34,9 +34,25 @@ npm run lint                 # eslint
 
 ## Known pre-existing issues — do not try to fix these unless your task is specifically about them
 
-- **~66 pre-existing failing tests** across `partners` page/metadata tests, `hero.test.tsx`, `navigation.test.tsx`, `newsletter-inline.test.tsx`, `topic-filter.test.tsx`, `use-scroll-tracking.test.tsx`, `feature-flags.test.ts`, `topic-utils.test.ts`. These fail identically on `main` regardless of any feature branch — confirmed by diffing `npx vitest run` output with/without unrelated changes. When asked to verify "no regressions," compare your failure count/list against this baseline, not against zero.
-- **`npx tsc --noEmit` errors on every `*.test.ts(x)` file** (`Cannot find name 'describe'/'it'/'expect'/'vi'`) — `tsconfig.json` doesn't include Vitest's global types even though `vitest.config.ts` sets `globals: true`. Tests still run fine under Vitest itself. Not worth fixing as a side effect of an unrelated task.
-- **`npm run lint` fails outright**: `Failed to load config "@typescript-eslint/recommended"`. Pre-existing, unrelated to feature work.
+- The verified test baseline from 2026-10-03 is **66 failures across 11 files**, out of 185 tests:
+
+  | file | failures |
+  |---|---:|
+  | `src/app/partners/__tests__/page.test.tsx` | 13 |
+  | `src/components/__tests__/newsletter-inline.test.tsx` | 12 |
+  | `src/components/__tests__/waitlist-form.test.tsx` | 7 |
+  | `src/hooks/__tests__/use-scroll-tracking.test.tsx` | 6 |
+  | `src/components/__tests__/navigation.test.tsx` | 6 |
+  | `src/components/__tests__/hero.test.tsx` | 6 |
+  | `src/app/partners/__tests__/metadata.test.tsx` | 6 |
+  | `src/components/__tests__/topic-filter.test.tsx` | 5 |
+  | `src/lib/__tests__/topic-utils.test.ts` | 3 |
+  | `src/lib/__tests__/feature-flags.test.ts` | 1 |
+  | `src/components/partners/__tests__/components.test.tsx` | 1 |
+
+  These fail identically on `main` regardless of any feature branch. When asked to verify "no regressions," compare the per-file failure counts against this baseline, not just the aggregate. `waitlist-form.test.tsx` (7 failures) is deliberately left failing because upcoming lead-capture work will rewrite that component and its tests together. `redirects.test.tsx` previously failed to *collect* (it runs in a node environment, and `src/test/setup.ts` touched `window` unguarded), so it contributed zero failures and was invisible in any pass/fail tally. Both are now fixed and its 2 tests pass. Current observed total: **185 tests — 119 passed, 66 failed, across 11 failing files**.
+- **`npx tsc --noEmit` loads Vitest globals correctly**, so test files no longer produce `Cannot find name 'describe'/'it'/'expect'/'vi'` noise. It currently reports 255 genuine type errors, primarily missing Testing Library matcher types, plus a small number of incompatible mock tuples/values, unresolved modules, and implicit `any` parameters.
+- **`npm run lint` loads the ESLint configuration correctly**. It currently reports 213 errors and 137 warnings across the codebase, primarily Tailwind classname ordering/shorthand/migration findings, unescaped JSX entities, unused variables, explicit `any`, and accessibility rules.
 
 ## Definition of done, by default
 

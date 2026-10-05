@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Users, Lightbulb, Heart } from 'lucide-react'
 import { getHeroVariant, heroVariants } from '@/lib/feature-flags'
 
 export function Hero() {
