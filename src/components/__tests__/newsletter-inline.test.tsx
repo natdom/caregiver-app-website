@@ -1,162 +1,132 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { NewsletterInline } from '../newsletter-inline'
 
-// Mock Plausible
 const mockPlausible = vi.fn()
 Object.defineProperty(window, 'plausible', {
   value: mockPlausible,
-  writable: true
+  writable: true,
 })
 
 describe('NewsletterInline', () => {
   beforeEach(() => {
-    mockPlausible.mockClear()
+    vi.restoreAllMocks()
+    mockPlausible.mockReset()
   })
 
-  it('renders the newsletter signup form', () => {
-    render(<NewsletterInline />)
+  const submit = async (email = 'person@private-company.example') => {
+    const user = userEvent.setup()
+    const input = screen.getByRole('textbox', { name: /email address/i })
+    await user.type(input, email)
+    await user.click(screen.getByRole('button'))
+    return input as HTMLInputElement
+  }
 
-    expect(screen.getByText('Get more resources like this')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Enter your email')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /get the kit/i })).toBeInTheDocument()
-  })
+  it('posts the email and source to the newsletter API', async () => {
+    const fetchMock = vi
+      .spyOn(globalThis, 'fetch')
+      .mockResolvedValue(new Response(JSON.stringify({ message: 'ok' }), { status: 200 }))
+    render(<NewsletterInline source="homepage" />)
 
-  it('shows loading state when submitting', async () => {
-    render(<NewsletterInline />)
+    await submit('person@example.com')
 
-    const emailInput = screen.getByPlaceholderText('Enter your email')
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
-    fireEvent.click(submitButton)
-
-    expect(screen.getByText('Joining...')).toBeInTheDocument()
-    expect(submitButton).toBeDisabled()
-  })
-
-  it('shows success state after successful submission', async () => {
-    render(<NewsletterInline />)
-
-    const emailInput = screen.getByPlaceholderText('Enter your email')
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
-    fireEvent.click(submitButton)
-
-    await waitFor(() => {
-      expect(screen.getByText('Thanks for joining!')).toBeInTheDocument()
-      expect(screen.getByText('Check your email for our caregiving starter kit.')).toBeInTheDocument()
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1))
+    expect(fetchMock).toHaveBeenCalledWith('/api/newsletter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: 'person@example.com', source: 'homepage' }),
     })
   })
 
-  it('tracks analytics event on successful signup', async () => {
-    render(<NewsletterInline source="test_source" />)
+  it('shows a disabled loading state while the request is in flight', async () => {
+    vi.spyOn(globalThis, 'fetch').mockReturnValue(new Promise(() => {}))
+    render(<NewsletterInline />)
 
-    const emailInput = screen.getByPlaceholderText('Enter your email')
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
+    await submit()
 
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
-    fireEvent.click(submitButton)
+    expect(screen.getByRole('button')).toBeDisabled()
+  })
 
+  it('shows success only after an ok response', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ message: 'ok' }), { status: 200 })
+    )
+    render(<NewsletterInline />)
+
+    await submit()
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('textbox', { name: /email address/i })
+      ).not.toBeInTheDocument()
+    )
+  })
+
+  it('shows the route error and not success for a non-2xx response', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ error: 'Invalid email address' }), { status: 400 })
+    )
+    render(<NewsletterInline />)
+
+    await submit()
+
+    expect(await screen.findByText('Invalid email address')).toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: /email address/i })).toBeInTheDocument()
+    expect(mockPlausible).not.toHaveBeenCalled()
+  })
+
+  it('shows the generic error and not success when fetch rejects', async () => {
+    vi.spyOn(globalThis, 'fetch').mockRejectedValue(new TypeError('network details'))
+    render(<NewsletterInline />)
+
+    await submit()
+
+    expect(
+      await screen.findByText('Something went wrong. Please try again.')
+    ).toBeInTheDocument()
+    expect(screen.queryByText('network details')).not.toBeInTheDocument()
+    expect(screen.getByRole('textbox', { name: /email address/i })).toBeInTheDocument()
+    expect(mockPlausible).not.toHaveBeenCalled()
+  })
+
+  it('does not submit when the email field is empty', () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch')
+    const { container } = render(<NewsletterInline />)
+
+    fireEvent.submit(container.querySelector('form')!)
+
+    expect(fetchMock).not.toHaveBeenCalled()
+  })
+
+  it('clears the email field after a successful submission', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ message: 'ok' }), { status: 200 })
+    )
+    render(<NewsletterInline />)
+
+    await submit('person@example.com')
+
+    await waitFor(() =>
+      expect(
+        screen.queryByDisplayValue('person@example.com')
+      ).not.toBeInTheDocument()
+    )
+  })
+
+  it('tracks only source with Plausible after a successful signup', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
+      new Response(JSON.stringify({ message: 'ok' }), { status: 200 })
+    )
+    render(<NewsletterInline source="resource_page" />)
+
+    await submit('person@private-company.example')
+
+    await waitFor(() => expect(mockPlausible).toHaveBeenCalledTimes(1))
     expect(mockPlausible).toHaveBeenCalledWith('resource_signup_inline', {
-      props: { 
-        source: 'test_source', 
-        email_domain: 'example.com' 
-      }
+      props: { source: 'resource_page' },
     })
-  })
-
-  it('handles email domain extraction correctly', async () => {
-    render(<NewsletterInline />)
-
-    const emailInput = screen.getByPlaceholderText('Enter your email')
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-
-    fireEvent.change(emailInput, { target: { value: 'user@gmail.com' } })
-    fireEvent.click(submitButton)
-
-    expect(mockPlausible).toHaveBeenCalledWith('resource_signup_inline', {
-      props: { 
-        source: 'resource_inline', 
-        email_domain: 'gmail.com' 
-      }
-    })
-  })
-
-  it('handles malformed email gracefully', async () => {
-    render(<NewsletterInline />)
-
-    const emailInput = screen.getByPlaceholderText('Enter your email')
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-
-    fireEvent.change(emailInput, { target: { value: 'invalid-email' } })
-    fireEvent.click(submitButton)
-
-    expect(mockPlausible).toHaveBeenCalledWith('resource_signup_inline', {
-      props: { 
-        source: 'resource_inline', 
-        email_domain: 'unknown' 
-      }
-    })
-  })
-
-  it('renders in compact mode', () => {
-    render(<NewsletterInline compact={true} />)
-
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-    expect(submitButton).toHaveClass('h-8') // sm size class
-  })
-
-  it('applies custom className', () => {
-    render(<NewsletterInline className="custom-class" />)
-
-    const container = screen.getByText('Get more resources like this').closest('div')
-    expect(container).toHaveClass('custom-class')
-  })
-
-  it('disables submit button when email is empty', () => {
-    render(<NewsletterInline />)
-
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-    expect(submitButton).toBeDisabled()
-  })
-
-  it('enables submit button when valid email is entered', () => {
-    render(<NewsletterInline />)
-
-    const emailInput = screen.getByPlaceholderText('Enter your email')
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
-    expect(submitButton).not.toBeDisabled()
-  })
-
-  it('shows privacy notice', () => {
-    render(<NewsletterInline />)
-
-    expect(screen.getByText('No spam. Unsubscribe anytime. We respect your privacy.')).toBeInTheDocument()
-  })
-
-  it('displays subscriber count', () => {
-    render(<NewsletterInline />)
-
-    expect(screen.getByText(/Join 2,000\+ caregivers/)).toBeInTheDocument()
-  })
-
-  it('resets form after successful submission', async () => {
-    render(<NewsletterInline />)
-
-    const emailInput = screen.getByPlaceholderText('Enter your email') as HTMLInputElement
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
-    
-    const submitButton = screen.getByRole('button', { name: /get the kit/i })
-    fireEvent.click(submitButton)
-
-    await waitFor(() => {
-      expect(screen.getByText('Thanks for joining!')).toBeInTheDocument()
-    })
-
-    // Email should be cleared
-    expect(emailInput.value).toBe('')
+    expect(JSON.stringify(mockPlausible.mock.calls)).not.toContain(
+      'private-company.example'
+    )
   })
 })

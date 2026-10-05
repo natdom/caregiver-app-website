@@ -31,20 +31,43 @@ export function NewsletterInline({
     setErrorMessage('')
 
     try {
-      // Track signup attempt
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source }),
+      })
+
+      if (!response.ok) {
+        let message = 'Something went wrong. Please try again.'
+
+        try {
+          const body: unknown = await response.json()
+          if (
+            typeof body === 'object' &&
+            body !== null &&
+            'error' in body &&
+            typeof body.error === 'string'
+          ) {
+            message = body.error
+          }
+        } catch {
+          // Use the generic message when the response body is unavailable.
+        }
+
+        setStatus('error')
+        setErrorMessage(message)
+        return
+      }
+
       if (typeof window !== 'undefined' && (window as any).plausible) {
         ;(window as any).plausible('resource_signup_inline', {
-          props: { source, email_domain: email.split('@')[1] || 'unknown' },
+          props: { source },
         })
       }
 
-      // Here you would typically call your email signup API
-      // For now, we'll simulate success
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-
-      setStatus('success')
       setEmail('')
-    } catch (error) {
+      setStatus('success')
+    } catch {
       setStatus('error')
       setErrorMessage('Something went wrong. Please try again.')
     }

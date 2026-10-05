@@ -20,7 +20,6 @@ import { resolve } from 'path'
 const quarantine = [
   'src/app/partners/__tests__/page.test.tsx',
   'src/app/partners/__tests__/metadata.test.tsx',
-  'src/components/__tests__/newsletter-inline.test.tsx',
   'src/components/__tests__/waitlist-form.test.tsx',
   'src/components/__tests__/navigation.test.tsx',
   'src/components/__tests__/hero.test.tsx',
