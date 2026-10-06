@@ -29,7 +29,7 @@ Marketing website for **pero**, a caregiver support app that is pre-launch. The 
 | Content | Contentlayer (MDX) — see note below |
 | Fonts | Inter + Plus Jakarta Sans (Google Fonts) |
 | Analytics | Plausible (script tag, no cookies) |
-| Email | Resend (installed, **not yet configured**) |
+| Email | Resend — **live**, domain verified, delivering in production |
 | Testing | Vitest + Testing Library |
 | Linting | ESLint + Prettier + Husky pre-commit |
 | Deployment | Vercel |
@@ -54,7 +54,7 @@ Contentlayer is disabled for local dev (`next.config.js` wraps it in a comment) 
 | `/about` | `src/app/about/page.tsx` | About pero |
 | `/contact` | `src/app/contact/page.tsx` | Contact form |
 | `/newsletter` | `src/app/newsletter/page.tsx` | Newsletter signup standalone page |
-| `/press` | redirect → `/partners` | Permanent 301 |
+| `/press` | redirect → `/partners` | Permanent **308** (Next `permanent: true`). The page behind it is unreachable — see #86 |
 | `/privacy`, `/terms`, `/accessibility` | `src/app/(legal)/` | Legal pages |
 | `/docs/design-system` | `src/app/docs/design-system/page.tsx` | Internal component reference |
 
@@ -169,7 +169,7 @@ Copy `.env.example` to `.env.local` to get started.
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | Yes | Set to `https://www.joinpero.com` in prod |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | No | Omit to disable analytics |
-| `RESEND_API_KEY` | No (yet) | Installed, needs config to send real emails |
+| `RESEND_API_KEY` | **Yes** | Set in Vercel. Without it both form routes return 503 rather than faking success |
 | `MAILCHIMP_API_KEY` / `MAILCHIMP_SERVER_PREFIX` / `MAILCHIMP_AUDIENCE_ID` | No (yet) | Alternative to Resend for newsletter |
 | `CONVERTKIT_API_KEY` / `CONVERTKIT_FORM_ID` | No (yet) | Second alternative |
 | `DATABASE_URL` | No (yet) | When set in production, switches waitlist to Postgres |
@@ -200,7 +200,8 @@ These are the most important gaps before launch:
 ```bash
 npm run dev -- -p 3000     # start dev server (use port 3000 to match local config)
 npm run build              # contentlayer + next build (matches Vercel)
-npm run test               # vitest in watch mode — use `npx vitest run` for a single pass (e.g. in CI or before a PR)
+npm run test               # vitest run — a single pass, NOT watch mode
+npm run test:ci            # the required CI gate: excludes quarantined files
 npm run typecheck          # tsc --noEmit
 npm run lint               # ESLint
 npm run export-submissions # export waitlist.json to CSV

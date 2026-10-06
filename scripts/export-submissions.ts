@@ -17,7 +17,6 @@ interface NewsletterSubmission {
   name: string
   email: string
   role: string
-  challenge?: string
   consent: boolean
   timestamp: string
   ip?: string
@@ -46,7 +45,6 @@ function getNewsletterSubmissions(): NewsletterSubmission[] {
       name: 'Jane Smith',
       email: 'jane@example.com',
       role: 'caregiver',
-      challenge: 'Finding time for self-care while caring for my elderly mother.',
       consent: true,
       timestamp: '2024-01-14T15:45:00Z',
       ip: '192.168.1.2',

@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 
 /**
- * Quarantined test files: known-failing as of 2026-10-03, 66 failures total.
+ * Quarantined test files: known-failing as of 2026-10-06, 53 failures total.
  * See the per-file table in AGENTS.md for counts.
  *
  * These are excluded from the CI gate (VITEST_QUARANTINE=skip) so that the
@@ -14,8 +14,10 @@ import { resolve } from 'path'
  * which is why they broke en masse at the rebrand. The intent is to delete
  * them alongside the components they cover rather than repair them in place.
  *
- * When a file is genuinely fixed, remove it from this list so it becomes
- * part of the required gate and cannot regress.
+ * A file leaves this list when its tests are rewritten against BEHAVIOUR —
+ * typically when the component it covers is changed — not by patching the
+ * existing copy-coupled assertions back to green. Removing it puts the file
+ * in the required gate, where it can no longer regress.
  */
 const quarantine = [
   'src/app/partners/__tests__/page.test.tsx',

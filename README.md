@@ -79,7 +79,6 @@ The site focuses on a single conversion goal: **waitlist signups**
 **2. Form Validation Testing:**
 - Submit empty form → Should show validation errors
 - Enter invalid email → Should show email format error
-- Type 500+ characters in challenge field → Should be limited
 - Uncheck consent → Should prevent submission
 
 **3. Success Flow Testing:**

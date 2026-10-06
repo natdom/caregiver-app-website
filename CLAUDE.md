@@ -50,13 +50,13 @@ Resend is wired up and **confirmed working in production**.
 
 - Raw PII no longer logged by the form routes (#31); route tests guard against regression
 - The newsletter widget no longer sends the submitted email's domain to Plausible (#92)
-- The free-text "biggest caregiving challenge" field is **gone** (#97) — it could capture health information about a third party, the person being cared for. The waitlist now collects name, email, role, consent. **Do not reintroduce free-text fields here.**
+- The free-text "biggest caregiving challenge" field is **gone** (#97) — it could capture health information about a third party, the person being cared for. The waitlist form now shows name (optional), email, role and consent. **Note the full stored record is larger than the visible form**: `submitWaitlistForm()` also captures the requester IP (`x-forwarded-for`/`x-real-ip`) and user agent, and `WaitlistEntry` persists both. Any privacy statement must account for those. **Do not reintroduce free-text fields here.**
 
 ### 🔴 The waitlist is still broken (#2) — highest-value open item
 
 `src/lib/storage/waitlist-adapter.ts`:
 
-- `DATABASE_URL` set → `PostgresWaitlistStorage`, every method throws
+- `DATABASE_URL` set **and** `NODE_ENV === 'production'` → `PostgresWaitlistStorage`, every method throws. Both conditions are required (`waitlist-adapter.ts:112`)
 - unset → writes `data/waitlist.json` on an **ephemeral serverless filesystem**, then **redirects to the success page**. Signups are silently lost.
 
 Plan agreed, written up on #2: **Resend Audiences with custom `properties`**. Blocked on an SDK upgrade (2.1.0 → 6.x — `properties` does not exist in 2.1.0) and on an Audience being created.

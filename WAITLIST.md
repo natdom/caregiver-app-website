@@ -1,5 +1,8 @@
 # Waitlist System Documentation
 
+> **Updated 2026-10-06:** the free-text "biggest caregiving challenge" field was removed in #97 — it could capture health information about a third party (the person being cared for) who never consented. References to it have been stripped from this document. Do not reintroduce free-text fields to this form.
+
+
 ## Overview
 
 The pero waitlist system is designed for high conversion rates, comprehensive accessibility, and detailed analytics. Built with React Server Actions, Zod validation, and extensive testing.
@@ -36,11 +39,9 @@ src/
 - **Server-side validation** with Zod schemas
 - **Real-time client validation** for better UX
 - **Comprehensive error handling** with field-specific messages
-- **Character limits** (500 chars for challenge field)
 
 ### ✅ User Segmentation
 - **Role-based tracking**: Family Caregiver, Healthcare Professional, Partner, Other
-- **Optional challenge field** for user insights
 - **Analytics integration** with role data
 
 ### ✅ Accessibility (WCAG 2.2 AA)
@@ -69,7 +70,6 @@ src/
 | `name` | Text | No | Optional string |
 | `email` | Email | Yes | Valid email format |
 | `role` | Radio | Yes | One of: caregiver, professional, partner, other |
-| `challenge` | Textarea | No | Max 500 characters |
 | `consent` | Checkbox | Yes | Must be checked |
 
 ## Storage System
@@ -95,7 +95,6 @@ interface WaitlistEntry {
   email: string
   name?: string
   role: 'caregiver' | 'professional' | 'partner' | 'other'
-  challenge?: string
   consent: boolean
   submittedAt: Date
 }
@@ -141,7 +140,6 @@ npm test src/components/__tests__/waitlist-form.test.tsx
 **Form Validation:**
 - [ ] Submit empty form → Shows all required field errors
 - [ ] Invalid email → Shows email format error
-- [ ] 500+ chars in challenge → Field limited to 500
 - [ ] Unchecked consent → Prevents submission
 - [ ] Valid submission → Redirects to success page
 
@@ -162,7 +160,7 @@ npm test src/components/__tests__/waitlist-form.test.tsx
 ### Tracked Events
 ```javascript
 // Form submission with segmentation
-analytics.waitlistSubmit(role, hasName, hasChallenge)
+analytics.waitlistSubmit(role, hasName)
 
 // Social sharing clicks
 analytics.pageView('twitter_share_click')
@@ -190,7 +188,6 @@ CREATE TABLE waitlist_entries (
   email VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255),
   role VARCHAR(50) NOT NULL CHECK (role IN ('caregiver', 'professional', 'partner', 'other')),
-  challenge TEXT,
   consent BOOLEAN NOT NULL DEFAULT false,
   submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -254,7 +251,6 @@ CREATE INDEX idx_waitlist_submitted_at ON waitlist_entries(submitted_at);
 ### Monitoring
 - **Form submission rate** via Plausible
 - **Error tracking** via server logs  
-- **User feedback** from challenge field responses
 - **Conversion funnel** analysis
 
 ---
