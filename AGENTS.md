@@ -34,7 +34,7 @@ npm run lint                 # eslint
 
 ## Known pre-existing issues — do not try to fix these unless your task is specifically about them
 
-- The verified test baseline from 2026-10-03 is **54 failures across 10 files**, out of 180 tests:
+- The verified test baseline from 2026-10-03 is **54 failures across 10 files**, out of 190 tests:
 
   | file | failures |
   |---|---:|
@@ -49,7 +49,9 @@ npm run lint                 # eslint
   | `src/lib/__tests__/feature-flags.test.ts` | 1 |
   | `src/components/partners/__tests__/components.test.tsx` | 1 |
 
-  These fail identically on `main` regardless of any feature branch. When asked to verify "no regressions," compare the per-file failure counts against this baseline, not just the aggregate. `waitlist-form.test.tsx` (7 failures) is deliberately left failing because upcoming lead-capture work will rewrite that component and its tests together. `redirects.test.tsx` previously failed to *collect* (it runs in a node environment, and `src/test/setup.ts` touched `window` unguarded), so it contributed zero failures and was invisible in any pass/fail tally. Both are now fixed and its 2 tests pass. Current observed total: **180 tests — 126 passed, 54 failed, across 10 failing files**.
+  These fail identically on `main` regardless of any feature branch. When asked to verify "no regressions," compare the per-file failure counts against this baseline, not just the aggregate. `waitlist-form.test.tsx` (7 failures) is deliberately left failing because upcoming lead-capture work will rewrite that component and its tests together. `redirects.test.tsx` previously failed to *collect* (it runs in a node environment, and `src/test/setup.ts` touched `window` unguarded), so it contributed zero failures and was invisible in any pass/fail tally. Both are now fixed and its 2 tests pass. Current observed total: **190 tests — 136 passed, 54 failed, across 10 failing files**.
+
+  The failure count and the failing-file list are the part that matters; the totals move whenever tests are added. They have now drifted three times in three PRs — see #94, which proposes generating these numbers in CI rather than maintaining them by hand.
 
   `newsletter-inline.test.tsx` left this list in #93: its component was reconnected to the API, its 13 copy-coupled tests were replaced with 8 behavioural ones, and the file was removed from the quarantine array in `vitest.config.ts` so it now sits in the required CI gate. That is the intended lifecycle — a quarantined file leaves when its tests are rewritten against behaviour, never by being repaired in place.
 
