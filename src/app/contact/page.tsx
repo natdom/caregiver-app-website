@@ -48,7 +48,6 @@ export default function ContactPage() {
     setIsLoading(true)
 
     try {
-      // TODO: Replace with actual API endpoint
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -58,7 +57,29 @@ export default function ContactPage() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to send message')
+        let message = 'Please try again later or email us directly.'
+
+        try {
+          const body: unknown = await response.json()
+          if (
+            typeof body === 'object' &&
+            body !== null &&
+            'error' in body &&
+            typeof body.error === 'string' &&
+            body.error.trim() !== ''
+          ) {
+            message = body.error
+          }
+        } catch {
+          // Use the generic message when the response body is unavailable.
+        }
+
+        toast({
+          title: 'Something went wrong',
+          description: message,
+          variant: 'destructive',
+        })
+        return
       }
 
       toast({

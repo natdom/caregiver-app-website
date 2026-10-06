@@ -165,7 +165,29 @@ export function AssessmentClient() {
         }),
       })
 
-      if (!res.ok) throw new Error('api_error')
+      if (!res.ok) {
+        let message = 'Something went wrong. Please try again.'
+
+        try {
+          const body: unknown = await res.json()
+          if (
+            typeof body === 'object' &&
+            body !== null &&
+            'error' in body &&
+            typeof body.error === 'string' &&
+            body.error.trim() !== ''
+          ) {
+            message = body.error
+          }
+        } catch {
+          // Use the generic message when the response body is unavailable.
+        }
+
+        setEmailStatus('error')
+        setEmailError(message)
+        trackAssessmentEvent('assessment_email_error', { error_type: 'api_error' })
+        return
+      }
 
       setEmailStatus('success')
       trackAssessmentEvent('assessment_email_success', {
