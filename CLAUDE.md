@@ -61,9 +61,12 @@ Resend is wired up and **confirmed working in production**.
 
 Plan agreed, written up on #2: **Resend Audiences with custom `properties`**. Blocked on an SDK upgrade (2.1.0 → 6.x — `properties` does not exist in 2.1.0) and on an Audience being created.
 
+### ✅ /press is retired (#86)
+
+Decided 2026-10-05: press is not relevant — `/partners` covers that audience. `src/app/press/page.tsx` is deleted, `/press` is gone from both `src/app/sitemap.ts` and the tracked `public/sitemap.xml` artifact, and the never-fired `press_view` analytics event is removed. **The `permanent: true` 308 to `/partners` stays** — it costs nothing and catches any link that went out in outreach. This unblocks the domain/crawl cluster (#1, #19, #35).
+
 ### 🔴 Open decisions only the owner can make
 
-- **Should `/press` exist?** (#86) It is a `permanent: true` 308 to `/partners` with a complete page unreachable behind it. Blocks the domain/crawl cluster (#1, #19, #35).
 - **Next 15+ migration** (#90) — check `next-contentlayer` compatibility first; it declares Next 12/13 support only.
 
 ### 🔧 Known traps

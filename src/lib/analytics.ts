@@ -25,7 +25,6 @@ export type AnalyticsEvent =
   | 'contact_submit'
   | 'resource_view'
   | 'about_view'
-  | 'press_view'
 
 export function trackEvent(
   event: AnalyticsEvent,

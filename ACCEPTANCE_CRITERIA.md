@@ -3,7 +3,7 @@
 ## ✅ Core Functionality
 - [x] Runs locally with `pnpm dev` (also works with `npm dev`)
 - [x] Deploys on Vercel without code changes
-- [x] Home, About, Resources (3 posts), Press, Contact, Newsletter, Privacy, Terms, Accessibility pages live
+- [x] Home, About, Resources (3 posts), Contact, Newsletter, Privacy, Terms, Accessibility pages live
 - [x] Waitlist + Contact forms validate with Zod and persist via server action
 - [x] Newsletter stubs wired to a provider interface
 - [x] JSON-LD (WebSite, Organization, Article) present; OG images generated
@@ -85,7 +85,7 @@
 ### Page Content
 - [x] Compelling homepage with clear CTAs
 - [x] Informative About page with mission/values
-- [x] Comprehensive Press kit for partners
+- [n/a] Press kit — retired in #86; `/press` 308s to `/partners`, which serves this audience
 - [x] Professional legal pages
 - [x] Contact information and forms
 
