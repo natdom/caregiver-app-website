@@ -54,7 +54,7 @@ Contentlayer is disabled for local dev (`next.config.js` wraps it in a comment) 
 | `/about` | `src/app/about/page.tsx` | About pero |
 | `/contact` | `src/app/contact/page.tsx` | Contact form |
 | `/newsletter` | `src/app/newsletter/page.tsx` | Newsletter signup standalone page |
-| `/press` | redirect → `/partners` | Permanent **308** (Next `permanent: true`). The page behind it is unreachable — see #86 |
+| `/press` | redirect → `/partners` | Permanent **308** (Next `permanent: true`). The page was deleted in #86 — press is not a thing pero does; the redirect stays to catch any old inbound link |
 | `/privacy`, `/terms`, `/accessibility` | `src/app/(legal)/` | Legal pages |
 | `/docs/design-system` | `src/app/docs/design-system/page.tsx` | Internal component reference |
 
