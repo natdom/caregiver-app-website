@@ -83,7 +83,7 @@ Accepts `?title=` and `?subtitle=` query params. Used by all pages with custom O
 ## Data layer
 
 ### Waitlist (`src/lib/storage/waitlist-adapter.ts`)
-Uses file-based storage in `data/waitlist.json` (gitignored). A `PostgresWaitlistStorage` stub exists for a future `DATABASE_URL` migration. The factory function `createWaitlistStorage()` will switch automatically if `DATABASE_URL` is set in production.
+`createWaitlistStorage()` returns `ResendWaitlistStorage` when `RESEND_API_KEY` is set, falls back to `data/waitlist.json` (gitignored) only outside production, and **throws in production when the key is missing** — never silently writing to the ephemeral serverless filesystem. The Postgres stub and the `DATABASE_URL` branch were deleted in #2.
 
 ### Resources (Contentlayer)
 MDX files live in `content/resources/`. The `src/lib/contentlayer-shim.ts` bridges the Contentlayer types for local dev when the plugin is disabled.
@@ -169,10 +169,9 @@ Copy `.env.example` to `.env.local` to get started.
 |---|---|---|
 | `NEXT_PUBLIC_SITE_URL` | Yes | Set to `https://www.joinpero.com` in prod |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | No | Omit to disable analytics |
-| `RESEND_API_KEY` | **Yes** | Set in Vercel. Without it both form routes return 503 rather than faking success |
+| `RESEND_API_KEY` | **Yes** | Email and waitlist storage; set in Vercel. Must be a **full-access** key — sending-only keys cannot write contacts. Without it email routes return 503, while the waitlist server action returns an error state |
 | `MAILCHIMP_API_KEY` / `MAILCHIMP_SERVER_PREFIX` / `MAILCHIMP_AUDIENCE_ID` | No (yet) | Alternative to Resend for newsletter |
 | `CONVERTKIT_API_KEY` / `CONVERTKIT_FORM_ID` | No (yet) | Second alternative |
-| `DATABASE_URL` | No (yet) | When set in production, switches waitlist to Postgres |
 | `NEXT_PUBLIC_HERO_VARIANT` | No | `'A'` or `'B'`; defaults to B |
 
 ---
@@ -181,9 +180,9 @@ Copy `.env.example` to `.env.local` to get started.
 
 These are the most important gaps before launch:
 
-1. **The waitlist loses signups in production** (#2) — the single most damaging open issue. `createWaitlistStorage()` picks `PostgresWaitlistStorage` when `DATABASE_URL` is set, and every method on it throws. With it unset, it writes `data/waitlist.json` on an **ephemeral serverless filesystem** and then **redirects to the success page** — so the signup is silently lost while the user is told it worked. Plan agreed on #2: Resend Audiences with custom `properties`. Blocked on an SDK upgrade (2.1.0 → 6.x) and an Audience being created.
+1. **Waitlist storage needs a full-access Resend key** (#2). The silent-loss bug is fixed — signups go to Resend contacts, and production with no key throws instead of writing to a disk that vanishes. But contact endpoints reject **sending-only** API keys, and the production key's permission has not been verified. If it is sending-only, every signup fails with an error telling the visitor to email directly. Check at https://resend.com/api-keys.
 
-2. **Newsletter list** — signups deliver a notification email but are not added to any marketing list. Set `RESEND_AUDIENCE_ID` and the existing code path adds them to a Resend audience; without it, that step is skipped silently.
+2. **Newsletter list** — signups deliver a notification email but are not added to any marketing list. The code path in `src/lib/email/resend.ts` still depends on `RESEND_AUDIENCE_ID`, which no longer has a valid value to hold: Resend deprecated Audiences in favour of Segments and the current contacts API takes no audience id. That path should move to `POST /contacts` like the waitlist did.
 
 3. **OG image** — `src/app/api/og/route.tsx` uses old dark-slate styling, not pero's coral/teal brand (#37). Update before social sharing matters.
 

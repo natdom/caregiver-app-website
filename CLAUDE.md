@@ -50,16 +50,25 @@ Resend is wired up and **confirmed working in production**.
 
 - Raw PII no longer logged by the form routes (#31); route tests guard against regression
 - The newsletter widget no longer sends the submitted email's domain to Plausible (#92)
-- The free-text "biggest caregiving challenge" field is **gone** (#97) — it could capture health information about a third party, the person being cared for. The waitlist form now shows name (optional), email, role and consent. **Note the full stored record is larger than the visible form**: `submitWaitlistForm()` also captures the requester IP (`x-forwarded-for`/`x-real-ip`) and user agent, and `WaitlistEntry` persists both. Any privacy statement must account for those. **Do not reintroduce free-text fields here.**
+- The free-text "biggest caregiving challenge" field is **gone** (#97) — it could capture health information about a third party, the person being cared for. The waitlist form now shows name (optional), email, role and consent. IP address and user-agent collection was **removed** in #2 — neither was disclosed in the privacy policy and neither had a current purpose (abuse prevention is #29's job and a rate limiter needs no per-record retention). The stored record includes name, email, role, consent, submission time, and explicit consent timestamp/version. **Do not reintroduce free-text fields, or IP/UA, here.**
 
-### 🔴 The waitlist is still broken (#2) — highest-value open item
+### ✅ The waitlist now has a durable destination (#2)
 
-`src/lib/storage/waitlist-adapter.ts`:
+`src/lib/storage/resend-waitlist-storage.ts` writes each signup to Resend as a contact, calling the **REST API directly with `fetch`** — deliberately not the `resend` npm package, which is pinned at 2.1.0 and has no `properties` support. This avoided a four-major SDK upgrade underneath the live sending flows.
 
-- `DATABASE_URL` set **and** `NODE_ENV === 'production'` → `PostgresWaitlistStorage`, every method throws. Both conditions are required (`waitlist-adapter.ts:112`)
-- unset → writes `data/waitlist.json` on an **ephemeral serverless filesystem**, then **redirects to the success page**. Signups are silently lost.
+Properties stored: first-touch `source: 'waitlist'` for newly created contacts, plus
+`waitlist_role`, `waitlist_consent_at`, and `waitlist_consent_version`. Existing newsletter
+contacts keep their source and join the waitlist through the three `waitlist_*` properties.
 
-Plan agreed, written up on #2: **Resend Audiences with custom `properties`**. Blocked on an SDK upgrade (2.1.0 → 6.x — `properties` does not exist in 2.1.0) and on an Audience being created.
+- `RESEND_API_KEY` set → `ResendWaitlistStorage`
+- no key, not production → `FileWaitlistStorage` so local dev works offline
+- **no key in production → throws.** This is the whole point: the old code fell through to a file write on an ephemeral serverless filesystem, succeeded, and redirected to the success page. Signups were silently lost.
+
+**The key must be full-access.** Sending-only keys cannot write contacts, and the production key's permission has not been verified — if it is sending-only, every signup will fail loudly (which is correct, but still fails).
+
+Resend has **deprecated Audiences in favour of Segments** and the current contacts endpoints take no audience id, so `RESEND_AUDIENCE_ID` is gone from `.env.example`. `src/lib/email/resend.ts`'s newsletter path still reads it and still no-ops safely when unset — reworking that is separate.
+
+`getAll()`/`count()` are implemented but have **no callers**; `getWaitlistCount()` is exported and unused. Also unverified: whether Resend's list endpoint returns `properties`, which `getAll()` filters on.
 
 ### ✅ /press is retired (#86)
 

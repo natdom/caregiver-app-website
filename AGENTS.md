@@ -34,12 +34,12 @@ npm run lint                 # eslint
 
 ## Known pre-existing issues — do not try to fix these unless your task is specifically about them
 
-- The verified test baseline from 2026-10-03 is **53 failures across 10 files**, out of 193 tests:
+- The verified test baseline from 2026-10-06 is **53 failures across 10 files**, out of 221 tests:
 
   | file | failures |
   |---|---:|
   | `src/app/partners/__tests__/page.test.tsx` | 13 |
-    | `src/components/__tests__/waitlist-form.test.tsx` | 6 |
+  | `src/components/__tests__/waitlist-form.test.tsx` | 6 |
   | `src/hooks/__tests__/use-scroll-tracking.test.tsx` | 6 |
   | `src/components/__tests__/navigation.test.tsx` | 6 |
   | `src/components/__tests__/hero.test.tsx` | 6 |
@@ -49,14 +49,14 @@ npm run lint                 # eslint
   | `src/lib/__tests__/feature-flags.test.ts` | 1 |
   | `src/components/partners/__tests__/components.test.tsx` | 1 |
 
-  These fail identically on `main` regardless of any feature branch. When asked to verify "no regressions," compare the per-file failure counts against this baseline, not just the aggregate. `waitlist-form.test.tsx` (6 failures) is deliberately left failing because upcoming lead-capture work will rewrite that component and its tests together. `redirects.test.tsx` previously failed to *collect* (it runs in a node environment, and `src/test/setup.ts` touched `window` unguarded), so it contributed zero failures and was invisible in any pass/fail tally. Both are now fixed and its 2 tests pass. Current observed total: **193 tests — 140 passed, 53 failed, across 10 failing files**.
+  These fail identically on `main` regardless of any feature branch. When asked to verify "no regressions," compare the per-file failure counts against this baseline, not just the aggregate. `waitlist-form.test.tsx` (6 failures) is deliberately left failing because upcoming lead-capture work will rewrite that component and its tests together. `redirects.test.tsx` previously failed to *collect* (it runs in a node environment, and `src/test/setup.ts` touched `window` unguarded), so it contributed zero failures and was invisible in any pass/fail tally. Both are now fixed and its 2 tests pass. Current observed total: **221 tests — 168 passed, 53 failed, across 10 failing files**.
 
   The failure count and the failing-file list are the part that matters; the totals move whenever tests are added. They have now drifted three times in three PRs — see #94, which proposes generating these numbers in CI rather than maintaining them by hand.
 
   `newsletter-inline.test.tsx` left this list in #93: its component was reconnected to the API, its 13 copy-coupled tests were replaced with 8 behavioural ones, and the file was removed from the quarantine array in `vitest.config.ts` so it now sits in the required CI gate. That is the intended lifecycle — a quarantined file leaves when its tests are rewritten against behaviour, never by being repaired in place.
 
   **This table and `vitest.config.ts` must be updated together.** They drifted apart within one PR of the quarantine mechanism existing.
-- **`npx tsc --noEmit` loads Vitest globals correctly**, so test files no longer produce `Cannot find name 'describe'/'it'/'expect'/'vi'` noise. It currently reports 255 genuine type errors, primarily missing Testing Library matcher types, plus a small number of incompatible mock tuples/values, unresolved modules, and implicit `any` parameters.
+- **`npx tsc --noEmit` loads Vitest globals correctly**, so test files no longer produce `Cannot find name 'describe'/'it'/'expect'/'vi'` noise. It currently reports 244 genuine type errors, primarily missing Testing Library matcher types, plus a small number of incompatible mock tuples/values, unresolved modules, and implicit `any` parameters.
 - **`npm run lint` loads the ESLint configuration correctly**. It currently reports 213 errors and 137 warnings across the codebase, primarily Tailwind classname ordering/shorthand/migration findings, unescaped JSX entities, unused variables, explicit `any`, and accessibility rules.
 
 ## Definition of done, by default

@@ -85,7 +85,7 @@ The site focuses on a single conversion goal: **waitlist signups**
 - Complete valid form submission
 - Verify redirect to success page
 - Test social sharing buttons (Twitter/LinkedIn)
-- Check data storage: `cat data/waitlist-entries.json`
+- Check data storage: `cat data/waitlist.json`
 
 **4. Accessibility Testing:**
 - Navigate entire form using only Tab key
@@ -118,8 +118,8 @@ npm start
 ### Forms & Validation
 - **React Server Actions** for form handling
 - **Zod** for schema validation and type safety
-- **File-based storage** for development (PostgreSQL-ready for production)
-- **Resend** for email sending (stub implementation)
+- **File-based storage** for local development; **Resend contacts** in production
+- **Resend** for transactional email — live and confirmed in production
 
 ### SEO & Analytics
 - **next/metadata** for SEO optimization
@@ -278,32 +278,24 @@ The optimized waitlist system includes:
 **Features:**
 - Server-side validation with Zod schemas
 - Role-based user segmentation (caregiver, professional, partner, other)
-- File-based storage for development (`data/waitlist-entries.json`)
-- PostgreSQL-ready production adapter
+- File-based storage for local development (`data/waitlist.json`)
+- Resend contacts as the production destination, with consent metadata
 - Comprehensive accessibility support
 - Success page with social sharing
 - Analytics integration with Plausible
 
 **Development Storage:**
-Waitlist submissions are stored locally in `data/waitlist-entries.json`:
+With no `RESEND_API_KEY` set outside production, submissions are stored locally in
+`data/waitlist.json` (gitignored):
 ```bash
 # View submissions
-cat data/waitlist-entries.json
-
-# Check waitlist count
-ls -la data/
+cat data/waitlist.json
 ```
 
 **Production Setup:**
-For production, implement the PostgreSQL adapter in `src/lib/storage/waitlist-adapter.ts`:
-```typescript
-// Update the adapter to use your database
-if (process.env.NODE_ENV === 'production') {
-  // Use PostgreSQL implementation
-} else {
-  // Use file-based storage
-}
-```
+Set a **full-access** `RESEND_API_KEY` (sending-only keys cannot write contacts) and
+`createWaitlistStorage()` selects `ResendWaitlistStorage` automatically. In production with no
+key it throws rather than writing to the ephemeral serverless filesystem — see `WAITLIST.md`.
 
 ### Contact Forms
 Contact forms currently log to console. To enable email sending:
@@ -380,7 +372,7 @@ axe http://localhost:3000
 
 ### Required for Launch
 - [ ] **Analytics** - Set up Plausible account and tracking
-- [ ] **Waitlist Storage** - Implement PostgreSQL adapter for production
+- [x] **Waitlist Storage** - Resend contacts adapter (#2); needs a full-access `RESEND_API_KEY` in Vercel
 - [ ] **Email** - Configure Resend or alternative email service  
 - [ ] **Domain** - Update NEXT_PUBLIC_SITE_URL in environment
 - [ ] **Content** - Review all copy for brand voice and accuracy

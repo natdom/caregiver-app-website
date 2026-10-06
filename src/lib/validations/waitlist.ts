@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+export const WAITLIST_CONSENT_VERSION = '2026-10-05-waitlist-v1'
+
 export const waitlistSchema = z.object({
   name: z.string().trim().optional().or(z.literal('')),
   email: z.string().email('Please enter a valid email address').trim(),
@@ -17,8 +19,8 @@ export type WaitlistFormData = z.infer<typeof waitlistSchema>
 export interface WaitlistEntry extends WaitlistFormData {
   id: string
   submittedAt: Date
-  ipAddress?: string
-  userAgent?: string
+  consentAt: Date
+  consentVersion: string
 }
 
 // For form display purposes

@@ -30,7 +30,7 @@ src/
 │   └── validations/
 │       └── waitlist.ts       # Zod schema validation
 └── data/
-    └── waitlist-entries.json # Development storage (auto-created)
+    └── waitlist.json         # Development storage (auto-created)
 ```
 
 ## Features
@@ -77,17 +77,21 @@ src/
 ### Development (File-based)
 ```bash
 # Data stored in local JSON file
-data/waitlist-entries.json
+data/waitlist.json
 
 # View submissions
-cat data/waitlist-entries.json
+cat data/waitlist.json
 
 # Check entry count
-jq length data/waitlist-entries.json
+jq length data/waitlist.json
 ```
 
-### Production (PostgreSQL-ready)
-The storage adapter in `src/lib/storage/waitlist-adapter.ts` includes interfaces for PostgreSQL implementation:
+### Production (Resend contacts)
+`createWaitlistStorage()` in `src/lib/storage/waitlist-adapter.ts` returns `ResendWaitlistStorage` whenever `RESEND_API_KEY` is set. It calls Resend's REST contacts API directly with `fetch` — not the `resend` npm package, which is pinned at 2.1.0 and has no support for contact `properties`.
+
+Each new contact gets first-touch `source: 'waitlist'`; existing contacts retain their original
+source. Waitlist membership is identified by `waitlist_consent_at`, alongside
+`waitlist_consent_version` and `waitlist_role`. Entries are shaped as:
 
 ```typescript
 interface WaitlistEntry {
@@ -97,6 +101,8 @@ interface WaitlistEntry {
   role: 'caregiver' | 'professional' | 'partner' | 'other'
   consent: boolean
   submittedAt: Date
+  consentAt: Date
+  consentVersion: string
 }
 ```
 
@@ -151,7 +157,7 @@ npm test src/components/__tests__/waitlist-form.test.tsx
 - [ ] Submit with Enter key works
 
 **Data Storage:**
-- [ ] Form submission creates `data/waitlist-entries.json`
+- [ ] Form submission creates `data/waitlist.json`
 - [ ] Entry includes all form data and timestamp
 - [ ] Duplicate emails are prevented
 
@@ -178,30 +184,25 @@ analytics.pageView('linkedin_share_click')
 ```bash
 NEXT_PUBLIC_SITE_URL=https://yourdomain.com
 NEXT_PUBLIC_PLAUSIBLE_DOMAIN=yourdomain.com
-DATABASE_URL=postgresql://... # For production storage
+RESEND_API_KEY=re_...          # Must be a FULL-ACCESS key; sending-only keys cannot write contacts
+RESEND_FROM=pero <hello@joinpero.com>
+CONTACT_INBOX=hello@joinpero.com
 ```
 
-### Database Setup (Production)
-```sql
-CREATE TABLE waitlist_entries (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email VARCHAR(255) UNIQUE NOT NULL,
-  name VARCHAR(255),
-  role VARCHAR(50) NOT NULL CHECK (role IN ('caregiver', 'professional', 'partner', 'other')),
-  consent BOOLEAN NOT NULL DEFAULT false,
-  submitted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+With no `RESEND_API_KEY` set, `NODE_ENV=production` makes `createWaitlistStorage()` **throw** rather than fall back to the local file. That is deliberate: the serverless filesystem is ephemeral, so a file write there succeeds and then vanishes, which is how signups were silently lost before #2.
 
-CREATE INDEX idx_waitlist_email ON waitlist_entries(email);
-CREATE INDEX idx_waitlist_role ON waitlist_entries(role);
-CREATE INDEX idx_waitlist_submitted_at ON waitlist_entries(submitted_at);
-```
+### Reading the signups
 
-### Implementation Steps
-1. **Update storage adapter** in `src/lib/storage/waitlist-adapter.ts`
-2. **Add database connection** logic
-3. **Test production storage** with staging environment
-4. **Monitor form submissions** via Plausible analytics
+Resend's dashboard is the UI — there is no admin page in this app. Filter contacts by the
+presence of `waitlist_consent_at` to identify waitlist signups.
+
+`getAll()` and `count()` exist on the storage interface and are implemented, but **nothing in
+the app calls them** — `getWaitlistCount()` is exported from `src/lib/actions/waitlist.ts` and
+has no callers. Treat them as untested-in-production until something uses them.
+
+Live verification is still needed for whether the four custom properties must be pre-created
+in the Resend workspace and whether the list endpoint returns `properties` for `getAll()` to
+filter on.
 
 ## Performance
 
