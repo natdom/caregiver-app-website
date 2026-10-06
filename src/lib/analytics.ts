@@ -54,11 +54,10 @@ export function useAnalytics() {
 
 // Convenience functions for common events
 export const analytics = {
-  waitlistSubmit: (role: string, hasName: boolean, hasChallenge: boolean) => 
+  waitlistSubmit: (role: string, hasName: boolean) => 
     trackEvent('waitlist_submit', { 
       role, 
-      has_name: hasName, 
-      has_challenge: hasChallenge 
+      has_name: hasName
     }),
     
   newsletterSubscribe: (source?: string) =>

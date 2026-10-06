@@ -27,7 +27,6 @@ const validPayload = {
   email: 'newsletter-private@private-company.example',
   name: 'Private Subscriber',
   role: 'caregiver',
-  challenge: 'DISTINCTIVE_PRIVATE_NEWSLETTER_CHALLENGE_73914',
   source: 'footer',
   assessmentStage: 'planning',
 }
@@ -81,7 +80,6 @@ describe('POST /api/newsletter', () => {
 
     const logged = JSON.stringify(logSpy.mock.calls)
     expect(logged).not.toContain(validPayload.email)
-    expect(logged).not.toContain(validPayload.challenge)
     logSpy.mockRestore()
   })
 })
