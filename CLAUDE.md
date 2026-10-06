@@ -16,32 +16,60 @@ Key things not to relearn the hard way:
 
 ---
 
-## Current state (updated 2026-09-07)
+## Current state (updated 2026-10-06)
 
-### ✅ First-visit welcome splash
-- `src/components/welcome-splash.tsx` — modal shown once per browser on first homepage visit, gated by `localStorage['pero_splash_seen']`
-- Offers a choice: "Take the assessment →" (`/assessment`) or "Browse the site" (dismiss)
-- Built on a new Radix Dialog primitive, `src/components/ui/dialog.tsx` (shadcn-style, matches `ui/toast.tsx` conventions) — reuse this for any future modal needs rather than adding another dialog implementation
-- Analytics: `src/lib/splash/analytics.ts` (`splash_shown`, `splash_assessment_clicked`, `splash_browse_clicked`, `splash_dismissed`)
-- Tests: `src/components/__tests__/welcome-splash.test.tsx`
-- Mounted only in `src/app/page.tsx` (homepage), not the root layout — keeps it homepage-only by construction
-- Tracking issue: [#12](https://github.com/natdom/caregiver-app-website/issues/12) (closed), shipped in PR #14
+### Working on the P0 queue
 
-### ✅ Rebrand complete
-- Logo: new pero logos (light + dark, transparent bg) in `public/images/`
-- Logo component: `src/components/pero-logo.tsx` — switches light/dark per theme
-- All `withCare` brand text → `pero` across entire codebase
-- Email: `hello@joinpero.com` everywhere
-- URLs: `https://www.joinpero.com` throughout (domain confirmed)
-- Theme: system auto (follows OS light/dark preference)
+The GitHub Project board **"Pero Website" (#7)** is the source of truth. 79 issues open, 34 marked P0 — which means P0 currently carries little signal and is worth re-triaging.
 
-### ✅ Icons
-- All clay icons in `public/icons/` re-cropped with tight alpha-threshold bounds
-- Centred correctly, consistent visual size
-- Rendered via plain `<img>` tags (not `next/image`) to avoid optimisation cache issues
-- Feature grid (`feature-grid.tsx`): `h-24 w-24 object-contain`
-- About page: `h-20 w-20 object-contain`
-- Explore quick-access: `h-16 w-16 object-contain`
+Full working plan, including sequence and rationale: https://claude.ai/code/artifact/2413f764-ad25-45dd-9270-d8edd392e084
 
-### 🔧 Still needs attention
-- `src/app/api/og/route.tsx` — OG social share image, update closer to launch
+### ✅ Verification is now trustworthy (#60, #61, #65 — PR #87)
+
+Before this, nothing could be verified. `npm run lint` failed on a malformed config name so **no PR had ever had static analysis**; `tsc --noEmit` buried real errors under thousands of missing-globals; and `redirects.test.tsx` failed to *collect*, contributing zero failures and staying invisible in every tally.
+
+- ESLint config repaired; cosmetic rules (Tailwind ordering/shorthand, unescaped entities) disabled so the ~50 remaining findings are real
+- `tsconfig.json` has `"types": ["vitest/globals"]`
+- CI at `.github/workflows/ci.yml`: a **required gate** (lint, `test:ci`, build) plus an **informational** job (full suite, typecheck) that never blocks
+- Known-failing files are quarantined by name in `vitest.config.ts`. The gate runs everything else. **A file leaves quarantine when its tests are rewritten against behaviour — never by being repaired in place.**
+
+### ✅ Email delivery is live (#16, #24, #25, #31, #92)
+
+Resend is wired up and **confirmed working in production**.
+
+- `src/lib/email/resend.ts` — lazy client, two purpose-specific senders
+- `joinpero.com` verified in Resend; `RESEND_API_KEY` set in Vercel
+- Contact → `hello@joinpero.com` → forwarded to the owner, `Reply-To` set to the submitter
+- **A 200 means Resend accepted the message. Nothing else returns 200.** Missing key → 503, provider failure → 502, both advising the visitor to email directly. Never fake success.
+
+### ✅ Security (#18 — PR #89)
+
+`next` 14.0.4 → **14.2.35**, closing a critical SSRF advisory against Server Actions — `src/lib/actions/waitlist.ts` is a Server Action handling personal data. **24 advisories remain**; two criticals have no fix in the 14.x line. Tracked in **#90**.
+
+### ✅ Privacy
+
+- Raw PII no longer logged by the form routes (#31); route tests guard against regression
+- The newsletter widget no longer sends the submitted email's domain to Plausible (#92)
+- The free-text "biggest caregiving challenge" field is **gone** (#97) — it could capture health information about a third party, the person being cared for. The waitlist now collects name, email, role, consent. **Do not reintroduce free-text fields here.**
+
+### 🔴 The waitlist is still broken (#2) — highest-value open item
+
+`src/lib/storage/waitlist-adapter.ts`:
+
+- `DATABASE_URL` set → `PostgresWaitlistStorage`, every method throws
+- unset → writes `data/waitlist.json` on an **ephemeral serverless filesystem**, then **redirects to the success page**. Signups are silently lost.
+
+Plan agreed, written up on #2: **Resend Audiences with custom `properties`**. Blocked on an SDK upgrade (2.1.0 → 6.x — `properties` does not exist in 2.1.0) and on an Audience being created.
+
+### 🔴 Open decisions only the owner can make
+
+- **Should `/press` exist?** (#86) It is a `permanent: true` 308 to `/partners` with a complete page unreachable behind it. Blocks the domain/crawl cluster (#1, #19, #35).
+- **Next 15+ migration** (#90) — check `next-contentlayer` compatibility first; it declares Next 12/13 support only.
+
+### 🔧 Known traps
+
+- **`npm run lint` hangs** if stdin is left open. Always `npm run lint < /dev/null`. Same for anything invoking `next lint`.
+- **`public/sitemap.xml` is a generated artifact tracked in git** (#88). Every local `npm run build` dirties it — `git checkout -- public/sitemap.xml` before committing.
+- **The test baseline in `AGENTS.md` goes stale constantly** — four hand-corrections in four PRs (#94). Update it in the same PR that changes test counts.
+- **`git merge-base --is-ancestor` reports squash-merged branches as unmerged.** Check PR state instead before deleting branches.
+- `src/app/api/og/route.tsx` — OG image still uses old dark-slate branding (#37).

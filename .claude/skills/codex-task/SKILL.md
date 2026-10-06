@@ -72,9 +72,38 @@ Compare the full-suite failure list against the known baseline in `AGENTS.md` / 
 
 Also skim `npx tsc --noEmit` and `npm run lint` output for the changed files specifically — both have unrelated pre-existing failures repo-wide (see `AGENTS.md`), so don't expect a clean run overall, just no *new* errors in what changed.
 
-## 7. Review the diff yourself
+## 7. Review the diff — and not by the agent that wrote it
 
-Treat Codex's diff like a PR from any other contributor — use the `code-review` skill (`medium` is usually enough) or a manual read. Look especially for: scope creep beyond the task, edge cases in event handlers (e.g. modified-click / keyboard paths — this is exactly the class of bug the review caught in the welcome-splash PR), and duplicated logic that should reuse an existing utility.
+Treat Codex's diff like a PR from any other contributor. Look for scope creep, edge cases in event handlers, and duplicated logic that should reuse an existing utility.
+
+**The reviewer must not have written the code, and must not have seen the implementation prompt.** If Claude scoped the task and Claude reviews the result, Claude is reviewing its own specification — it will check whether Codex followed instructions rather than whether the instructions were right. That is the bias this step exists to remove.
+
+What the reviewer gets: the issue, the acceptance criteria, and the diff. **Not** the implementation prompt or the implementer's reasoning. Note the distinction — withholding the *criteria* is wrong; the reviewer needs to know what "done" meant.
+
+Dispatch the review as a **separate session**. Never `codex exec resume` the implementing session to review its own work: that session's whole context is the thing you want absent.
+
+```bash
+git diff main...HEAD > /tmp/diff.patch
+codex exec -s workspace-write -C "$(pwd)" - < review-prompt.txt
+```
+
+**Use `workspace-write` for reviews, not `read-only`.** `-s read-only` looks safer but blocks `npx vitest run` (vitest needs to write `node_modules/.vite`, and fails `EPERM`) and gives the reviewer no network. A reviewer that cannot run the suite is a much weaker reviewer. Verified empirically.
+
+### Risk-based, not uniform
+
+Applying a full cold review to every change is ceremony that gets skipped. Match the review to the risk:
+
+**Cold review required** — security, auth, secrets, dependencies; PII, analytics payloads, consent, retention; anything that persists a submission or claims success to a user; redirects, canonical/domain changes, robots and crawl control; legal or medical claims; CI, quarantine and deploy configuration; large deletions or any claim that code is "unused".
+
+**Automated verification is enough** — contained config fixes, metadata, copy deletion, mechanical refactors with full test coverage.
+
+The "unused" case is not theoretical: a commit message on #89 claimed `images.unsplash.com` was referenced nowhere, having searched only `src/`. Cold review found it in 10 MDX content files. The conclusion happened to survive; the reasoning did not.
+
+### Have the reviewer report, not fix
+
+Tell the reviewer explicitly to report findings rather than silently fixing them, and to say when it finds nothing rather than manufacturing a finding. On a dead-code pass this surfaced that `useScrollTracking` accepted a `threshold` option it never read — renaming it to `_threshold` would have satisfied the linter and buried a real bug.
+
+Surface every disagreement between the two agents to the user rather than resolving it quietly. Those are usually either a real defect or a real ambiguity in the issue.
 
 ## 8. Iterate if the review finds something
 

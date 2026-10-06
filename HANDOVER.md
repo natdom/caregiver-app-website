@@ -1,6 +1,6 @@
 # pero — Handover Document
 
-**Last updated:** September 2026  
+**Last updated:** October 2026  
 **Repo:** `caregiver-app-website`  
 **Live domain:** https://www.joinpero.com  
 **Contact:** hello@joinpero.com
@@ -62,16 +62,16 @@ Contentlayer is disabled for local dev (`next.config.js` wraps it in a comment) 
 
 ## APIs
 
-All API routes are under `src/app/api/`. None send real emails yet — see "What's not wired up" below.
+All API routes are under `src/app/api/`. Contact and newsletter now deliver via Resend — see "What's not wired up" below for what still does not.
 
 ### `POST /api/newsletter`
-Accepts: `{ email, name?, role?, challenge?, source?, assessmentStage? }`  
-What it does: validates with Zod, logs the subscription to the server console, returns 200.  
+Accepts: `{ email, name?, role?, source?, assessmentStage? }`  
+What it does: validates with Zod, logs a redacted event (no PII), delivers a notification via Resend, returns 200 only if Resend accepted it. 503 if `RESEND_API_KEY` is unset, 502 if Resend fails.  
 `source` defaults to `'website-newsletter'` if omitted; the assessment passes `'assessment'`.
 
 ### `POST /api/contact`
 Accepts: `{ name, email, role, message }`  
-What it does: validates, logs to console, returns 200.
+What it does: validates, logs a redacted event (no PII), delivers to `hello@joinpero.com` via Resend with `Reply-To` set to the submitter. Returns 200 only on confirmed delivery; 503 unconfigured, 502 on provider failure.
 
 ### `GET /api/og`
 Generates Open Graph social share images via `@vercel/og`. Runs on the edge runtime.  
@@ -181,19 +181,19 @@ Copy `.env.example` to `.env.local` to get started.
 
 These are the most important gaps before launch:
 
-1. **Email sending** — `RESEND_API_KEY` is unset. Both `/api/newsletter` and `/api/contact` log to console only. Wire up Resend (already installed as a dependency) with:
-   - A welcome email for newsletter/assessment signups
-   - A notification email to `hello@joinpero.com` for contact form submissions
+1. **The waitlist loses signups in production** (#2) — the single most damaging open issue. `createWaitlistStorage()` picks `PostgresWaitlistStorage` when `DATABASE_URL` is set, and every method on it throws. With it unset, it writes `data/waitlist.json` on an **ephemeral serverless filesystem** and then **redirects to the success page** — so the signup is silently lost while the user is told it worked. Plan agreed on #2: Resend Audiences with custom `properties`. Blocked on an SDK upgrade (2.1.0 → 6.x) and an Audience being created.
 
-2. **Newsletter list** — submissions are not added to any CRM or marketing list. Options already in the env file: Resend Audiences, Mailchimp, ConvertKit.
+2. **Newsletter list** — signups deliver a notification email but are not added to any marketing list. Set `RESEND_AUDIENCE_ID` and the existing code path adds them to a Resend audience; without it, that step is skipped silently.
 
-3. **Waitlist persistence** — currently file-based (`data/waitlist.json`). Fine for low volume, but needs a database before any meaningful launch traffic. The Postgres adapter stub is ready in `waitlist-adapter.ts`.
+3. **OG image** — `src/app/api/og/route.tsx` uses old dark-slate styling, not pero's coral/teal brand (#37). Update before social sharing matters.
 
-4. **OG image** — `src/app/api/og/route.tsx` uses old dark-slate styling, not pero's coral/teal brand. Update before any PR or social sharing matters.
+4. **Assessment stage-specific emails** — `assessmentStage` is passed through to the newsletter API, but no template or trigger exists.
 
-5. **Assessment stage-specific emails** — architecture is ready (the `assessmentStage` field is now passed through to the newsletter API), but the actual email template and trigger don't exist yet.
+5. **The domain serves nothing** — `joinpero.com` has no A record and `www` CNAMEs to a Namecheap parking page, while `layout.tsx` and `seo.ts` emit `https://www.joinpero.com` canonicals. Anything crawled today points at a dead address. Separate from #1, which is about config pointing at the *wrong* domain.
 
----
+### Already done (was listed here previously)
+
+**Email sending works.** Resend is wired up, `joinpero.com` is verified, `RESEND_API_KEY` is set in Vercel, and delivery is confirmed end to end. Both routes return 200 only when Resend accepts the message — 503 unconfigured, 502 on provider failure. See #16, #24, #95.
 
 ## Dev commands
 
@@ -207,9 +207,12 @@ npm run export-submissions # export waitlist.json to CSV
 ```
 
 ### Known issues (pre-existing, not caused by recent work)
-- **~66 failing tests** across `partners` page/metadata tests, `hero.test.tsx`, `navigation.test.tsx`, `newsletter-inline.test.tsx`, `topic-filter.test.tsx`, `use-scroll-tracking.test.tsx`, `feature-flags.test.ts`, and `topic-utils.test.ts` — confirmed present on `main` independent of the welcome-splash work (verified 2026-09 by diffing `npx vitest run` output with/without that branch). Content/assertions appear to have drifted from the components. Needs a dedicated pass.
-- **`npm run typecheck` errors in every `*.test.ts(x)` file** (`Cannot find name 'describe'/'it'/'expect'/'vi'`) — `vitest.config.ts` sets `globals: true` so tests run fine under Vitest itself, but `tsconfig.json` doesn't include Vitest's global types, so `tsc --noEmit` flags them anyway. Cosmetic (doesn't affect `npm run build` or `npm run test`), but noisy.
-- **`npm run lint` fails outright**: `Failed to load config "@typescript-eslint/recommended"` — `.eslintrc.json` references a config package that isn't resolving. Needs a dependency fix before lint is usable again.
+
+- **53 failing tests across 10 files**, out of 193. The authoritative per-file breakdown lives in `AGENTS.md` — use that, not this list, and treat the per-file counts as the baseline rather than the aggregate. Nearly all of these assert rendered marketing copy rather than behaviour, which is why they broke together at the rebrand. **They are not being repaired in place**: when a component is rewritten, its tests are rewritten against behaviour and the file leaves the quarantine list in `vitest.config.ts`. `newsletter-inline.test.tsx` was the first to make that transition (#93).
+- **`npm run lint` hangs** if stdin is left open — always `npm run lint < /dev/null`. The config itself was repaired in #87; the remaining ~50 findings are real (unused vars, a11y, explicit `any`), not config noise.
+- **`npx tsc --noEmit` reports ~255 errors**, mostly missing Testing Library matcher types. The missing-globals noise was fixed in #87 by adding `"types": ["vitest/globals"]`. Typecheck runs in CI as **informational only** — promote it to the required gate once the remainder is cleaned up.
+- **`public/sitemap.xml` is a generated artifact tracked in git** (#88) — every local `npm run build` rewrites its timestamps and dirties the tree. `git checkout -- public/sitemap.xml` before committing.
+- **24 `next` advisories remain** after the 14.2.35 bump (#90), including two criticals with no fix in the 14.x line. Neither is assessed as high exposure here, but the migration is real work and `next-contentlayer` compatibility needs checking first.
 
 ---
 
