@@ -9,7 +9,6 @@ const newsletterSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
   name: z.string().optional(),
   role: z.string().optional(),
-  challenge: z.string().optional(),
   source: z.string().optional(),
   assessmentStage: z.string().optional(),
 })
@@ -26,8 +25,6 @@ export async function POST(request: NextRequest) {
       role: validatedData.role,
       assessmentStage: validatedData.assessmentStage,
       hasName: Boolean(validatedData.name),
-      hasChallenge: Boolean(validatedData.challenge),
-      challengeLength: validatedData.challenge?.length ?? 0,
     }
 
     console.log('Newsletter subscription:', subscriptionEvent)

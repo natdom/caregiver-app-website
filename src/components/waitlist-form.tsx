@@ -4,7 +4,6 @@ import { useFormState, useFormStatus } from 'react-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { submitWaitlistForm, type WaitlistActionResult } from '@/lib/actions/waitlist'
 import { roleOptions } from '@/lib/validations/waitlist'
@@ -183,25 +182,6 @@ export function WaitlistForm({ className, showTitle = true }: WaitlistFormProps)
               </label>
             ))}
           </div>
-        </FormField>
-
-        {/* Challenge field (optional) */}
-        <FormField id="challenge" error={state?.errors?.challenge}>
-          <Label htmlFor="challenge" className="text-sm font-medium">
-            What's your biggest caregiving challenge? (optional)
-          </Label>
-          <Textarea
-            id="challenge"
-            name="challenge"
-            placeholder="Share what would help you most in your caregiving journey..."
-            rows={3}
-            maxLength={500}
-            className="w-full resize-none"
-            aria-describedby={state?.errors?.challenge ? 'challenge-error' : 'challenge-hint'}
-          />
-          <p id="challenge-hint" className="text-xs text-neutral-500 dark:text-neutral-400">
-            This helps us build features that matter most to you.
-          </p>
         </FormField>
 
         {/* Consent checkbox (required) */}

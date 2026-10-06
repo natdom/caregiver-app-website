@@ -40,9 +40,6 @@ describe('WaitlistForm', () => {
       expect(screen.getByLabelText(/email address/i)).toBeInTheDocument()
       expect(screen.getByText(/your role/i)).toBeInTheDocument()
       expect(
-        screen.getByLabelText(/biggest caregiving challenge/i)
-      ).toBeInTheDocument()
-      expect(
         screen.getByLabelText(/agree to receive updates/i)
       ).toBeInTheDocument()
     })
@@ -86,15 +83,6 @@ describe('WaitlistForm', () => {
       const roleGroup = screen.getByRole('radiogroup')
       expect(roleGroup).toHaveAttribute('aria-required', 'true')
 
-      // Challenge textarea
-      const challengeField = screen.getByLabelText(
-        /biggest caregiving challenge/i
-      )
-      expect(challengeField).toHaveAttribute('maxLength', '500')
-      expect(challengeField).toHaveAttribute(
-        'aria-describedby',
-        'challenge-hint'
-      )
     })
 
     it('renders all role options with descriptions', () => {
@@ -176,29 +164,6 @@ describe('WaitlistForm', () => {
       })
     })
 
-    it('enforces character limit on challenge field', async () => {
-      const user = userEvent.setup()
-      render(<WaitlistForm />)
-
-      const challengeField = screen.getByLabelText(
-        /biggest caregiving challenge/i
-      )
-      const longText = 'a'.repeat(501) // Over 500 character limit
-
-      await user.type(challengeField, longText)
-
-      const submitButton = screen.getByRole('button', {
-        name: /join the waitlist/i,
-      })
-      await user.click(submitButton)
-
-      await waitFor(() => {
-        expect(
-          screen.getByText(/please keep your response under 500 characters/i)
-        ).toBeInTheDocument()
-      })
-    })
-
     it('accepts valid form submission', async () => {
       const user = userEvent.setup()
       const mockFormAction = vi.fn()
@@ -213,10 +178,6 @@ describe('WaitlistForm', () => {
         'john@example.com'
       )
       await user.click(screen.getByLabelText(/family caregiver/i))
-      await user.type(
-        screen.getByLabelText(/biggest caregiving challenge/i),
-        'Finding time for self-care'
-      )
       await user.click(screen.getByLabelText(/agree to receive updates/i))
 
       const submitButton = screen.getByRole('button', {
@@ -227,9 +188,6 @@ describe('WaitlistForm', () => {
       // Verify form fields are filled correctly
       expect(screen.getByDisplayValue('John Doe')).toBeInTheDocument()
       expect(screen.getByDisplayValue('john@example.com')).toBeInTheDocument()
-      expect(
-        screen.getByDisplayValue('Finding time for self-care')
-      ).toBeInTheDocument()
       expect(screen.getByLabelText(/family caregiver/i)).toBeChecked()
       expect(screen.getByLabelText(/agree to receive updates/i)).toBeChecked()
     })
@@ -318,11 +276,6 @@ describe('WaitlistForm', () => {
 
       await user.tab()
       expect(screen.getByLabelText(/other/i)).toHaveFocus()
-
-      await user.tab()
-      expect(
-        screen.getByLabelText(/biggest caregiving challenge/i)
-      ).toHaveFocus()
 
       await user.tab()
       expect(screen.getByLabelText(/agree to receive updates/i)).toHaveFocus()
@@ -444,23 +397,7 @@ describe('WaitlistForm', () => {
     })
   })
 
-  describe('Character Count and Field Limits', () => {
-    it('enforces maxLength on challenge textarea', async () => {
-      const user = userEvent.setup()
-      render(<WaitlistForm />)
-
-      const challengeField = screen.getByLabelText(
-        /biggest caregiving challenge/i
-      ) as HTMLTextAreaElement
-      const longText = 'a'.repeat(600) // Longer than 500 character limit
-
-      await user.type(challengeField, longText)
-
-      // Field should only accept up to 500 characters
-      expect(challengeField.value).toHaveLength(500)
-      expect(challengeField.value).toBe('a'.repeat(500))
-    })
-
+  describe('Field Requirements', () => {
     it('provides clear indication of field requirements in labels', () => {
       render(<WaitlistForm />)
 
@@ -473,9 +410,6 @@ describe('WaitlistForm', () => {
 
       // Optional fields should be clearly marked
       expect(screen.getByText(/name \(optional\)/i)).toBeInTheDocument()
-      expect(
-        screen.getByText(/biggest caregiving challenge\? \(optional\)/i)
-      ).toBeInTheDocument()
     })
   })
 
@@ -524,10 +458,6 @@ describe('WaitlistForm', () => {
         'test@example.com'
       )
       await user.click(screen.getByLabelText(/family caregiver/i))
-      await user.type(
-        screen.getByLabelText(/biggest caregiving challenge/i),
-        'Time management'
-      )
       await user.click(screen.getByLabelText(/agree to receive updates/i))
 
       // Verify error is shown
@@ -540,7 +470,6 @@ describe('WaitlistForm', () => {
       // Form fields should retain their values
       expect(screen.getByDisplayValue('Test User')).toBeInTheDocument()
       expect(screen.getByDisplayValue('test@example.com')).toBeInTheDocument()
-      expect(screen.getByDisplayValue('Time management')).toBeInTheDocument()
       expect(screen.getByLabelText(/family caregiver/i)).toBeChecked()
       expect(screen.getByLabelText(/agree to receive updates/i)).toBeChecked()
     })

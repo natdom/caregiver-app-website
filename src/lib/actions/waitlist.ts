@@ -22,7 +22,6 @@ export async function submitWaitlistForm(
       name: formData.get('name') as string,
       email: formData.get('email') as string,
       role: formData.get('role') as string,
-      challenge: formData.get('challenge') as string,
       consent: formData.get('consent') === 'on'
     }
 
@@ -63,8 +62,7 @@ export async function submitWaitlistForm(
     // Redirect to success page with analytics data
     const searchParams = new URLSearchParams({
       role: validatedData.role,
-      name: validatedData.name ? 'true' : 'false',
-      challenge: validatedData.challenge ? 'true' : 'false'
+      name: validatedData.name ? 'true' : 'false'
     })
     
     redirect(`/waitlist/success?${searchParams.toString()}`)

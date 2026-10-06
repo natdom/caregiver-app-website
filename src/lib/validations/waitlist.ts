@@ -7,12 +7,6 @@ export const waitlistSchema = z.object({
     required_error: 'Please select your role',
     invalid_type_error: 'Please select a valid role',
   }),
-  challenge: z
-    .string()
-    .trim()
-    .max(500, 'Please keep your response under 500 characters')
-    .optional()
-    .or(z.literal('')),
   consent: z.boolean().refine((val) => val === true, {
     message: 'You must agree to receive updates to join the waitlist',
   }),

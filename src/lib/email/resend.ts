@@ -14,7 +14,6 @@ export interface NewsletterSignup {
   email: string
   name?: string
   role?: string
-  challenge?: string
   source?: string
   assessmentStage?: string
 }
@@ -100,7 +99,6 @@ export async function sendNewsletterNotification(
     `Email: ${signup.email}`,
     signup.name ? `Name: ${signup.name}` : undefined,
     signup.role ? `Role: ${signup.role}` : undefined,
-    signup.challenge ? `Challenge: ${signup.challenge}` : undefined,
     signup.source ? `Source: ${signup.source}` : undefined,
     signup.assessmentStage
       ? `Assessment stage: ${signup.assessmentStage}`
