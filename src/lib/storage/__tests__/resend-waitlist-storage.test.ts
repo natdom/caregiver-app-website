@@ -17,6 +17,20 @@ function response(body: unknown, status = 200): Response {
   })
 }
 
+// Resend returns properties WRAPPED on reads — {"k": {"value": v, "type": "string"}} —
+// while accepting a flat map on writes. Verified against the live API 2026-10-07.
+// Every read-shaped mock must go through this, or it tests a shape Resend never sends.
+function wrapped(
+  properties: Record<string, string>
+): Record<string, { value: string; type: string }> {
+  return Object.fromEntries(
+    Object.entries(properties).map(([key, value]) => [
+      key,
+      { value, type: 'string' },
+    ])
+  )
+}
+
 describe('ResendWaitlistStorage', () => {
   const originalApiKey = process.env.RESEND_API_KEY
 
@@ -85,7 +99,7 @@ describe('ResendWaitlistStorage', () => {
         response({
           id: 'existing',
           email: signup.email,
-          properties: { source: 'newsletter' },
+          properties: wrapped({ source: 'newsletter' }),
         })
       )
       .mockResolvedValueOnce(response({ id: 'existing' }))
@@ -119,7 +133,7 @@ describe('ResendWaitlistStorage', () => {
           id: 'existing',
           email: signup.email,
           first_name: 'Original',
-          properties: { source: 'newsletter' },
+          properties: wrapped({ source: 'newsletter' }),
         })
       )
       .mockResolvedValueOnce(response({ id: 'existing' }))
@@ -136,10 +150,10 @@ describe('ResendWaitlistStorage', () => {
       response({
         id: 'existing',
         email: signup.email,
-        properties: {
+        properties: wrapped({
           source: 'newsletter',
           waitlist_consent_at: '2026-10-05T12:00:00.000Z',
-        },
+        }),
       })
     )
 
@@ -202,12 +216,12 @@ describe('ResendWaitlistStorage', () => {
         id: 'contact-1',
         email: signup.email,
         first_name: signup.name,
-        properties: {
+        properties: wrapped({
           source: 'waitlist',
           waitlist_role: 'caregiver',
           waitlist_consent_at: '2026-10-05T12:00:00.000Z',
           waitlist_consent_version: WAITLIST_CONSENT_VERSION,
-        },
+        }),
       })
     )
 
@@ -244,16 +258,16 @@ describe('ResendWaitlistStorage', () => {
             {
               id: 'waitlist-1',
               email: 'one@example.com',
-              properties: {
+              properties: wrapped({
                 source: 'newsletter',
                 waitlist_role: 'caregiver',
                 waitlist_consent_at: '2026-10-05T12:00:00.000Z',
-              },
+              }),
             },
             {
               id: 'newsletter-1',
               email: 'news@example.com',
-              properties: { source: 'newsletter' },
+              properties: wrapped({ source: 'newsletter' }),
             },
           ],
           has_more: true,
@@ -265,11 +279,11 @@ describe('ResendWaitlistStorage', () => {
             {
               id: 'waitlist-2',
               email: 'two@example.com',
-              properties: {
+              properties: wrapped({
                 source: 'waitlist',
                 waitlist_role: 'partner',
                 waitlist_consent_at: '2026-10-05T13:00:00.000Z',
-              },
+              }),
             },
           ],
           has_more: false,
@@ -279,6 +293,11 @@ describe('ResendWaitlistStorage', () => {
     const entries = await new ResendWaitlistStorage().getAll()
 
     expect(entries.map(entry => entry.id)).toEqual(['waitlist-1', 'waitlist-2'])
+    // Assert the mapped VALUES, not just the ids: a reader that forgot to unwrap
+    // Resend's {value, type} shape still gets the ids right and yields objects
+    // and Invalid Date for everything else.
+    expect(entries.map(entry => entry.role)).toEqual(['caregiver', 'partner'])
+    expect(entries[0].consentAt).toEqual(new Date('2026-10-05T12:00:00.000Z'))
     // `after` must be the last contact id of the previous page — Resend returns
     // no cursor field, so a cursor-based implementation would never paginate.
     expect(fetchMock.mock.calls[0][0]).toBe(
@@ -296,13 +315,13 @@ describe('ResendWaitlistStorage', () => {
           {
             id: 'waitlist-1',
             email: 'one@example.com',
-            properties: {
+            properties: wrapped({
               source: 'newsletter',
               waitlist_role: 'caregiver',
               waitlist_consent_at: '2026-10-05T12:00:00.000Z',
-            },
+            }),
           },
-          { id: 'other-1', email: 'other@example.com', properties: {} },
+          { id: 'other-1', email: 'other@example.com', properties: wrapped({}) },
         ],
         has_more: false,
       })

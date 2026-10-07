@@ -22,7 +22,18 @@ const CONTACTS_URL = 'https://api.resend.com/contacts'
 // Resend caps the list endpoint at 100 per page and defaults to 20.
 const PAGE_SIZE = 100
 
-type ContactProperties = Record<string, string | number | null>
+// Resend's property representation is ASYMMETRIC, verified against the live API
+// on 2026-10-07. Writes take a flat map — {"source": "waitlist"} — but reads
+// return each property wrapped: {"source": {"value": "waitlist", "type":
+// "string"}}. `readProperty` below tolerates both so neither direction can
+// silently produce `[object Object]`.
+type ContactPropertyValue =
+  | string
+  | number
+  | null
+  | { value: string | number | null; type?: string }
+
+type ContactProperties = Record<string, ContactPropertyValue>
 
 interface ResendContact {
   id: string
@@ -67,27 +78,42 @@ async function request(url: string, init?: RequestInit): Promise<Response> {
   })
 }
 
+function readProperty(
+  properties: ContactProperties,
+  key: string
+): string | undefined {
+  const raw = properties[key]
+  const value =
+    raw !== null && typeof raw === 'object' && 'value' in raw ? raw.value : raw
+  if (value === null || value === undefined || value === '') {
+    return undefined
+  }
+  return String(value)
+}
+
 function contactToEntry(contact: ResendContact): WaitlistEntry {
   const properties = contact.properties ?? {}
-  const consentAtValue = properties.waitlist_consent_at ?? contact.created_at
-  const consentAt = consentAtValue
-    ? new Date(String(consentAtValue))
-    : new Date(0)
+  const consentAtValue =
+    readProperty(properties, 'waitlist_consent_at') ?? contact.created_at
+  const parsed = consentAtValue ? new Date(consentAtValue) : null
+  const consentAt =
+    parsed && !Number.isNaN(parsed.getTime()) ? parsed : new Date(0)
 
   return {
     id: contact.id,
     email: contact.email,
     name: contact.first_name ?? undefined,
-    role: properties.waitlist_role as WaitlistEntry['role'],
+    role: readProperty(properties, 'waitlist_role') as WaitlistEntry['role'],
     consent: true,
     submittedAt: consentAt,
     consentAt,
-    consentVersion: String(properties.waitlist_consent_version ?? 'unknown'),
+    consentVersion:
+      readProperty(properties, 'waitlist_consent_version') ?? 'unknown',
   }
 }
 
 function isWaitlistContact(contact: ResendContact): boolean {
-  return contact.properties?.waitlist_consent_at != null
+  return readProperty(contact.properties ?? {}, 'waitlist_consent_at') !== undefined
 }
 
 export class ResendWaitlistStorage implements WaitlistStorage {
