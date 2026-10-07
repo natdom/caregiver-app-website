@@ -180,9 +180,9 @@ Copy `.env.example` to `.env.local` to get started.
 
 These are the most important gaps before launch:
 
-1. **The waitlist has never been exercised through the real form.** #2 landed in #100: signups go to Resend contacts, and production with no key throws instead of writing to a disk that vanishes. The two setup steps it needed were both done on 2026-10-07 — a full-access `RESEND_API_KEY` is in Vercel and redeployed, and the four custom contact properties exist (both were confirmed the hard way against the live API: sending-only keys return `401 restricted_api_key`, and missing properties give `422 "One or more properties do not exist"`). Commands are in `WAITLIST.md`.
+1. ~~**The waitlist loses signups in production**~~ — **fixed and verified end-to-end on 2026-10-07** (#2, PR #100). A real submission through `/waitlist` on the deployed build created a Resend contact carrying `source`, `waitlist_role`, `waitlist_consent_at` and `waitlist_consent_version`, with `first_name` captured. The app-generated `waitlist_consent_at` landed 32ms before Resend's own `created_at`, confirming the real create path ran rather than a hand-made request.
 
-   **What remains is an end-to-end submission.** No signup has gone through `/waitlist` on a deployed build, so the create path has only ever run against mocked `fetch`. The production deployment sits behind Vercel SSO, so this needs a browser logged in to Vercel until the custom domain is attached.
+   Setup required a full-access `RESEND_API_KEY` and the four custom properties created in advance — both discovered the hard way (`401 restricted_api_key`; `422 "One or more properties do not exist"`). Commands in `WAITLIST.md`. The production deployment sits behind Vercel SSO, so testing it needs a browser logged in to Vercel until the custom domain is attached.
 
 2. **Newsletter list** — signups deliver a notification email but are not added to any marketing list. The code path in `src/lib/email/resend.ts` still depends on `RESEND_AUDIENCE_ID`, which no longer has a valid value to hold: Resend deprecated Audiences in favour of Segments and the current contacts API takes no audience id. That path should move to `POST /contacts` like the waitlist did.
 

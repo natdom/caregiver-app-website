@@ -68,7 +68,7 @@ contacts keep their source and join the waitlist through the three `waitlist_*` 
 
 **Properties are asymmetric** — writes take a flat map, reads return `{"key": {"value": v, "type": "string"}}`. `readProperty` in the storage module unwraps either shape; reuse it rather than writing a second one. The original tests asserted the flat shape and so confirmed the bug instead of catching it.
 
-**Still unexercised:** no signup has gone through the real form on a deployed build. The create path has only run against mocked `fetch`.
+**Verified end-to-end 2026-10-07:** a real submission through `/waitlist` on the deployed build produced a Resend contact with all four properties and `first_name` set. The app-generated `waitlist_consent_at` preceded Resend's `created_at` by 32ms, which is how we know it was the real create path and not a hand-made request.
 
 Resend has **deprecated Audiences in favour of Segments** and the current contacts endpoints take no audience id, so `RESEND_AUDIENCE_ID` is gone from `.env.example`. `src/lib/email/resend.ts`'s newsletter path still reads it and still no-ops safely when unset — reworking that is separate.
 
