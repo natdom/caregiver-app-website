@@ -200,9 +200,29 @@ presence of `waitlist_consent_at` to identify waitlist signups.
 the app calls them** — `getWaitlistCount()` is exported from `src/lib/actions/waitlist.ts` and
 has no callers. Treat them as untested-in-production until something uses them.
 
-Live verification is still needed for whether the four custom properties must be pre-created
-in the Resend workspace and whether the list endpoint returns `properties` for `getAll()` to
-filter on.
+### Required one-time Resend setup
+
+Verified against the live API on 2026-10-06, both the hard way:
+
+1. **The `RESEND_API_KEY` must be a full-access key.** A sending-only key returns
+   `401 restricted_api_key` — "This API key is restricted to only send emails" — on every
+   contact call. Sending-only is Resend's default when creating a key.
+2. **The four custom properties must be created before any signup can be stored.** Resend does
+   not create them on assignment; it rejects the request with
+   `422 "One or more properties do not exist"`. Only `string` and `number` types exist, so the
+   consent timestamp is stored as an ISO-8601 string.
+
+```bash
+KEY=re_your_full_access_key
+for k in source waitlist_role waitlist_consent_at waitlist_consent_version; do
+  curl -s -X POST 'https://api.resend.com/contact-properties' \
+    -H "Authorization: Bearer $KEY" -H 'Content-Type: application/json' \
+    -d "{\"key\":\"$k\",\"type\":\"string\"}"
+done
+```
+
+Still unverified: whether the list endpoint returns `properties`, which `getAll()` filters on.
+Nothing calls `getAll()` or `count()` yet, so this is latent rather than live.
 
 ## Performance
 

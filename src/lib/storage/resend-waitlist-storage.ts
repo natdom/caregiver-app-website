@@ -9,9 +9,13 @@ import type {
 } from '@/lib/validations/waitlist'
 import { WAITLIST_CONSENT_VERSION } from '@/lib/validations/waitlist'
 
-// Assumption: the Resend workspace permits these custom contact properties, or
-// has them pre-created: source, waitlist_consent_at, waitlist_consent_version,
-// and waitlist_role.
+// These four custom contact properties MUST already exist in the Resend
+// workspace: source, waitlist_role, waitlist_consent_at and
+// waitlist_consent_version. Resend does not create them on assignment — it
+// rejects the whole request with 422 "One or more properties do not exist".
+// Verified against the live API 2026-10-06. Create them once with
+// POST /contact-properties (type "string"; only string and number exist, so the
+// consent timestamp is stored as an ISO-8601 string). See WAITLIST.md.
 
 const CONTACTS_URL = 'https://api.resend.com/contacts'
 

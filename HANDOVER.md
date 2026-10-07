@@ -180,7 +180,11 @@ Copy `.env.example` to `.env.local` to get started.
 
 These are the most important gaps before launch:
 
-1. **Waitlist storage needs a full-access Resend key** (#2). The silent-loss bug is fixed — signups go to Resend contacts, and production with no key throws instead of writing to a disk that vanishes. But contact endpoints reject **sending-only** API keys, and the production key's permission has not been verified. If it is sending-only, every signup fails with an error telling the visitor to email directly. Check at https://resend.com/api-keys.
+1. **Waitlist storage needs two one-time Resend setup steps** (#2). The silent-loss bug is fixed — signups go to Resend contacts, and production with no key throws instead of writing to a disk that vanishes. But both of these were confirmed against the live API on 2026-10-06 and **both block a working waitlist**:
+   - The production `RESEND_API_KEY` is **sending-only**, which returns `401 restricted_api_key` on every contact call. It must be replaced with a **full-access** key (Resend defaults new keys to sending-only).
+   - The four custom contact properties did not exist, giving `422 "One or more properties do not exist"`. They must be created once via `POST /contact-properties`.
+
+   Commands for both are in `WAITLIST.md`. Until they are done, every signup fails visibly — correct behaviour, but a dead flow.
 
 2. **Newsletter list** — signups deliver a notification email but are not added to any marketing list. The code path in `src/lib/email/resend.ts` still depends on `RESEND_AUDIENCE_ID`, which no longer has a valid value to hold: Resend deprecated Audiences in favour of Segments and the current contacts API takes no audience id. That path should move to `POST /contacts` like the waitlist did.
 
