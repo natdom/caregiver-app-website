@@ -1,10 +1,14 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-import { headers } from 'next/headers'
 import { waitlistSchema } from '@/lib/validations/waitlist'
-import { createWaitlistStorage } from '@/lib/storage/waitlist-adapter'
+import {
+  createWaitlistStorage,
+  DuplicateWaitlistSignupError,
+  redactEmailAddresses,
+} from '@/lib/storage/waitlist-adapter'
 import { revalidatePath } from 'next/cache'
+import { ZodError } from 'zod'
 
 export interface WaitlistActionResult {
   success: boolean
@@ -28,24 +32,13 @@ export async function submitWaitlistForm(
     // Validate with Zod
     const validatedData = waitlistSchema.parse(rawData)
 
-    // Get request headers for metadata
-    const headersList = headers()
-    const ipAddress = headersList.get('x-forwarded-for') || 
-                     headersList.get('x-real-ip') || 
-                     'unknown'
-    const userAgent = headersList.get('user-agent') || 'unknown'
-
     // Store the submission
     const storage = createWaitlistStorage()
     
     try {
-      await storage.create({
-        ...validatedData,
-        ipAddress,
-        userAgent
-      })
+      await storage.create(validatedData)
     } catch (error) {
-      if (error instanceof Error && error.message === 'Email already registered') {
+      if (error instanceof DuplicateWaitlistSignupError) {
         return {
           success: false,
           message: "You're already on our waitlist! Check your email for updates.",
@@ -73,12 +66,11 @@ export async function submitWaitlistForm(
     }
     
     // Handle validation errors
-    if (error && typeof error === 'object' && 'issues' in error) {
-      const zodError = error as any
+    if (error instanceof ZodError) {
       const errors: Record<string, string[]> = {}
       
-      zodError.issues.forEach((issue: any) => {
-        const field = issue.path[0]
+      error.issues.forEach(issue => {
+        const field = String(issue.path[0])
         if (!errors[field]) {
           errors[field] = []
         }
@@ -92,11 +84,15 @@ export async function submitWaitlistForm(
       }
     }
 
-    // Generic error
-    console.error('Waitlist submission error:', error)
+    const errorDetails =
+      error instanceof Error
+        ? { name: error.name, message: redactEmailAddresses(error.message) }
+        : { name: 'UnknownError', message: 'Waitlist storage failed' }
+    console.error('Waitlist submission error:', errorDetails)
     return {
       success: false,
-      message: 'Something went wrong. Please try again.'
+      message:
+        'We could not save your signup. Please email hello@joinpero.com directly.'
     }
   }
 }
@@ -107,7 +103,11 @@ export async function getWaitlistCount(): Promise<number> {
     const storage = createWaitlistStorage()
     return await storage.count()
   } catch (error) {
-    console.error('Error getting waitlist count:', error)
+    const errorDetails =
+      error instanceof Error
+        ? { name: error.name, message: redactEmailAddresses(error.message) }
+        : { name: 'UnknownError', message: 'Waitlist storage failed' }
+    console.error('Error getting waitlist count:', errorDetails)
     return 0
   }
 }
