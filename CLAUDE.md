@@ -64,11 +64,17 @@ contacts keep their source and join the waitlist through the three `waitlist_*` 
 - no key, not production → `FileWaitlistStorage` so local dev works offline
 - **no key in production → throws.** This is the whole point: the old code fell through to a file write on an ephemeral serverless filesystem, succeeded, and redirected to the success page. Signups were silently lost.
 
-**The key must be full-access.** Sending-only keys cannot write contacts, and the production key's permission has not been verified — if it is sending-only, every signup will fail loudly (which is correct, but still fails).
+**Setup done 2026-10-07:** a full-access `RESEND_API_KEY` is in Vercel and redeployed, and the four custom properties were created via `POST /contact-properties`. Both were required and both were discovered the hard way — sending-only keys return `401 restricted_api_key`, and unknown property keys fail the whole request with `422 "One or more properties do not exist"`. Only `string` and `number` property types exist.
+
+**Properties are asymmetric** — writes take a flat map, reads return `{"key": {"value": v, "type": "string"}}`. `readProperty` in the storage module unwraps either shape; reuse it rather than writing a second one. The original tests asserted the flat shape and so confirmed the bug instead of catching it.
+
+**Still unexercised:** no signup has gone through the real form on a deployed build. The create path has only run against mocked `fetch`.
 
 Resend has **deprecated Audiences in favour of Segments** and the current contacts endpoints take no audience id, so `RESEND_AUDIENCE_ID` is gone from `.env.example`. `src/lib/email/resend.ts`'s newsletter path still reads it and still no-ops safely when unset — reworking that is separate.
 
-`getAll()`/`count()` are implemented but have **no callers**; `getWaitlistCount()` is exported and unused. Also unverified: whether Resend's list endpoint returns `properties`, which `getAll()` filters on.
+`getAll()`/`count()` are implemented but have **no callers**; `getWaitlistCount()` is exported and unused. Also unverified: whether Resend's list endpoint returns `properties`, which `getAll()` filters on — tracked in #101, which touches the same code.
+
+The newsletter path still reads the now-dead `RESEND_AUDIENCE_ID` and so adds signups to nothing, silently — **#101**.
 
 ### ✅ /press is retired (#86)
 
