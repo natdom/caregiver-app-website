@@ -16,11 +16,13 @@ Key things not to relearn the hard way:
 
 ---
 
-## Current state (updated 2026-10-06)
+## Current state (updated 2026-10-07)
 
 ### Working on the P0 queue
 
-The GitHub Project board **"Pero Website" (#7)** is the source of truth. 79 issues open, 34 marked P0 — which means P0 currently carries little signal and is worth re-triaging.
+The GitHub Project board **"Pero Website" (#7)** is the source of truth. **78 issues open** as of 2026-10-07, by severity label: 22 `sev:high`, 24 `sev:medium`, 18 `sev:low`, and **no** `sev:critical`. The board's Priority field is derived from those labels, so an earlier note here about "34 P0" reflected the board field rather than the labels and no longer holds.
+
+**Both silent-data-loss bugs are now closed.** The waitlist (#2) and the press redirect (#86) were the two items blocking everything else; what remains is mostly brand, SEO, legal and usability work. The one exception is #101 — the newsletter still has the same class of bug the waitlist had.
 
 Full working plan, including sequence and rationale: https://claude.ai/code/artifact/2413f764-ad25-45dd-9270-d8edd392e084
 

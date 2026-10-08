@@ -117,6 +117,12 @@ export async function sendNewsletterNotification(
     throw providerError(error)
   }
 
+  // DEAD PATH — see #101. Resend deprecated Audiences in favour of Segments and
+  // the current contacts endpoints take no audience id, so RESEND_AUDIENCE_ID can
+  // no longer hold a valid value and was removed from .env.example in #2. With it
+  // unset this silently does nothing, so newsletter signups reach no list at all.
+  // Replace with POST https://api.resend.com/contacts, as
+  // src/lib/storage/resend-waitlist-storage.ts does.
   const audienceId = process.env.RESEND_AUDIENCE_ID
   if (!audienceId) {
     return {}

@@ -170,6 +170,8 @@ Copy `.env.example` to `.env.local` to get started.
 | `NEXT_PUBLIC_SITE_URL` | Yes | Set to `https://www.joinpero.com` in prod |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | No | Omit to disable analytics |
 | `RESEND_API_KEY` | **Yes** | Email and waitlist storage; set in Vercel. Must be a **full-access** key — sending-only keys cannot write contacts. Without it email routes return 503, while the waitlist server action returns an error state |
+| `RESEND_FROM` | No | Defaults to `pero <hello@joinpero.com>`. Must be a domain verified in Resend or sending fails |
+| `CONTACT_INBOX` | No | Defaults to `hello@joinpero.com`. Receives contact submissions and newsletter notifications |
 | `MAILCHIMP_API_KEY` / `MAILCHIMP_SERVER_PREFIX` / `MAILCHIMP_AUDIENCE_ID` | No (yet) | Alternative to Resend for newsletter |
 | `CONVERTKIT_API_KEY` / `CONVERTKIT_FORM_ID` | No (yet) | Second alternative |
 | `NEXT_PUBLIC_HERO_VARIANT` | No | `'A'` or `'B'`; defaults to B |

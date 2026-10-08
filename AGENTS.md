@@ -59,6 +59,33 @@ npm run lint                 # eslint
 - **`npx tsc --noEmit` loads Vitest globals correctly**, so test files no longer produce `Cannot find name 'describe'/'it'/'expect'/'vi'` noise. It currently reports 244 genuine type errors, primarily missing Testing Library matcher types, plus a small number of incompatible mock tuples/values, unresolved modules, and implicit `any` parameters.
 - **`npm run lint` loads the ESLint configuration correctly**. It currently reports 213 errors and 137 warnings across the codebase, primarily Tailwind classname ordering/shorthand/migration findings, unescaped JSX entities, unused variables, explicit `any`, and accessibility rules.
 
+## Resend contacts API — verified facts, do not re-derive
+
+Confirmed against the live API on 2026-10-07 while building #2. Each was discovered the hard
+way; all three apply to any further contacts work (#101).
+
+- **The `RESEND_API_KEY` must be full-access.** Sending-only keys return
+  `401 restricted_api_key` on every contact endpoint. Sending-only is Resend's default for a
+  new key.
+- **Custom properties must exist before they can be assigned.** Resend does not create them on
+  write; it rejects the whole request with `422 "One or more properties do not exist"`. Create
+  them with `POST /contact-properties`. Only `string` and `number` types exist — there is no
+  date or boolean, which is why timestamps are stored as ISO-8601 strings.
+- **Properties are asymmetric between write and read.** A write takes a flat map
+  (`{"source": "waitlist"}`); a read returns each one wrapped
+  (`{"source": {"value": "waitlist", "type": "string"}}`). Use the `readProperty` helper in
+  `src/lib/storage/resend-waitlist-storage.ts` rather than writing a second one.
+- **Audiences are deprecated** in favour of Segments, and the current contacts endpoints take
+  no audience id. There is no `RESEND_AUDIENCE_ID` worth setting.
+- Pagination on `GET /contacts` is `limit` (max 100) plus `after=<last contact id>`. There is
+  **no cursor field** in the response.
+- Contacts are global and identified by email: `GET|PATCH|DELETE /contacts/{id_or_email}`.
+
+**Mocked `fetch` tests cannot verify any of this** — they assert whatever shape the
+implementation assumed. Two bugs on #100 (a non-existent `cursor` field, and the flat-vs-wrapped
+property shape) passed their own tests. Check shapes against the API reference, and confirm a
+test actually fails when you break the mapping it claims to cover.
+
 ## Definition of done, by default
 
 Unless a task says otherwise, before reporting a task complete:

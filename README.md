@@ -372,11 +372,11 @@ axe http://localhost:3000
 
 ### Required for Launch
 - [ ] **Analytics** - Set up Plausible account and tracking
-- [x] **Waitlist Storage** - Resend contacts adapter (#2); needs a full-access `RESEND_API_KEY` in Vercel
-- [ ] **Email** - Configure Resend or alternative email service  
+- [x] **Waitlist Storage** - Resend contacts adapter (#2), verified end-to-end on the deployed build 2026-10-07
+- [x] **Email** - Resend live and confirmed in production (contact and newsletter notifications)
 - [ ] **Domain** - Update NEXT_PUBLIC_SITE_URL in environment
 - [ ] **Content** - Review all copy for brand voice and accuracy
-- [ ] **Waitlist Flow** - Test complete signup and success flow
+- [x] **Waitlist Flow** - Signup, success page and duplicate handling all exercised against live Resend 2026-10-07
 - [ ] **Performance** - Verify Lighthouse scores ≥95 on mobile
 - [ ] **Accessibility** - Run axe audit and fix any issues
 
