@@ -4,6 +4,7 @@ import {
   isEmailConfigured,
   sendNewsletterNotification,
 } from '@/lib/email/resend'
+import { redactEmailAddresses } from '@/lib/storage/waitlist-adapter'
 
 const newsletterSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
@@ -41,8 +42,11 @@ export async function POST(request: NextRequest) {
 
     try {
       const result = await sendNewsletterNotification(validatedData)
-      if (result.audienceError) {
-        console.error('Newsletter audience error:', result.audienceError)
+      if (result.contactError) {
+        console.error('Newsletter contact write failed:', {
+          ...result.contactError,
+          message: redactEmailAddresses(result.contactError.message),
+        })
       }
     } catch (error) {
       const errorDetails =

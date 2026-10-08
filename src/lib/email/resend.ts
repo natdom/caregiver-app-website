@@ -1,4 +1,13 @@
 import { Resend } from 'resend'
+import {
+  CONTACTS_URL,
+  getProviderMessage,
+  isContactAlreadyExistsResponse,
+  readProperty,
+  request,
+  type ResendContact,
+} from '@/lib/resend/contacts'
+import { redactEmailAddresses } from '@/lib/storage/waitlist-adapter'
 
 const DEFAULT_FROM = 'pero <hello@joinpero.com>'
 const DEFAULT_CONTACT_INBOX = 'hello@joinpero.com'
@@ -24,7 +33,7 @@ export interface ProviderErrorDetails {
 }
 
 export interface NewsletterNotificationResult {
-  audienceError?: ProviderErrorDetails
+  contactError?: ProviderErrorDetails
 }
 
 export function isEmailConfigured(): boolean {
@@ -43,7 +52,7 @@ function getClient(): Resend {
 
 function getErrorDetails(error: unknown): ProviderErrorDetails {
   if (error instanceof Error) {
-    return { name: error.name, message: error.message }
+    return { name: error.name, message: redactEmailAddresses(error.message) }
   }
 
   if (typeof error === 'object' && error !== null) {
@@ -52,7 +61,7 @@ function getErrorDetails(error: unknown): ProviderErrorDetails {
       name: typeof candidate.name === 'string' ? candidate.name : 'ResendError',
       message:
         typeof candidate.message === 'string'
-          ? candidate.message
+          ? redactEmailAddresses(candidate.message)
           : 'Resend request failed',
     }
   }
@@ -117,29 +126,84 @@ export async function sendNewsletterNotification(
     throw providerError(error)
   }
 
-  // DEAD PATH — see #101. Resend deprecated Audiences in favour of Segments and
-  // the current contacts endpoints take no audience id, so RESEND_AUDIENCE_ID can
-  // no longer hold a valid value and was removed from .env.example in #2. With it
-  // unset this silently does nothing, so newsletter signups reach no list at all.
-  // Replace with POST https://api.resend.com/contacts, as
-  // src/lib/storage/resend-waitlist-storage.ts does.
-  const audienceId = process.env.RESEND_AUDIENCE_ID
-  if (!audienceId) {
-    return {}
-  }
-
   try {
-    const audienceResult = await resend.contacts.create({
-      audience_id: audienceId,
-      email: signup.email,
-      first_name: signup.name,
-      unsubscribed: false,
+    const contactUrl = `${CONTACTS_URL}/${encodeURIComponent(signup.email)}`
+    const lookup = await request(contactUrl)
+
+    const contactError = (message: string): NewsletterNotificationResult => ({
+      contactError: { name: 'ResendContactError', message },
     })
 
-    return audienceResult.error
-      ? { audienceError: getErrorDetails(audienceResult.error) }
-      : {}
+    const updateExistingContact = async (
+      existing: ResendContact,
+      subscribedAt: string
+    ): Promise<NewsletterNotificationResult> => {
+      const body = {
+        ...(!existing.first_name && signup.name
+          ? { first_name: signup.name }
+          : {}),
+        ...(!readProperty(existing.properties ?? {}, 'newsletter_subscribed_at')
+          ? { properties: { newsletter_subscribed_at: subscribedAt } }
+          : {}),
+      }
+
+      if (Object.keys(body).length === 0) {
+        return {}
+      }
+
+      const response = await request(contactUrl, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      return response.ok
+        ? {}
+        : contactError(await getProviderMessage(response))
+    }
+
+    if (!lookup.ok && lookup.status !== 404) {
+      return contactError(await getProviderMessage(lookup))
+    }
+
+    const subscribedAt = new Date().toISOString()
+    if (lookup.status === 404) {
+      const response = await request(CONTACTS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: signup.email,
+          ...(signup.name ? { first_name: signup.name } : {}),
+          unsubscribed: false,
+          properties: {
+            source: 'newsletter',
+            newsletter_subscribed_at: subscribedAt,
+          },
+        }),
+      })
+
+      if (!response.ok) {
+        const providerMessage = await getProviderMessage(response)
+        if (!isContactAlreadyExistsResponse(response, providerMessage)) {
+          return contactError(providerMessage)
+        }
+
+        const retryLookup = await request(contactUrl)
+        if (!retryLookup.ok) {
+          return contactError(await getProviderMessage(retryLookup))
+        }
+        return updateExistingContact(
+          (await retryLookup.json()) as ResendContact,
+          subscribedAt
+        )
+      }
+      return {}
+    }
+
+    return updateExistingContact(
+      (await lookup.json()) as ResendContact,
+      subscribedAt
+    )
   } catch (error) {
-    return { audienceError: getErrorDetails(error) }
+    return { contactError: getErrorDetails(error) }
   }
 }

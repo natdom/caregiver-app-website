@@ -2,6 +2,7 @@ import {
   createWaitlistStorage,
   DuplicateWaitlistSignupError,
   FileWaitlistStorage,
+  redactEmailAddresses,
 } from '@/lib/storage/waitlist-adapter'
 import { ResendWaitlistStorage } from '@/lib/storage/resend-waitlist-storage'
 import { WAITLIST_CONSENT_VERSION } from '@/lib/validations/waitlist'
@@ -15,6 +16,16 @@ const signup = {
   role: 'caregiver' as const,
   consent: true,
 }
+
+describe('redactEmailAddresses', () => {
+  it('redacts literal and percent-encoded email addresses identically', () => {
+    expect(
+      redactEmailAddresses(
+        'literal caregiver@example.com encoded caregiver%40example.com'
+      )
+    ).toBe('literal [redacted] encoded [redacted]')
+  })
+})
 
 async function fileStorageFixture(): Promise<{
   storage: FileWaitlistStorage

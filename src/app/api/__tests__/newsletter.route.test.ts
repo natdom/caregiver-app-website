@@ -57,6 +57,40 @@ describe('POST /api/newsletter', () => {
     expect(response.status).not.toBe(200)
   })
 
+  it('returns 200 when the notification is delivered but the contact write fails', async () => {
+    sendMock.mockResolvedValue({
+      contactError: { name: 'ResendContactError', message: 'Provider unavailable' },
+    })
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+
+    const response = await POST(request(validPayload))
+
+    expect(response.status).toBe(200)
+    expect(errorSpy).toHaveBeenCalledWith(
+      'Newsletter contact write failed:',
+      expect.objectContaining({ name: 'ResendContactError' })
+    )
+    errorSpy.mockRestore()
+  })
+
+  it('redacts subscriber addresses from contact-write error logs', async () => {
+    sendMock.mockResolvedValue({
+      contactError: {
+        name: 'ResendContactError',
+        message: `Provider rejected ${validPayload.email}`,
+      },
+    })
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+
+    const response = await POST(request(validPayload))
+
+    expect(response.status).toBe(200)
+    const logged = JSON.stringify(errorSpy.mock.calls)
+    expect(logged).toContain('[redacted]')
+    expect(logged).not.toContain(validPayload.email)
+    errorSpy.mockRestore()
+  })
+
   it('returns 503 without attempting delivery when email is not configured', async () => {
     configuredMock.mockReturnValue(false)
 
