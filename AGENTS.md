@@ -34,7 +34,7 @@ npm run lint                 # eslint
 
 ## Known pre-existing issues — do not try to fix these unless your task is specifically about them
 
-- The verified test baseline from 2026-10-06 is **53 failures across 10 files**, out of 221 tests:
+- The verified test baseline, re-measured 2026-10-08, is **53 failures across 10 files**, out of 235 tests:
 
   | file | failures |
   |---|---:|
@@ -49,7 +49,9 @@ npm run lint                 # eslint
   | `src/lib/__tests__/feature-flags.test.ts` | 1 |
   | `src/components/partners/__tests__/components.test.tsx` | 1 |
 
-  These fail identically on `main` regardless of any feature branch. When asked to verify "no regressions," compare the per-file failure counts against this baseline, not just the aggregate. `waitlist-form.test.tsx` (6 failures) is deliberately left failing because upcoming lead-capture work will rewrite that component and its tests together. `redirects.test.tsx` previously failed to *collect* (it runs in a node environment, and `src/test/setup.ts` touched `window` unguarded), so it contributed zero failures and was invisible in any pass/fail tally. Both are now fixed and its 2 tests pass. Current observed total: **221 tests — 168 passed, 53 failed, across 10 failing files**.
+  These fail identically on `main` regardless of any feature branch. When asked to verify "no regressions," compare the per-file failure counts against this baseline, not just the aggregate. `waitlist-form.test.tsx` (6 failures) is deliberately left failing because upcoming lead-capture work will rewrite that component and its tests together. `redirects.test.tsx` previously failed to *collect* (it runs in a node environment, and `src/test/setup.ts` touched `window` unguarded), so it contributed zero failures and was invisible in any pass/fail tally. Both are now fixed and its 2 tests pass. Current observed total: **235 tests — 182 passed, 53 failed, across 10 failing files** (re-measured 2026-10-08 on #101; the 221/168 figure here had drifted by 10 tests before that, which is #94 happening again — update these numbers in the same PR that changes them).
+
+  Two traps when re-measuring. First, **the failure count is only trustworthy on a warm run**: a run against a cold/absent `.contentlayer` lets four of the ten files fail to *collect* rather than run, which under-reports the total as ~180 tests / 27 failures. If you see a number near that, re-run before trusting it. Second, `npx vitest run` and `npm run lint` both hang if stdin is left open — always append `< /dev/null`. `npm run typecheck` is a third case: it does finish, but takes ~20 minutes locally and looks hung for most of it, so read typecheck from CI's informational job rather than waiting on it. It reports ~250 errors repo-wide, nearly all `contentlayer/generated` module resolution and missing matcher types — grep it for your own changed files rather than expecting a clean run.
 
   The failure count and the failing-file list are the part that matters; the totals move whenever tests are added. They have now drifted three times in three PRs — see #94, which proposes generating these numbers in CI rather than maintaining them by hand.
 

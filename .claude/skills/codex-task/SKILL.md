@@ -110,8 +110,14 @@ Surface every disagreement between the two agents to the user rather than resolv
 - Small, obvious fix → make it yourself directly, note in the eventual PR/commit message that it was a review fix.
 - Anything more substantive, or if you want Codex to own the full diff → send it back to the same session instead of starting fresh:
   ```bash
-  codex exec resume <session-id> -s workspace-write -C "<repo path>" "Specific feedback here, referencing exact file/line."
+  codex exec -s workspace-write -C "<repo path>" resume <session-id> - < followup-prompt.txt
   ```
+  **Flag order matters.** `-s` and `-C` belong to `exec` and must come BEFORE `resume`;
+  putting them after the session id (as this file used to say) fails outright with
+  `error: unexpected argument '-s' found`. Verified against codex-cli 0.152.1. Pass the
+  feedback on stdin with `-` for the same reason as step 4 — it is usually long enough that
+  shell escaping bites.
+
   Re-run step 6 after any revision, from either path.
 
 ## 9. Commit, push, open the PR — Claude only

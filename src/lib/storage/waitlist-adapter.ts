@@ -24,7 +24,7 @@ export class DuplicateWaitlistSignupError extends Error {
 
 export function redactEmailAddresses(value: string): string {
   return value.replace(
-    /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,
+    /[A-Z0-9._%+-]+(?:@|%40)[A-Z0-9.-]+\.[A-Z]{2,}/gi,
     '[redacted]'
   )
 }
